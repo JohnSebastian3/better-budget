@@ -5,10 +5,9 @@ const homeController = require('../controllers/home');
 
 router.post("/register", homeController.registerUser);
 router.post("/login", passport.authenticate("local", {session: true}), (req, res) => {
-  res.send("Successfully Authenticated");
+  res.sendStatus(200);
 });
-router.get('/user', (req, res) => {
-  console.log(req.user);
-})
+router.get('/user', homeController.getUser);
+router.get('/logout', homeController.logoutUser);
 
 module.exports = router;
