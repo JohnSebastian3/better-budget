@@ -1,11 +1,16 @@
-import React, { createContext, PropsWithChildren, useEffect } from 'react'
+import axios from 'axios'
+import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+import { UserInterface } from '../Interfaces/UserInterface'
 
-export const myContext = createContext<any>({})
+export const userContext = createContext<Partial<UserInterface>>({})
 export default function Context(props: PropsWithChildren) {
-//   useEffect(() => {
-
-// }, [])
+  const [user, setUser] = useState<UserInterface>()
+  useEffect(() => {
+    axios.get('http://localhost:4000/user', {withCredentials: true}).then(res => {
+      setUser(res.data);
+    })
+}, [])
   return (
-    <myContext.Provider value={1000}>{props.children}</myContext.Provider>
+    <userContext.Provider value={user!}>{props.children}</userContext.Provider>
   )
 }
