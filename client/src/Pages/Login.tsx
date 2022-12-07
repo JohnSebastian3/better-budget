@@ -13,7 +13,9 @@ export default function Login() {
       withCredentials: true
     })
       .then(res => {
-        console.log(res.data)
+        if(res.data === 'OK') {
+          window.location.href = "/dashboard"
+        }
       })
       .catch(err => {
         console.log(err);
@@ -47,8 +49,7 @@ export default function Login() {
       <h1>Login</h1>
       <input type="text" placeholder='email' onChange={handleEmailChange} value={email}/>
       <input type="text" placeholder='password' onChange={handlePasswordChange} value={password}/>
-    <button onClick={login}>Login</button>
-    <button onClick={getUser}>Get User That is Logged In</button>
+      <button onClick={login}>Login</button>
     </div>
   )
 }
