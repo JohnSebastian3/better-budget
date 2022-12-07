@@ -1,0 +1,15 @@
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  border-top: 3px solid #8FCB9B;
+  padding: 10px;
+}
+
+.nav-links li {
+  padding-left: 10px;
+}

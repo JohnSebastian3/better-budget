@@ -1,0 +1,10 @@
+.mobile-navigation {
+  display: flex;
+}
+
+
+@media screen and (min-width: 840px) {
+  .mobile-navigation {
+    display: none;
+  }
+}
