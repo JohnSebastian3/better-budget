@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
-import { UserInterface } from "../interfaces/UserInterface";
+import { DatabaseUserInterface } from "../interfaces/UserInterface";
 module.exports = {
   registerUser: async (req: Request, res: Response) => {
     const { email, username, password } = req?.body;
@@ -16,11 +16,11 @@ module.exports = {
       res.send("Improper values");
     }
 
-     User.findOne({ email }, async (err: Error, doc: UserInterface) => {
+     User.findOne({ email }, async (err: Error, doc: DatabaseUserInterface) => {
       if (err) throw err;
       if (doc) res.send("Email already registered");
       if (!doc) {
-        User.findOne({username}, async (err:Error, doc: UserInterface) => {
+        User.findOne({username}, async (err: Error, doc: DatabaseUserInterface) => {
           if(err) throw err;
           if(doc) res.send("Username is in use");
           if(!doc) {
@@ -31,7 +31,7 @@ module.exports = {
               password: hashedPassword,
             });
             await newUser.save();
-            res.send("Successfully registered");
+            res.sendStatus(200);
           }
         })
        
@@ -39,9 +39,13 @@ module.exports = {
       }
     });
   },
-  getUser: (req: Request, res: Response) => {
-    // const loggedInUser = await User.findOne({email: req.query.email})
-    // res.send(loggedInUser);
+  getUser: (req: any, res: Response) => {
     res.send(req.user);
+  },
+  logoutUser: (req: any, res: any) => {
+    req.logout((err: Error) => {
+      if(err) return err.message;
+      res.sendStatus(200);
+    });
   }
 };
