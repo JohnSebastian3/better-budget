@@ -5,6 +5,7 @@ import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import cookieParser from 'cookie-parser'
 const dashboardRoutes = require("./routes/dashboard");
 const homeRoutes = require("./routes/home");
 
@@ -26,10 +27,12 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60},
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 
+app.use(cookieParser());
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
