@@ -1,6 +1,7 @@
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 
+import { DatabaseUserInterface } from "../interfaces/UserInterface";
 // Load User Model
 import User from "../models/User";
 
@@ -36,45 +37,14 @@ module.exports = function (passport: any) {
     )
   );
 
-  passport.serializeUser((user: any, done: any) => {
-    done(null, user.id);
+  passport.serializeUser((user: DatabaseUserInterface, done: any) => {
+    done(null, user._id);
   });
 
   passport.deserializeUser((id: string, done: any) => {
-    User.findById(id, (err: Error, user: any) => {
+    User.findById(id, (err: Error, user: DatabaseUserInterface) => {
       done(null, user);
     });
   });
 };
 
-// function (passport: any) {
-//   passport.use(
-//     new LocalStrategy((email: string, password: string, done: any) => {
-//       User.findOne({ email: email }, (err: Error, user: any) => {
-//         if (err) throw err;
-//         if (!user) return done(null, false);
-//         bcrypt.compare(password, user.password, (err: Error, result: any) => {
-//           if (err) throw err;
-//           if (result === true) {
-//             return done(null, user);
-//           } else {
-//             return done(null, false);
-//           }
-//         });
-//       });
-//     })
-//   );
-
-//   passport.serializeUser((user: any, cb: any) => {
-//     cb(null, user.id);
-//   });
-
-//   passport.deserializeUser((id: string, cb: any) => {
-//     User.findOne({ _id: id }, (err: Error, user: any) => {
-//       const UserInformation = {
-//         email: user.email,
-//       };
-//       cb(err, UserInformation);
-//     });
-//   });
-// };
