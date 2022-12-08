@@ -4,6 +4,7 @@
 
 @media screen and (min-width: 840px) {
   .navigation {
-     display: flex;
+     display: block;
+     width: 50%;
   }
 }
