@@ -12,5 +12,19 @@
   font-family: 'Righteous', sans-serif;
   flex-grow: 1;
   text-align: center;
-  /* color: #8FCB9B; */
+  color: #8FCB9B;
+}
+
+@media screen and (min-width: 840px) {
+  .nav-container__main-heading {
+    flex-grow: 0;
+  }
+
+  .nav-container {
+    background-color: #8FCB9B;
+  }
+
+  .nav-container__main-heading {
+    color: #fafafa;
+  }
 }
