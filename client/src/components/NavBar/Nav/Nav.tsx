@@ -1,5 +1,5 @@
 import React from "react";
-import NavLinks from "./NavLinks";
+import NavLinks from "../NavLinks/NavLinks";
 import classes from './Nav.module.css';
 export default function Nav() {
   return (

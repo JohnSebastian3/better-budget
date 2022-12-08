@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavLinks from "./NavLinks";
+import NavLinks from "../NavLinks/NavLinks";
 import classes from "./MobileNav.module.css";
 import { AiOutlineMenu } from "react-icons/ai";
 import { SlClose } from "react-icons/sl";

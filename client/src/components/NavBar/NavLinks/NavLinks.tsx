@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import classes from "./NavLinks.module.css";
 import { motion } from "framer-motion";
-import { userContext } from "../../Pages/Context";
+import { UserContext } from "../../../context/UserContext";
 import axios from "axios";
 const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
   props
 ) => {
-  const ctx = useContext(userContext);
+  const ctx = useContext(UserContext);
   const animateFrom = { opacity: 0, y: -40 };
   const animateTo = { opacity: 1, y: 0 };
 

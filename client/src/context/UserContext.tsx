@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 import { UserInterface } from '../Interfaces/UserInterface'
 
-export const userContext = createContext<Partial<UserInterface>>({})
+export const UserContext = createContext<Partial<UserInterface>>({})
 export default function Context(props: PropsWithChildren) {
   const [user, setUser] = useState<UserInterface>()
   useEffect(() => {
@@ -11,6 +11,6 @@ export default function Context(props: PropsWithChildren) {
     })
 }, [])
   return (
-    <userContext.Provider value={user!}>{props.children}</userContext.Provider>
+    <UserContext.Provider value={user!}>{props.children}</UserContext.Provider>
   )
 }
