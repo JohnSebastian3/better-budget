@@ -13,7 +13,6 @@ function App() {
   return (
     <BrowserRouter>
         <NavBar />
-        <div className="container">
           <Routes>
           <Route path="/" element={<Homepage />}></Route>
             {ctx ? (
@@ -30,7 +29,6 @@ function App() {
               </>
             )}
           </Routes>
-        </div>
     </BrowserRouter>
   );
 }
