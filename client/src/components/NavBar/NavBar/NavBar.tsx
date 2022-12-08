@@ -6,7 +6,7 @@ import classes from "./NavBar.module.css";
 export default function NavBar() {
   return (
     <div className={classes['nav-container']}>
-      <Link to={'/'}><span className={classes['nav-container__logo']}>Better Budget</span></Link>
+      <Link to={'/'} className={classes['nav-container__logo']}><span >Better Budget</span></Link>
       <MobileNav />
       <Nav />
     </div>
