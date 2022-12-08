@@ -7,7 +7,7 @@ import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 import { userContext } from "./Pages/Context";
 import { useContext } from "react";
-
+import './App.css'
 function App() {
   const ctx = useContext(userContext);
   return (
