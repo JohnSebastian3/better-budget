@@ -5,12 +5,23 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { SlClose } from "react-icons/sl";
 const MobileNav: React.FC = props => {
   const [open, setOpen] = useState<boolean>(false);
+
+  const handleHamburgerClick = () => {
+    if(open) {
+      document.body.style.overflow = "visible"
+    } else if(!open) {
+      document.body.style.overflow = "hidden"
+    }
+
+    setOpen(!open);
+  }
+
   const hamburgerIcon = (
     <AiOutlineMenu
       className={classes.hamburger}
       size="25px"
       color="#8FCB9B"
-      onClick={() => setOpen(!open)}
+      onClick={handleHamburgerClick}
     />
   );
   const closeHamburgerIcon = (
@@ -18,7 +29,7 @@ const MobileNav: React.FC = props => {
       className={classes.hamburger}
       size="25px"
       color="#8FCB9B"
-      onClick={() => setOpen(!open)}
+      onClick={handleHamburgerClick}
     />
   );
   const closeMobileMenu = () => {
