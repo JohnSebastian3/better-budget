@@ -1,0 +1,22 @@
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 25px;
+}
+
+.btn-primary-purple,
+.btn-primary-green {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #EFF2F1;
+}
+
+.btn-primary-purple {
+  background-color: #967AA1;
+}
+
+.btn-primary-green {
+  background-color: #3D9970;
+}
