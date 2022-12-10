@@ -13,7 +13,7 @@
   font-size: 2.4rem;
   flex-grow: 1;
   text-align: center;
-  color: #689671;
+  color: #3D9970;
 }
 
 @media screen and (min-width: 840px) {
@@ -24,7 +24,7 @@
   }
 
   .nav-container {
-    background-color: #689671;
+    background-color: #3D9970;
   }
 
 }
