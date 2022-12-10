@@ -16,10 +16,15 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
       .get("http://localhost:4000/logout", { withCredentials: true })
       .then((res) => {
         if (res.data === "OK") {
+          document.body.style.overflow = 'visible';
           window.location.href = "/";
         }
       });
   };
+
+  const resetHomeOverflow = () => {
+    document.body.style.overflow = 'visible';
+  }
   return (
     <>
       {props.isMobile ? (
@@ -36,7 +41,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
               transition={{ delay: 0.2 }}
               onClick={() => props.isMobile && props.closeMobileMenu()}
             >
-              <Link to={"/"}>Home</Link>
+              <Link to={"/"} onClick={resetHomeOverflow}>Home</Link>
             </motion.li>
             {ctx ? (
               <>
@@ -46,7 +51,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/dashboard"}>Dashboard</Link>
+                  <Link to={"/dashboard"} onClick={resetHomeOverflow}>Dashboard</Link>
                 </motion.li>
                 <motion.li
                   initial={animateFrom}
@@ -67,7 +72,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/login"}>Login</Link>
+                  <Link to={"/login"} onClick={resetHomeOverflow}>Login</Link>
                 </motion.li>
                 <motion.li
                   initial={animateFrom}
@@ -75,7 +80,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.4 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/register"}>Register</Link>
+                  <Link to={"/register"} onClick={resetHomeOverflow}>Register</Link>
                 </motion.li>
               </>
             )}
@@ -83,18 +88,18 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
         </>
       ) : (
         <ul className={classes["nav-links"]}>
-          <Link to={"/"}>Home</Link>
+          <Link to={"/"} onClick={resetHomeOverflow}>Home</Link>
           {ctx ? (
             <>
-              <Link to={"/dashboard"}>Dashboard</Link>
+              <Link to={"/dashboard"} onClick={resetHomeOverflow}>Dashboard</Link>
               <Link onClick={logout} to={"/login"}>
                 Logout
               </Link>
             </>
           ) : (
             <>
-              <Link to={"/register"}>Register</Link>
-              <Link to={"/login"}>Login</Link>
+              <Link to={"/register"} onClick={resetHomeOverflow}>Register</Link>
+              <Link to={"/login"} onClick={resetHomeOverflow}>Login</Link>
             </>
           )}
         </ul>
