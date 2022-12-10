@@ -1,18 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "../../../components/UI/Button/Button";
-import classes from "./Header.module.css";
+import style from "./Header.module.css";
 export default function Header() {
   return (
-    <header className={classes.header}>
+    <header className={style.header}>
       <div className="container">
-        <section className={classes['header__main-section']}>
-          <h1 className={classes["header__h1"]}>
+        <section className={style["header__main-section"]}>
+          <h1 className={style["header__h1"]}>
             It's time to make money work in your favor.
           </h1>
-          <h2 className={classes["header__h2"]}>
-            Gain freedom by taking charge of your finances.
+          <h2 className={style["header__h2"]}>
+            Gain freedom and peace of mind by taking charge of your finances
+            with BetterBudget.
           </h2>
-          <Button type='button' value='Start Budgeting' classes='btn btn-primary'></Button>
+          <div>
+            <Link to={"/register"}>
+              <Button
+                type="button"
+                value="Start Budgeting"
+                kind="btn-primary-purple"
+              ></Button>
+            </Link>
+          </div>
         </section>
       </div>
     </header>
