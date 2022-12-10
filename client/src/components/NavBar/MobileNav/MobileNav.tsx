@@ -20,7 +20,7 @@ const MobileNav: React.FC = props => {
     <AiOutlineMenu
       className={classes.hamburger}
       size="25px"
-      color="#689671"
+      color="#3D9970"
       onClick={handleHamburgerClick}
     />
   );
@@ -28,7 +28,7 @@ const MobileNav: React.FC = props => {
     <SlClose
       className={classes.hamburger}
       size="25px"
-      color="#689671"
+      color="#3D9970"
       onClick={handleHamburgerClick}
     />
   );
