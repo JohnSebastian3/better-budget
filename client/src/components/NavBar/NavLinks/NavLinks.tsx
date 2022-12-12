@@ -4,11 +4,12 @@ import style from "./NavLinks.module.css";
 import { motion } from "framer-motion";
 import { UserContext } from "../../../context/UserContext";
 import axios from "axios";
-const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
-  props
-) => {
+const NavLinks: React.FC<{
+  isMobile: boolean;
+  closeMobileMenu: () => void;
+}> = (props) => {
   const ctx = useContext(UserContext);
-  const animateFrom = { opacity: 0, y: -40 };
+  const animateFrom = { opacity: 0, y: -10 };
   const animateTo = { opacity: 1, y: 0 };
 
   const logout = () => {
@@ -32,6 +33,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
           <motion.ul
             initial={animateFrom}
             animate={animateTo}
+            exit={{opacity: 0}}
             transition={{ delay: 0.1 }}
             className={style["nav-links"]}
           >
@@ -71,9 +73,11 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.4 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link onClick={logout} to={"/login"}>
-                    {" "}
+                  <Link
+                    onClick={logout}
+                    to={"/login"}
                     className={style["nav-links__item"]}
+                  >
                     Logout
                   </Link>
                 </motion.li>
@@ -130,9 +134,11 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
               >
                 Dashboard
               </Link>
-              <Link onClick={logout} to={"/login"}>
-                {" "}
+              <Link
+                onClick={logout}
+                to={"/login"}
                 className={style["nav-links__item"]}
+              >
                 Logout
               </Link>
             </>
@@ -148,7 +154,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
               <Link
                 to={"/login"}
                 onClick={resetHomeOverflow}
-                className={style["nav-links__item"]}
+                // className={style["nav-links__item"]}
               >
                 Login
               </Link>
