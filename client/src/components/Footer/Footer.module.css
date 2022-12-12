@@ -1,0 +1,48 @@
+.footer {
+  background-color: #3D9970;
+  color: #EFF2F1;
+  padding: 40px 0;
+}
+
+.footer__logo {
+  color: #EFF2F1;
+  font-family: 'Righteous', sans-serif;
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+.footer__links {
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.footer__links__explore {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer__links__explore a,
+.footer__links__get-started a
+ {
+  font-size: 1.4rem;
+}
+
+
+
+.footer__links__get-started {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media screen and (min-width: 840px) {
+  .footer__logo {
+    font-size: 3rem;
+  }
+
+}
+
+
