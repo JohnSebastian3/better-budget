@@ -2,11 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MobileNav from "../MobileNav/MobileNav";
 import Nav from "../Nav/Nav";
-import classes from "./NavBar.module.css";
+import style from "./NavBar.module.css";
 export default function NavBar() {
   return (
-    <div className={classes['nav-container']}>
-      <Link to={'/'} className={classes['nav-container__logo']}><span >Better Budget</span></Link>
+    <div className={style["nav-container"]}>
+      <div className={style['nav-container__logo-container']}>
+        <Link to={"/"} className={style["logo"]}>
+          <span>Better Budget</span>
+        </Link>
+      </div>
       <MobileNav />
       <Nav />
     </div>
