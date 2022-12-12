@@ -19,7 +19,7 @@ export default function Header() {
               <Button
                 type="button"
                 value="Start Budgeting"
-                kind="btn-primary-purple"
+                kind="btn-primary-green"
               ></Button>
             </Link>
           </div>
