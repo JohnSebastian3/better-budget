@@ -8,6 +8,11 @@ h2 {
   font-weight: 600;
 }
 
+h3 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
 p {
   font-size: 1.8rem;
 }
@@ -18,15 +23,16 @@ ul {
 }
 
 a {
+  cursor: pointer;
   text-decoration: none;
-  color: #333;
+  color: #EFF2F1;
   font-size: 2rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
 
 a:hover {
-  color: #3D9970;
+  color: #51c591;
 }
 
 
@@ -40,12 +46,13 @@ a:hover {
   }
 
   a {
-    color: #fff;
+    color: #EFF2F1;
   }
 
   a:hover {
-    color: rgb(183, 235, 190);
+    color: #b7ebbe;
   }
+  
 }
 
 
@@ -54,4 +61,10 @@ a:hover {
   margin: 0 auto;
   padding: 20px;
   text-align: center;
+}
+
+@media screen and (min-width: 840px) {
+  .container {
+    text-align: start;
+  }
 }
