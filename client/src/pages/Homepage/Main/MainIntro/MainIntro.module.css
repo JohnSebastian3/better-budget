@@ -1,0 +1,12 @@
+.main__intro{
+  background-color: #3D9970;
+  color: #EFF2F1;
+  padding: 40px 0;
+}
+
+.main__intro-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
