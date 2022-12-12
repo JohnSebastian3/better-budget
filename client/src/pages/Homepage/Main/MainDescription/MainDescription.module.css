@@ -16,3 +16,7 @@
 .inline-link:hover {
   color: #51c591;
 }
+
+.step {
+  width: 100%;
+}

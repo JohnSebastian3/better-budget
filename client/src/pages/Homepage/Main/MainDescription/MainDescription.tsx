@@ -9,7 +9,7 @@ const MainDescription = () => {
         <div className={style["main__description-content"]}>
           <TbDeviceDesktopAnalytics size={"80px"} style={{ marginBottom: "20px" }}></TbDeviceDesktopAnalytics>
           <h2>How It Works</h2>
-          <div className="step">
+          <div className={style.step}>
             <h3>Create an account for free</h3>
             <p>
               BetterBudget is free to use and always will be. You can <Link to={'/register'} className={style['inline-link']}>start your
@@ -17,7 +17,7 @@ const MainDescription = () => {
             </p>
           </div>
 
-          <div className="step">
+          <div className={style.step}>
             <h3>Log in and start budgeting</h3>
 
             <p>
@@ -25,7 +25,7 @@ const MainDescription = () => {
               expenses in your <Link to={'/dashboard'} className={style['inline-link']}>dashboard</Link>.
             </p>
           </div>
-          <div className="step">
+          <div className={style.step}>
             <h3>Profit</h3>
             <p>
               Over time, budgeting will help bolster your savings as well as
