@@ -46,7 +46,7 @@ export default function Login() {
           value={email}
         />
         <input
-          type="text"
+          type="password"
           placeholder="password"
           onChange={handlePasswordChange}
           value={password}
