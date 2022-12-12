@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import classes from "./NavLinks.module.css";
+import style from "./NavLinks.module.css";
 import { motion } from "framer-motion";
 import { UserContext } from "../../../context/UserContext";
 import axios from "axios";
@@ -16,15 +16,15 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
       .get("http://localhost:4000/logout", { withCredentials: true })
       .then((res) => {
         if (res.data === "OK") {
-          document.body.style.overflow = 'visible';
+          document.body.style.overflow = "visible";
           window.location.href = "/";
         }
       });
   };
 
   const resetHomeOverflow = () => {
-    document.body.style.overflow = 'visible';
-  }
+    document.body.style.overflow = "visible";
+  };
   return (
     <>
       {props.isMobile ? (
@@ -33,7 +33,7 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
             initial={animateFrom}
             animate={animateTo}
             transition={{ delay: 0.1 }}
-            className={classes["nav-links"]}
+            className={style["nav-links"]}
           >
             <motion.li
               initial={animateFrom}
@@ -41,7 +41,13 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
               transition={{ delay: 0.2 }}
               onClick={() => props.isMobile && props.closeMobileMenu()}
             >
-              <Link to={"/"} onClick={resetHomeOverflow}>Home</Link>
+              <Link
+                to={"/"}
+                onClick={resetHomeOverflow}
+                className={style["nav-links__item"]}
+              >
+                Home
+              </Link>
             </motion.li>
             {ctx ? (
               <>
@@ -51,7 +57,13 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/dashboard"} onClick={resetHomeOverflow}>Dashboard</Link>
+                  <Link
+                    to={"/dashboard"}
+                    onClick={resetHomeOverflow}
+                    className={style["nav-links__item"]}
+                  >
+                    Dashboard
+                  </Link>
                 </motion.li>
                 <motion.li
                   initial={animateFrom}
@@ -60,6 +72,8 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
                   <Link onClick={logout} to={"/login"}>
+                    {" "}
+                    className={style["nav-links__item"]}
                     Logout
                   </Link>
                 </motion.li>
@@ -72,7 +86,13 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/login"} onClick={resetHomeOverflow}>Login</Link>
+                  <Link
+                    to={"/login"}
+                    onClick={resetHomeOverflow}
+                    className={style["nav-links__item"]}
+                  >
+                    Login
+                  </Link>
                 </motion.li>
                 <motion.li
                   initial={animateFrom}
@@ -80,26 +100,58 @@ const NavLinks: React.FC<{ isMobile: boolean; closeMobileMenu: () => void }> = (
                   transition={{ delay: 0.4 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
                 >
-                  <Link to={"/register"} onClick={resetHomeOverflow}>Register</Link>
+                  <Link
+                    to={"/register"}
+                    onClick={resetHomeOverflow}
+                    className={style["nav-links__item"]}
+                  >
+                    Register
+                  </Link>
                 </motion.li>
               </>
             )}
           </motion.ul>
         </>
       ) : (
-        <ul className={classes["nav-links"]}>
-          <Link to={"/"} onClick={resetHomeOverflow}>Home</Link>
+        <ul className={style["nav-links"]}>
+          <Link
+            to={"/"}
+            onClick={resetHomeOverflow}
+            className={style["nav-links__item"]}
+          >
+            Home
+          </Link>
           {ctx ? (
             <>
-              <Link to={"/dashboard"} onClick={resetHomeOverflow}>Dashboard</Link>
+              <Link
+                to={"/dashboard"}
+                onClick={resetHomeOverflow}
+                className={style["nav-links__item"]}
+              >
+                Dashboard
+              </Link>
               <Link onClick={logout} to={"/login"}>
+                {" "}
+                className={style["nav-links__item"]}
                 Logout
               </Link>
             </>
           ) : (
             <>
-              <Link to={"/register"} onClick={resetHomeOverflow}>Register</Link>
-              <Link to={"/login"} onClick={resetHomeOverflow}>Login</Link>
+              <Link
+                to={"/register"}
+                onClick={resetHomeOverflow}
+                className={style["nav-links__item"]}
+              >
+                Register
+              </Link>
+              <Link
+                to={"/login"}
+                onClick={resetHomeOverflow}
+                className={style["nav-links__item"]}
+              >
+                Login
+              </Link>
             </>
           )}
         </ul>
