@@ -1,0 +1,18 @@
+.main__description {
+  padding: 40px 0;
+}
+
+.main__description-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.inline-link {
+  color: #3D9970;
+}
+
+.inline-link:hover {
+  color: #51c591;
+}
