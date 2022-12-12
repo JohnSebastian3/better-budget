@@ -2,6 +2,7 @@
   border: none;
   border-radius: 10px;
   padding: 12px 25px;
+  cursor: pointer;
 }
 
 .btn-primary-purple,
@@ -19,4 +20,12 @@
 
 .btn-primary-green {
   background-color: #3D9970;
+}
+
+.btn-primary-purple:hover {
+  background-color: #b694c3;
+}
+
+.btn-primary-green:hover {
+  background-color: #51c591;
 }
