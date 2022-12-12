@@ -24,14 +24,6 @@
   align-items: flex-start;
 }
 
-.footer__links__explore a,
-.footer__links__get-started a
- {
-  font-size: 1.4rem;
-}
-
-
-
 .footer__links__get-started {
   display: flex;
   flex-direction: column;
