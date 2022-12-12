@@ -30,7 +30,7 @@ export default function Register() {
   return( <div>
     <h1>Register</h1>
     <input type="text" placeholder="Email" onChange={handleEmailChange}/>
-    <input type="text" placeholder="Password" onChange={handlePasswordChange}/>
+    <input type="password" placeholder="Password" onChange={handlePasswordChange}/>
     <button onClick={register}>Register</button>
   </div>
   );
