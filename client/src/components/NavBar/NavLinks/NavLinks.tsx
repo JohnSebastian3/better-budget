@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import style from "./NavLinks.module.css";
 import { motion } from "framer-motion";
-import { UserContext } from "../../../context/UserContext";
+import { userContext } from "../../../context/UserContext";
 import axios from "axios";
 const NavLinks: React.FC<{
   isMobile: boolean;
   closeMobileMenu: () => void;
 }> = (props) => {
-  const ctx = useContext(UserContext);
+  const ctx = useContext(userContext);
   const animateFrom = { opacity: 0, y: -10 };
   const animateTo = { opacity: 1, y: 0 };
 
@@ -145,18 +145,18 @@ const NavLinks: React.FC<{
           ) : (
             <>
               <Link
+                to={"/login"}
+                onClick={resetHomeOverflow}
+                className={style["nav-links__item"]}
+              >
+                Login
+              </Link>
+              <Link
                 to={"/register"}
                 onClick={resetHomeOverflow}
                 className={style["nav-links__item"]}
               >
                 Register
-              </Link>
-              <Link
-                to={"/login"}
-                onClick={resetHomeOverflow}
-                // className={style["nav-links__item"]}
-              >
-                Login
               </Link>
             </>
           )}
