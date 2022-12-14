@@ -1,31 +1,38 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { isParameterPropertyDeclaration } from "typescript";
 import { ExpenseInterface } from "../../../../Interfaces/ExpenseInterface";
 // import { expensesContext } from "../../../../context/ExpensesContext";
 
-const DashboardExpensesList = () => {
+const DashboardExpensesList = (props: {
+  expenses: ExpenseInterface[];
+  selectedMonth: number;
+  selectedYear: number;
+}) => {
   // const ctx = useContext(expensesContext);
 
-  // LIFT STATE UP TO MAIN DASHBOARD COMPONENT TO BE ABLE TO SET STATE CORRECTLY AND REFRESU AUTO
-  const [expenses, setExpenses] = useState<ExpenseInterface[]>([]);
-  useEffect(() => {
-    console.log('getting expenses');
-    axios
-      .get("http://localhost:4000/dashboard", { withCredentials: true })
-      .then((data) => {
-        setExpenses(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const filteredExpenses = props.expenses.filter((expense: ExpenseInterface) => {
+    const expenseMonth = new Date(expense.date).getUTCMonth();
+    const expenseYear = new Date(expense.date).getUTCFullYear();
+    // console.log(`expense ${expense.title} was bought on ${expenseMonth}, ${expenseYear}`);
+    return expenseMonth === props.selectedMonth && expenseYear === props.selectedYear;
+  })
 
-  }, [])
+  const calculateFullExpenses = (expenses: ExpenseInterface[]) => {
+    return expenses.reduce((acc, curr) => {
+      return acc += curr.value;
+    }, 0)
+  }
+
   return (
-  <ul>
-    {expenses.map((expense, index) => {
-      return <li key={index}>{expense?.title}</li>
-    })}
-  </ul>
+    <>
+    <h1>Total spent this month: {calculateFullExpenses(filteredExpenses)}</h1>
+    <ul>
+      {filteredExpenses.map((expense, index) => {
+        return <li key={index}>{expense.title} for {expense.value}</li>;
+      })}
+    </ul>
+    </>
   );
 };
 
