@@ -1,6 +1,4 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { isParameterPropertyDeclaration } from "typescript";
+import React from "react";
 import { ExpenseInterface } from "../../../../Interfaces/ExpenseInterface";
 // import { expensesContext } from "../../../../context/ExpensesContext";
 
