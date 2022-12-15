@@ -78,7 +78,7 @@ const DashboardExpenseForm = (props: {
       <Button
         type="submit"
         value="Add Expense"
-        kind="btn-primary-green"
+        kind="btn--primary--green"
       ></Button>
     </form>
   );
