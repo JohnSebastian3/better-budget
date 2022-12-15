@@ -4,7 +4,8 @@ import { userContext } from "../../context/UserContext";
 import { ExpenseInterface } from "../../Interfaces/ExpenseInterface";
 import DashboardExpenseForm from "./DashboardExpenseForm/DashboardExpenseForm";
 import DashboardExpenses from "./DashboardExpenses/DashboardExpenses";
-
+import DashboardGraph from "./DashboardGraph/DashboardGraph";
+import style from "./Dashboard.module.css";
 export default function Dashboard() {
   const ctx = useContext(userContext);
 
@@ -77,22 +78,35 @@ export default function Dashboard() {
   const changeDay = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(new Date(event.target.value).getMonth());
     setDay(new Date(event.target.value).getUTCDate());
-  }
+  };
 
   return (
-    <div>
-      <h3>Welcome back, {ctx.username}</h3>
-      <button type="button" onClick={goToPrevMonth}>
-        prev month
-      </button>
-      <h1>{months[month]}</h1>
-      <h2>{year}</h2>
-      <button type="button" onClick={goToNextMonth}>
-        {" "}
-        next month{" "}
-      </button>
-      <DashboardExpenseForm onAddExpense={addExpense} onChangeDay={changeDay} selectedMonth={month} selectedYear={year} selectedDay={day}/>
-      <DashboardExpenses expenses={expenses} selectedMonth={month} selectedYear={year}/>
+    <div className={style.dashboard}>
+      <div className="container">
+        <h3>Welcome back, {ctx.username}</h3>
+        <DashboardGraph />
+        <button type="button" onClick={goToPrevMonth}>
+          prev month
+        </button>
+        <h1>{months[month]}</h1>
+        <h2>{year}</h2>
+        <button type="button" onClick={goToNextMonth}>
+          {" "}
+          next month{" "}
+        </button>
+        <DashboardExpenseForm
+          onAddExpense={addExpense}
+          onChangeDay={changeDay}
+          selectedMonth={month}
+          selectedYear={year}
+          selectedDay={day}
+        />
+        <DashboardExpenses
+          expenses={expenses}
+          selectedMonth={month}
+          selectedYear={year}
+        />
+      </div>
     </div>
   );
 }
