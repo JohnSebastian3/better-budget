@@ -5,8 +5,8 @@
   cursor: pointer;
 }
 
-.btn-primary-purple,
-.btn-primary-green {
+.btn--primary--purple,
+.btn--primary--green {
   font-size: 1.4rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -14,18 +14,18 @@
   color: #EFF2F1;
 }
 
-.btn-primary-purple {
+.btn--primary--purple {
   background-color: #967AA1;
 }
 
-.btn-primary-green {
+.btn--primary--green {
   background-color: #3D9970;
 }
 
-.btn-primary-purple:hover {
+.btn--primary--purple:hover {
   background-color: #b694c3;
 }
 
-.btn-primary-green:hover {
+.btn--primary--green:hover {
   background-color: #51c591;
 }
