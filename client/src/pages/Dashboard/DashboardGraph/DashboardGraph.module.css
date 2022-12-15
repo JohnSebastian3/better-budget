@@ -1,0 +1,52 @@
+.dashboard__graph {
+  position: relative;
+  /* z-index: -1; */
+  margin: 6rem 0;
+}
+
+.dashboard__chart {
+  /* position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 500px; */
+  position: relative;
+  margin: auto;
+  /* height: 35vh; */
+  height: 250px;
+  width: 90vw;
+}
+
+.dashboard__chart canvas {
+  border: 1px solid red;
+}
+
+.dashboard__info {
+  width: max-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dashboard__heading {
+  font-weight: bold;
+}
+
+.dashboard__total-value {
+  color: #3D9970;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 840px) {
+  .dashboard__chart {
+    height: 300px;
+  }
+}
