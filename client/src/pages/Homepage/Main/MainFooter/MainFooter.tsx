@@ -18,7 +18,7 @@ const MainFooter = () => {
             <Button
               type={"button"}
               value={"Create Your Budget"}
-              kind={"btn-primary-green"}
+              kind={"btn--primary--green"}
             ></Button>
           </Link>
         </div>
