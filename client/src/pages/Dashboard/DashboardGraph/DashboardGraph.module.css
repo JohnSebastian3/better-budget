@@ -33,6 +33,7 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+  z-index: -1;
 }
 
 .dashboard__heading {
@@ -41,7 +42,7 @@
 
 .dashboard__total-value {
   color: #3D9970;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
