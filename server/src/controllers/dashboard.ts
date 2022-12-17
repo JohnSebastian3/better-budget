@@ -1,19 +1,22 @@
 import { Request, Response } from "express";
-import Expense from '../models/Expense';
+import Transaction from "../models/Transaction";
 module.exports = {
   getDashboard: async (req: any, res: any) => {
-    const expenses = await Expense.find({user: req.user._id});
-    res.send(expenses);
+    if (req.user) {
+      const expenses = await Transaction.find({ user: req.user._id });
+      res.send(expenses);
+    }
   },
-  createExpense: async (req: any, res: any) => {
-    const newExpense = new Expense({
+  createTransaction: async (req: any, res: any) => {
+    const newTransaction = new Transaction({
       title: req.body.title,
       value: Number(req.body.value),
       category: req.body.category,
+      isIncome: req.body.isIncome,
       date: req.body.date,
-      user: req.user.id
-    })
-    const createdExpense = await newExpense.save();
-    res.json(createdExpense);
-  }
+      user: req.user.id,
+    });
+    const createdTransaction = await newTransaction.save();
+    res.json(createdTransaction);
+  },
 };
