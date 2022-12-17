@@ -1,0 +1,41 @@
+.dashboard__nav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  width: 150px;
+  background-color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard__nav__links {
+  padding-top: 3rem;
+  border-top: 1px solid rgba(162, 173, 164, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard__nav__item {
+  color: #02452d;
+}
+
+.dashboard__nav__link {
+  display: flex; 
+  align-items: center;
+  gap: .75rem;
+
+}
+
+
+.logo {
+  color: #3D9970;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
+}
