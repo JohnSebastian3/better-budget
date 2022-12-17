@@ -1,15 +1,19 @@
 import React from "react";
 import ExpensesContext from "../../../context/ExpensesContext";
-import { ExpenseInterface } from "../../../Interfaces/ExpenseInterface";
+import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 import DashboardExpensesList from "./DashboardExpensesList/DashboardExpensesList";
 const DashboardExpenses = (props: {
-  expenses: ExpenseInterface[];
-  selectedMonth: number;
-  selectedYear: number;
+  expenses: TransactionInterface[];
+  totalExpenses: number;
+  totalIncome: number;
 }) => {
   return (
     <ExpensesContext>
-      <DashboardExpensesList expenses={props.expenses} selectedMonth={props.selectedMonth} selectedYear={props.selectedYear} />
+      <DashboardExpensesList
+        expenses={props.expenses}
+        totalExpenses={props.totalExpenses}
+        totalIncome={props.totalIncome}
+      />
     </ExpensesContext>
   );
 };
