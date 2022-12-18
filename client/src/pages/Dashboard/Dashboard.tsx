@@ -1,24 +1,28 @@
 import axios from "axios";
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState} from "react";
 import { userContext } from "../../context/UserContext";
-import { ExpenseInterface } from "../../Interfaces/ExpenseInterface";
+import { TransactionInterface } from "../../Interfaces/TransactionInterface";
 import DashboardExpenseForm from "./DashboardExpenseForm/DashboardExpenseForm";
 import DashboardExpenses from "./DashboardExpenses/DashboardExpenses";
 import DashboardGraph from "./DashboardGraph/DashboardGraph";
 import style from "./Dashboard.module.css";
+import DashboardNav from "./DashboardNav/DashboardNav";
+import DashboardBudget from "./DashboardBudget/DashboardBudget";
+import DashboardStats from "./DashboardBudget/DashboardStats/DashboardStats";
 export default function Dashboard() {
   const ctx = useContext(userContext);
 
-  const [expenses, setExpenses] = useState<ExpenseInterface[]>([]);
+  const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
   const [day, setDay] = useState<number>(new Date().getDate());
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
+
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/dashboard", { withCredentials: true })
       .then((data) => {
-        setExpenses(data.data);
+        setTransactions(data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -47,8 +51,8 @@ export default function Dashboard() {
     setYear(currentYear);
   }, []);
 
-  const addExpense = (expense: ExpenseInterface): void => {
-    setExpenses((prev) => {
+  const addExpense = (expense: TransactionInterface): void => {
+    setTransactions((prev) => {
       return [...prev, expense];
     });
   };
@@ -80,33 +84,33 @@ export default function Dashboard() {
     setDay(new Date(event.target.value).getUTCDate());
   };
 
+  const filteredTransactions = transactions.filter((expense: TransactionInterface) => {
+    const expenseMonth = new Date(expense.date).getUTCMonth();
+    const expenseYear = new Date(expense.date).getUTCFullYear();
+    // console.log(`expense ${expense.title} was bought on ${expenseMonth}, ${expenseYear}`);
+    return expenseMonth === month && expenseYear === year;
+  });
+
+  const totalExpenses = filteredTransactions.reduce((acc, curr) => {
+    if(!curr.isIncome) {
+      return acc += curr.value;
+    } else {
+      return acc;
+    }
+  }, 0);
+
+  const totalIncome = filteredTransactions.reduce((acc, curr) => {
+    if(curr.isIncome) {
+      return acc += curr.value;
+    } else {
+      return acc;
+    }
+  }, 0)
+
   return (
     <div className={style.dashboard}>
-      <div className="container">
-        <h3>Welcome back, {ctx.username}</h3>
-        <DashboardGraph />
-        <button type="button" onClick={goToPrevMonth}>
-          prev month
-        </button>
-        <h1>{months[month]}</h1>
-        <h2>{year}</h2>
-        <button type="button" onClick={goToNextMonth}>
-          {" "}
-          next month{" "}
-        </button>
-        <DashboardExpenseForm
-          onAddExpense={addExpense}
-          onChangeDay={changeDay}
-          selectedMonth={month}
-          selectedYear={year}
-          selectedDay={day}
-        />
-        <DashboardExpenses
-          expenses={expenses}
-          selectedMonth={month}
-          selectedYear={year}
-        />
-      </div>
+      <DashboardNav />
+      <DashboardBudget />
     </div>
   );
 }
