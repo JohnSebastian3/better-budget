@@ -1,0 +1,30 @@
+.dashboard__date {
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  border-bottom: 1px solid rgba(162, 173, 164, 0.6);
+}
+
+.dashboard__month-control {
+  height: max-content;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dashboard__date__month {
+  font-size: 2.8rem;
+}
+
+.dashboard__date__year {
+  font-size: 2.4rem;
+}
+
+@media screen and (min-width: 560px) {
+  .dashboard__date {
+    justify-content: flex-start;
+  }
+}
+

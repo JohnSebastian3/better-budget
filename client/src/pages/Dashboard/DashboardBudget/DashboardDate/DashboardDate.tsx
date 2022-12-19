@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
+import Button from "../../../../components/UI/Button/Button";
 import { userContext } from "../../../../context/UserContext";
 import style from "./DashboardDate.module.css";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const DashboardDate = (props: {
   setNewMonth: (month: number) => void;
   setNewYear: (year: number) => void;
@@ -42,7 +44,6 @@ const DashboardDate = (props: {
     }
   };
 
-
   const goToPrevMonth = () => {
     let prevMonth = 0;
     if (props.month === 0) {
@@ -55,16 +56,24 @@ const DashboardDate = (props: {
   };
 
   return (
-    <div className="dashboard__date">
-      <h3>Welcome back, {ctx.username}</h3>
-      <button type="button" onClick={goToPrevMonth}>
-        prev month
+    <div className={style["dashboard__date"]}>
+      <button
+        type="button"
+        onClick={goToPrevMonth}
+        className={style["dashboard__month-control"]}
+      >
+        <IoIosArrowBack size={"30px"} />
       </button>
-      <h1>{months[props.month]}</h1>
-      <h2>{props.year}</h2>
-      <button type="button" onClick={goToNextMonth}>
-        {" "}
-        next month{" "}
+      <div>
+        <h1 className={style['dashboard__date__month']}>{months[props.month]}</h1>
+        <h2 className={style['dashboard__date__year']}>{props.year}</h2>
+      </div>
+      <button
+        type="button"
+        onClick={goToNextMonth}
+        className={style["dashboard__month-control"]}
+      >
+        <IoIosArrowForward size={"30px"} />
       </button>
     </div>
   );
