@@ -1,7 +1,7 @@
 .dashboard__graph {
   position: relative;
   /* z-index: -1; */
-  margin: 6rem 0;
+  margin: 5rem 0;
 }
 
 .dashboard__chart {
@@ -13,7 +13,7 @@
   margin: auto;
   /* height: 35vh; */
   height: 250px;
-  width: 90vw;
+  width: 100%;
 }
 
 .dashboard__chart canvas {
@@ -46,8 +46,3 @@
   font-weight: 600;
 }
 
-@media screen and (min-width: 840px) {
-  .dashboard__chart {
-    height: 300px;
-  }
-}
