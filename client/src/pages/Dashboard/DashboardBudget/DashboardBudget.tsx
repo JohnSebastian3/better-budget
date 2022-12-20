@@ -4,10 +4,10 @@ import style from "./DashboardBudget.module.css";
 import { userContext } from "../../../context/UserContext";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 // import DashboardExpenseForm from "./DashboardExpenseForm/DashboardExpenseForm";
-import DashboardExpenses from "../DashboardExpenses/DashboardExpenses";
 import DashboardDate from "./DashboardDate/DashboardDate";
 import DashboardStats from "./DashboardStats/DashboardStats";
-import DashboardExpenseForm from "../DashboardExpenseForm/DashboardExpenseForm";
+import DashboardExpenseForm from "../DashboardTransactionForm/DashboardTransactionForm";
+import DashboardCategories from "../DashboardCategories/DashboardCategories";
 // import DashboardGraph from "./DashboardGraph/DashboardGraph";
 // import DashboardNav from "./DashboardNav/DashboardNav";
 
@@ -30,21 +30,19 @@ const DashboardBudget = () => {
       });
   }, []);
 
-
   const addExpense = (expense: TransactionInterface): void => {
     setTransactions((prev) => {
       return [...prev, expense];
     });
   };
-  
+
   const setNewMonth = (month: number) => {
     setMonth(month);
-  }
+  };
 
   const setNewYear = (year: number) => {
-    setYear(year)
-  }
-  
+    setYear(year);
+  };
 
   const changeDay = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(new Date(event.target.value).getMonth());
@@ -52,11 +50,11 @@ const DashboardBudget = () => {
   };
 
   const filteredTransactions = transactions.filter(
-    (expense: TransactionInterface) => {
-      const expenseMonth = new Date(expense.date).getUTCMonth();
-      const expenseYear = new Date(expense.date).getUTCFullYear();
+    (transaction: TransactionInterface) => {
+      const transactionMonth = new Date(transaction.date).getUTCMonth();
+      const transactionYear = new Date(transaction.date).getUTCFullYear();
       // console.log(`expense ${expense.title} was bought on ${expenseMonth}, ${expenseYear}`);
-      return expenseMonth === month && expenseYear === year;
+      return transactionMonth === month && transactionYear === year;
     }
   );
 
@@ -85,15 +83,18 @@ const DashboardBudget = () => {
           month={month}
           year={year}
         />
-        <DashboardExpenses
-          expenses={filteredTransactions}
+        <DashboardCategories
+          transactions={filteredTransactions}
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
         />
       </div>
-      <div className={style['dashboard__stats']}>
-      <DashboardStats totalExpenses={totalExpenses} totalIncome={totalIncome}/>
-      <DashboardExpenseForm
+      <div className={style["dashboard__stats"]}>
+        <DashboardStats
+          totalExpenses={totalExpenses}
+          totalIncome={totalIncome}
+        />
+        <DashboardExpenseForm
           onAddExpense={addExpense}
           onChangeDay={changeDay}
           selectedMonth={month}
