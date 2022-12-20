@@ -50,8 +50,8 @@ const DashboardGraph = (props: {
           <div className={style["dashboard__info"]}>
             <h3 className={style["dashboard__heading"]}>Total</h3>
             <span className={style["dashboard__total-value"]}>
-              ${props.totalExpenses} spent, ${moneyLeft}{" "}
-              left
+              Spent: ${props.totalExpenses} of ${props.totalIncome}<br></br>
+              Left: ${moneyLeft}
             </span>
           </div>
         </div>
