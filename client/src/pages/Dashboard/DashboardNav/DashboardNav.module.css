@@ -69,16 +69,15 @@
   
 
   .logo {
-    
     font-size: 1.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 3rem 0;
+    margin: 2rem 0;
   }
 
   .logo svg {
-    height: 65px;
-    width: 65px;
+    height: 45px;
+    width: 45px;
   }
 }
