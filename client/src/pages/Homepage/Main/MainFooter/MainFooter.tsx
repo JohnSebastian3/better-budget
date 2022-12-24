@@ -19,6 +19,7 @@ const MainFooter = () => {
               type={"button"}
               value={"Create Your Budget"}
               kind={"btn--primary--green"}
+              disabled={false}
             ></Button>
           </Link>
         </div>
