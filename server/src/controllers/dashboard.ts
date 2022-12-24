@@ -6,10 +6,10 @@ module.exports = {
   getDashboard: async (req: any, res: any) => {
     try {
       if (req.user) {
-        const userCategories = await Category.find({user: req.user._id});
+        const userCategories = await Category.find({ user: req.user._id });
 
         const transactions = await Transaction.find({ user: req.user._id });
-        res.send({ transactions, categories: userCategories});
+        res.send({ transactions, categories: userCategories });
       }
     } catch (err) {}
   },
@@ -32,7 +32,6 @@ module.exports = {
   },
   addCategory: async (req: any, res: any) => {
     try {
-
       let newCategory = new Category({
         title: req.body.newCategory.title,
         subcategories: req.body.newCategory.subcategories,
@@ -48,18 +47,19 @@ module.exports = {
   addSubcategory: async (req: any, res: any) => {
     try {
       await Category.findOneAndUpdate(
-        {user: req.user._id, title: req.params.category},
+        { user: req.user._id, title: req.params.category },
         {
-          $push: {subcategories: req.body.subcategory}
+          $push: { subcategories: req.body.subcategory },
         }
-        )
-      
+      );
+
       res.sendStatus(200);
-    } catch(err) {
-      
-    }
+    } catch (err) {}
   },
-  getSubcategories: async (req: any, res: any) => {
-    const subcategories = await Subcategory.find({_id: req.user.id, category: req.params.category});
-  }
+  deleteSubcategory: async (req: any, res: any) => {
+    await Category.findOneAndUpdate(
+      { user: req.user._id, title: req.params.category },
+      {}
+    );
+  },
 };
