@@ -2,18 +2,44 @@ import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import React, { useForm } from "react-hook-form";
 import Button from "../../../components/UI/Button/Button";
+import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 
 const DashboardTransactionForm = (props: {
   onAddExpense: (expense: TransactionInterface) => void;
   onChangeDay: (event: ChangeEvent<HTMLInputElement>) => void;
+  categories: CategoryInterface[];
   selectedMonth: number;
   selectedYear: number;
   selectedDay: number;
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isIncome, setIsIncome] = useState<boolean>(true);
+  const [currentCategory, setCurrentCategory] = useState<string>("");
+  const [currentSubcategory, setCurrentSubcategory] = useState<string>("");
   const { register, handleSubmit, reset } = useForm();
+
+  const filteredCategory = props.categories.filter((category) => {
+    return category.title === currentCategory;
+  });
+
+  useEffect(() => {
+    if (filteredCategory.length >= 1) {
+      console.log("reached");
+      setCurrentSubcategory(filteredCategory[0].subcategories[0]);
+    }
+  }, [currentCategory]);
+
+  useEffect(() => {
+    if (isIncome) {
+      setCurrentCategory("Income");
+      setCurrentSubcategory("");
+    } else {
+      setCurrentCategory("Spending");
+      setCurrentSubcategory("");
+    }
+    reset();
+  }, [isIncome]);
 
 
   const onSubmit = (data: any) => {
@@ -21,8 +47,9 @@ const DashboardTransactionForm = (props: {
       .post(
         "http://localhost:4000/dashboard/addTransaction",
         {
-          title: data.title || 'Unknown',
-          category: isIncome ? 'Income' : data.category,
+          title: data.title || "Unknown",
+          category: isIncome ? "Income" : currentCategory,
+          subcategory: currentSubcategory ? currentSubcategory : '',
           value: Number(data.value),
           isIncome: isIncome,
           date: new Date(data.date),
@@ -54,6 +81,14 @@ const DashboardTransactionForm = (props: {
   const setIncome = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     value === "Income" ? setIsIncome(true) : setIsIncome(false);
+  };
+
+  const onChangeCategory = (event: ChangeEvent<HTMLSelectElement>) => {
+    setCurrentCategory(event.target.selectedOptions[0].innerText);
+  };
+
+  const onChangeSubcategory = (event: ChangeEvent<HTMLSelectElement>) => {
+    setCurrentSubcategory(event.target.selectedOptions[0].innerText);
   };
 
   return (
@@ -102,16 +137,45 @@ const DashboardTransactionForm = (props: {
               }}
             />
           </label>
+          <select
+            defaultValue={currentSubcategory ? currentSubcategory : 'default'}
+            onChange={(event) => onChangeSubcategory(event)}
+          >
+            <option value="default" disabled>
+              Subcategory
+            </option>
+            {filteredCategory.length > 0 ? (
+              filteredCategory[0].subcategories.map((subcategory, index) => {
+                return (
+                  <option key={index} value={subcategory}>
+                    {subcategory}
+                  </option>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </select>
           <input
             type="number"
             placeholder="amount earned?"
             {...register("value")}
           />
-          <Button
+          {currentSubcategory ? (
+            <Button
             type="submit"
             value="Add Income"
             kind="btn--primary--green"
+            disabled={false}
           ></Button>
+          ) : (
+            <Button
+            type="submit"
+            value="Must select subcategory"
+            kind="btn--primary--green"
+            disabled={true}
+          ></Button>
+          )}
         </>
       ) : (
         <>
@@ -140,21 +204,76 @@ const DashboardTransactionForm = (props: {
               }}
             />
           </label>
-          <input
-            type="text"
-            placeholder="category?"
+          <select
+            defaultValue={currentCategory ? currentCategory : 'default'}
             {...register("category")}
-          />
+            onChange={(event) => onChangeCategory(event)}
+          >
+            <option value="default" disabled>
+              Category
+            </option>
+            {props.categories.map((category, index) => {
+              if(category.title !== "Income") {
+                return (
+                  <option
+                    key={index}
+                    // {...register("category")}
+                    value={category.title}
+                  >
+                    {category.title}
+                  </option>
+                );
+              }
+            })}
+          </select>
+          <select
+            defaultValue={currentSubcategory ? currentSubcategory : 'default'}
+            onChange={(event) => onChangeSubcategory(event)}
+          >
+            <option value="default" disabled>
+              Subcategory
+            </option>
+            {currentCategory ? (
+              filteredCategory[0].subcategories.map((subcategory, index) => {
+                if (subcategory === currentSubcategory) {
+                  return (
+                    <option key={index} value={subcategory} selected>
+                      {subcategory}
+                    </option>
+                  );
+                } else {
+                  return (
+                    <option key={index} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  );
+                }
+              })
+            ) : (
+              <></>
+            )}
+          </select>
           <input
             type="number"
             placeholder="amount spent?"
             {...register("value")}
           />
-          <Button
+          {currentSubcategory ? (
+            <Button
             type="submit"
             value="Add Expense"
             kind="btn--primary--green"
+            disabled={false}
           ></Button>
+          ) : (
+            <Button
+            type="submit"
+            value="Must select subcategory"
+            kind="btn--primary--green"
+            disabled={true}
+          ></Button>
+          )}
+          
         </>
       )}
     </form>
