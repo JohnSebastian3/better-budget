@@ -9,24 +9,23 @@ const DashboardGraph = (props: {
   totalExpenses: number;
   totalIncome: number;
 }) => {
-
-  const moneyLeft = (props.totalIncome - props.totalExpenses < 0) ? 0 : props.totalIncome - props.totalExpenses;
+  const moneyLeft =
+    props.totalIncome - props.totalExpenses ;
   const config = {
     type: "Doughnut",
     data: {
-      labels: [
-        "Amount Spent",
-        "Amount Left",
-      ],
+      labels: ["Amount Spent", "Amount Left"],
       datasets: [
         {
           data: [
-            props.totalExpenses,
-            props.totalExpenses > 0 ? moneyLeft : 1, 
+            props.totalExpenses < props.totalIncome
+            ? props.totalExpenses
+            : Math.abs(moneyLeft),
+            props.totalExpenses > 0 ? moneyLeft  > 0 ? moneyLeft : props.totalIncome - Math.abs(moneyLeft) : 1,
           ],
           backgroundColor: [
             "#ff6961",
-            "#40b480",
+            moneyLeft >= 0 ? "#40b480" : '#dedede',
           ],
           hoverOffset: 5,
           borderRadius: 6,
@@ -37,7 +36,6 @@ const DashboardGraph = (props: {
     options: {
       maintainAspectRatio: false,
       responsive: true,
-      // radius: 100,
       cutout: 100,
     },
   };
@@ -50,7 +48,8 @@ const DashboardGraph = (props: {
           <div className={style["dashboard__info"]}>
             <h3 className={style["dashboard__heading"]}>Total</h3>
             <span className={style["dashboard__total-value"]}>
-              Spent: ${props.totalExpenses} of ${props.totalIncome}<br></br>
+              Spent: ${props.totalExpenses} of ${props.totalIncome}
+              <br></br>
               Left: ${moneyLeft}
             </span>
           </div>
