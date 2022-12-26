@@ -3,13 +3,11 @@ import axios from "axios";
 import style from "./DashboardBudget.module.css";
 import { userContext } from "../../../context/UserContext";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
-// import DashboardExpenseForm from "./DashboardExpenseForm/DashboardExpenseForm";
 import DashboardDate from "./DashboardDate/DashboardDate";
 import DashboardStats from "./DashboardStats/DashboardStats";
-import DashboardExpenseForm from "../DashboardTransactionForm/DashboardTransactionForm";
+import DashboardTransactionForm from "../DashboardTransactionForm/DashboardTransactionForm";
 import DashboardCategories from "../DashboardCategories/DashboardCategories";
-// import DashboardGraph from "./DashboardGraph/DashboardGraph";
-// import DashboardNav from "./DashboardNav/DashboardNav";
+import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 
 const DashboardBudget = () => {
   const ctx = useContext(userContext);
@@ -18,12 +16,21 @@ const DashboardBudget = () => {
   const [day, setDay] = useState<number>(new Date().getDate());
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
-
+  const [categories, setCategories] = useState<CategoryInterface[]>([]);
   useEffect(() => {
     axios
       .get("http://localhost:4000/dashboard", { withCredentials: true })
       .then((data) => {
-        setTransactions(data.data);
+        const categories = data.data.categories.map(
+          (category: CategoryInterface) => {
+            return {
+              title: category.title,
+              subcategories: category.subcategories,
+            };
+          }
+        );
+        setCategories(categories);
+        setTransactions(data.data.transactions);
       })
       .catch((err) => {
         console.log(err);
@@ -49,11 +56,28 @@ const DashboardBudget = () => {
     setDay(new Date(event.target.value).getUTCDate());
   };
 
+  const addCategory = (newCategory: CategoryInterface) => {
+    setCategories((prev) => {
+      return [...prev, newCategory];
+    });
+  };
+
+  const addSubcategory = (subcategory: string, category: string) => {
+    setCategories((prev) => {
+      for(const cat of prev) {
+        if(cat.title === category) {
+          cat.subcategories.push(subcategory);
+        }
+      }
+      return prev
+    });
+  }
+
+
   const filteredTransactions = transactions.filter(
     (transaction: TransactionInterface) => {
       const transactionMonth = new Date(transaction.date).getUTCMonth();
       const transactionYear = new Date(transaction.date).getUTCFullYear();
-      // console.log(`expense ${expense.title} was bought on ${expenseMonth}, ${expenseYear}`);
       return transactionMonth === month && transactionYear === year;
     }
   );
@@ -85,8 +109,9 @@ const DashboardBudget = () => {
         />
         <DashboardCategories
           transactions={filteredTransactions}
-          totalExpenses={totalExpenses}
-          totalIncome={totalIncome}
+          categories={categories}
+          addCategory={addCategory}
+          onAddSubcategory={addSubcategory}
         />
       </div>
       <div className={style["dashboard__stats"]}>
@@ -94,8 +119,9 @@ const DashboardBudget = () => {
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
         />
-        <DashboardExpenseForm
+        <DashboardTransactionForm
           onAddExpense={addExpense}
+          categories={categories}
           onChangeDay={changeDay}
           selectedMonth={month}
           selectedYear={year}
