@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { ChangeEvent, useContext, useEffect, useState} from "react";
 import { userContext } from "../../context/UserContext";
 import { TransactionInterface } from "../../Interfaces/TransactionInterface";
-import DashboardExpenseForm from "./DashboardExpenseForm/DashboardExpenseForm";
-import DashboardExpenses from "./DashboardExpenses/DashboardExpenses";
+import DashboardExpenseForm from "./DashboardTransactionForm/DashboardTransactionForm";
+import DashboardExpenses from "./DashboardCategories/DashboardCategories";
 import DashboardGraph from "./DashboardGraph/DashboardGraph";
 import style from "./Dashboard.module.css";
 import DashboardNav from "./DashboardNav/DashboardNav";
@@ -22,7 +22,7 @@ export default function Dashboard() {
     axios
       .get("http://localhost:4000/dashboard", { withCredentials: true })
       .then((data) => {
-        setTransactions(data.data);
+        setTransactions(data.data.transactions);
       })
       .catch((err) => {
         console.log(err);
