@@ -57,9 +57,20 @@ module.exports = {
     } catch (err) {}
   },
   deleteSubcategory: async (req: any, res: any) => {
-    await Category.findOneAndUpdate(
-      { user: req.user._id, title: req.params.category },
-      {}
-    );
+    try {
+      console.log('trying to delete');
+      const updatedCategory = await Category.findOneAndUpdate(
+        { user: req.user._id, title: req.params.category },
+        {
+          $pull: {
+            subcategories: req.params.subcategory
+          }
+        }
+      );
+      await Transaction.deleteMany({user: req.user.id, subcategory: req.params.subcategory});
+      res.send(updatedCategory);  
+    } catch(err) {
+      console.log(err);
+    }
   },
 };
