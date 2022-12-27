@@ -56,6 +56,23 @@ const DashboardCategory = (props: {
     setIsFormShown(false);
   };
 
+  const deleteSubcategory = (subcategory: string) => {
+    axios
+      .delete(
+        `http://localhost:4000/dashboard/deleteSubcategory/${props.category}/${subcategory}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        const newSubcategories = subcategories.filter((currSubcategory) => currSubcategory !== subcategory);
+        setSubcategories(newSubcategories);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className={style["income-header"]}>
@@ -69,6 +86,7 @@ const DashboardCategory = (props: {
               subcategory={subcategory}
               transactions={transactions}
               category={props.category}
+              onDeleteSubcategory={deleteSubcategory}
             />
           );
         })}
