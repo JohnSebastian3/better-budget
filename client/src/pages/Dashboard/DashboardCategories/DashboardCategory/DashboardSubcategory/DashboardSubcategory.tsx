@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { TransactionInterface } from "../../../../../Interfaces/TransactionInterface";
 import style from "./DashboardSubcategory.module.css";
@@ -6,6 +5,7 @@ const DashboardSubcategory = (props: {
   subcategory: string;
   category: string;
   transactions: TransactionInterface[];
+  onDeleteSubcategory: (subcategory: string) => void;
 }) => {
   let transactions = props.transactions.filter((transaction) => {
     return transaction.subcategory === props.subcategory;
@@ -21,9 +21,10 @@ const DashboardSubcategory = (props: {
     setDeleteIsVisible(false);
   };
 
-  const deleteSubcategory = () => {
-    axios.delete(`http://localhost:4000/dashboard/deleteSubcategory/${props.category}/${props.subcategory}`)
+  const onDeleteSubcategory = () => {
+    props.onDeleteSubcategory(props.subcategory);
   }
+ 
 
   return (
     <div className={style["dashboard__subcategory"]}>
@@ -33,7 +34,7 @@ const DashboardSubcategory = (props: {
         onMouseLeave={(event) => hideDeleteOption(event)}
       >
         <h3>{props.subcategory}</h3>
-        {deleteIsVisible ? <a onClick={deleteSubcategory}>Delete</a> : ""}
+        {deleteIsVisible ? <a onClick={onDeleteSubcategory}>Delete</a> : ""}
       </div>
       <ul>
         {transactions?.map((transaction, index) => {
