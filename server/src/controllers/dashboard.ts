@@ -56,6 +56,15 @@ module.exports = {
       res.sendStatus(200);
     } catch (err) {}
   },
+  deleteCategory: async (req: any, res: any) => {
+    try {
+      await Category.findOneAndDelete({title: req.params.category});
+      await Transaction.deleteMany({user: req.user.id, category: req.params.category});
+      res.sendStatus(200);
+    } catch(err) {
+      console.log(err);
+    }
+  },
   deleteSubcategory: async (req: any, res: any) => {
     try {
       console.log('trying to delete');
@@ -73,4 +82,7 @@ module.exports = {
       console.log(err);
     }
   },
+  setSubcategoryBudget: async (req: any, res: any) => {
+
+  }
 };
