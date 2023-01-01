@@ -5,6 +5,7 @@ import Button from "../../../../components/UI/Button/Button";
 import { TransactionInterface } from "../../../../Interfaces/TransactionInterface";
 import style from "./DashboardCategory.module.css";
 import DashboardSubcategory from "./DashboardSubcategory/DashboardSubcategory";
+import {AiOutlineClose} from 'react-icons/ai';
 const DashboardCategory = (props: {
   transactions: TransactionInterface[];
   category: string;
@@ -77,6 +78,7 @@ const DashboardCategory = (props: {
     <>
       <div className={style["income-header"]}>
         <h2>{props.category}</h2>
+        <AiOutlineClose size={"25px"}></AiOutlineClose>
       </div>
       <div>
         {subcategories.map((subcategory, index) => {
