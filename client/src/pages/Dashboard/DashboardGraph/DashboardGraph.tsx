@@ -18,14 +18,12 @@ const DashboardGraph = (props: {
       datasets: [
         {
           data: [
-            props.totalExpenses < props.totalIncome
-            ? props.totalExpenses
-            : Math.abs(moneyLeft),
-            props.totalExpenses > 0 ? moneyLeft  > 0 ? moneyLeft : props.totalIncome - Math.abs(moneyLeft) : 1,
+            moneyLeft > 0 ? props.totalIncome - moneyLeft : props.totalExpenses,
+            props.totalExpenses > 0 && moneyLeft > 0 ? props.totalIncome - props.totalExpenses : 1,
           ],
           backgroundColor: [
             "#ff6961",
-            moneyLeft >= 0 ? "#40b480" : '#dedede',
+            "#40b480"
           ],
           hoverOffset: 5,
           borderRadius: 6,
