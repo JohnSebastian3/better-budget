@@ -17,6 +17,7 @@ const DashboardBudget = () => {
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/dashboard", { withCredentials: true })
@@ -66,11 +67,19 @@ const DashboardBudget = () => {
     setCategories((prev) => {
       for(const cat of prev) {
         if(cat.title === category) {
+          console.log(`Adding subcat ${subcategory.toUpperCase()} to ${category.toUpperCase()}`)
           cat.subcategories.push(subcategory);
         }
       }
       return prev
     });
+  }
+
+  const deleteCategory = (category: string) => {
+    console.log('running');
+    setCategories((prev) => {
+      return prev.filter(cat => cat.title !== category);
+    })
   }
 
 
@@ -112,12 +121,14 @@ const DashboardBudget = () => {
           categories={categories}
           addCategory={addCategory}
           onAddSubcategory={addSubcategory}
+          onDeleteCategory={deleteCategory}
         />
       </div>
       <div className={style["dashboard__stats"]}>
         <DashboardStats
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
+          transactions={transactions}
         />
         <DashboardTransactionForm
           onAddExpense={addExpense}
