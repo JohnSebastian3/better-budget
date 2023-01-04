@@ -19,10 +19,11 @@ const DashboardTransactionForm = (props: {
   const [currentSubcategory, setCurrentSubcategory] = useState<string>("");
   const { register, handleSubmit, reset } = useForm();
 
+  
   const filteredCategory = props.categories.filter((category) => {
     return category.title === currentCategory;
   });
-
+  
   useEffect(() => {
     if (filteredCategory.length >= 1) {
       console.log("reached");
