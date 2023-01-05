@@ -16,7 +16,7 @@ const DashboardTransactionForm = (props: {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isIncome, setIsIncome] = useState<boolean>(true);
   const [currentCategory, setCurrentCategory] = useState<string>("");
-  const [currentSubcategory, setCurrentSubcategory] = useState<string>("");
+  const [currentSubcategory, setCurrentSubcategory] = useState<string | undefined>("");
   const { register, handleSubmit, reset } = useForm();
 
   
@@ -27,7 +27,7 @@ const DashboardTransactionForm = (props: {
   useEffect(() => {
     if (filteredCategory.length >= 1) {
       console.log("reached");
-      setCurrentSubcategory(filteredCategory[0].subcategories[0]);
+      setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
     }
   }, [currentCategory]);
 
@@ -148,8 +148,8 @@ const DashboardTransactionForm = (props: {
             {filteredCategory.length > 0 ? (
               filteredCategory[0].subcategories.map((subcategory, index) => {
                 return (
-                  <option key={index} value={subcategory}>
-                    {subcategory}
+                  <option key={index} value={subcategory.title}>
+                    {subcategory.title}
                   </option>
                 );
               })
@@ -236,16 +236,16 @@ const DashboardTransactionForm = (props: {
             </option>
             {currentCategory ? (
               filteredCategory[0].subcategories.map((subcategory, index) => {
-                if (subcategory === currentSubcategory) {
+                if (subcategory.title === currentSubcategory) {
                   return (
-                    <option key={index} value={subcategory} selected>
-                      {subcategory}
+                    <option key={index} value={subcategory.title} selected>
+                      {subcategory.title}
                     </option>
                   );
                 } else {
                   return (
-                    <option key={index} value={subcategory}>
-                      {subcategory}
+                    <option key={index} value={subcategory.title}>
+                      {subcategory.title}
                     </option>
                   );
                 }
