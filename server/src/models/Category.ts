@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
   title: String,
-  subcategories: [String],
+  subcategories: [{
+    title: String,
+    budget: Number,
+  }],
   user: mongoose.Types.ObjectId,
 })
 
