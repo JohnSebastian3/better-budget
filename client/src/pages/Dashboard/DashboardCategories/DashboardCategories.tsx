@@ -12,7 +12,9 @@ const DashboardCategories = (props: {
   categories: CategoryInterface[];
   addCategory: (category: CategoryInterface) => void;
   onAddSubcategory: (subcategory: string, category: string) => void;
+  onDeleteCategory: (category: string | undefined) => void; 
 }) => {
+
   const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setisFormShown] = useState<boolean>(false);
 
@@ -27,7 +29,7 @@ const DashboardCategories = (props: {
   const onSubmit = (data: any) => {
     let categoryTitle = data.category.toLowerCase();
     categoryTitle = categoryTitle[0].toUpperCase() + categoryTitle.slice(1);
-    let newCategory = { title: categoryTitle, subcategories: [] };
+    let newCategory = { title: categoryTitle, subcategories: [{}] };
     axios
       .post(
         "http://localhost:4000/dashboard/addCategory",
@@ -49,6 +51,18 @@ const DashboardCategories = (props: {
     setisFormShown(false);
   };
 
+  const deleteCategory = (category: string | undefined) => {
+    axios.delete(
+      `http://localhost:4000/dashboard/deleteCategory/${category}`,
+      { withCredentials: true }
+    ).then((res) => {
+      props.onDeleteCategory(category);
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+
   const onAddSubcategory = (subcategory: string, category: string) => {
     props.onAddSubcategory(subcategory, category);
   }
@@ -60,8 +74,9 @@ const DashboardCategories = (props: {
           <Card key={index}>
             <DashboardCategory
               transactions={props.transactions}
-              category={category.title}
+              category={category}
               subcategories={category.subcategories}
+              onDeleteCategory={deleteCategory}
               onAddSubcategory={onAddSubcategory}
             />
           </Card>
