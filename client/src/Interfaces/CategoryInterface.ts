@@ -1,4 +1,7 @@
 export interface CategoryInterface {
   title: string;
-  subcategories: string[];
+  subcategories: {
+    title?: string;
+    budget?: number;
+  }[]
 }
