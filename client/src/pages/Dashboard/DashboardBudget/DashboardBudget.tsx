@@ -26,7 +26,7 @@ const DashboardBudget = () => {
           (category: CategoryInterface) => {
             return {
               title: category.title,
-              subcategories: category.subcategories,
+              subcategories: [...category.subcategories]
             };
           }
         );
@@ -68,14 +68,14 @@ const DashboardBudget = () => {
       for(const cat of prev) {
         if(cat.title === category) {
           console.log(`Adding subcat ${subcategory.toUpperCase()} to ${category.toUpperCase()}`)
-          cat.subcategories.push(subcategory);
+          cat.subcategories.push({title: subcategory, budget: 0});
         }
       }
       return prev
     });
   }
 
-  const deleteCategory = (category: string) => {
+  const deleteCategory = (category: string | undefined) => {
     console.log('running');
     setCategories((prev) => {
       return prev.filter(cat => cat.title !== category);
