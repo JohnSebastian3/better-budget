@@ -5,24 +5,26 @@ import Button from "../../../../components/UI/Button/Button";
 import { TransactionInterface } from "../../../../Interfaces/TransactionInterface";
 import style from "./DashboardCategory.module.css";
 import DashboardSubcategory from "./DashboardSubcategory/DashboardSubcategory";
-import {AiOutlineClose} from 'react-icons/ai';
+import { AiOutlineClose } from "react-icons/ai";
+import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 const DashboardCategory = (props: {
   transactions: TransactionInterface[];
-  category: string;
-  subcategories: string[];
+  category: CategoryInterface;
+  subcategories: {title?: string, budget?: number}[];
   onAddSubcategory: (newSubcategory: string, category: string) => void;
+  onDeleteCategory: (category: string | undefined) => void;
 }) => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
-  const [subcategories, setSubcategories] = useState<string[]>([]);
+  const [subcategories, setSubcategories] = useState<{title?: string, budget?: number}[]>([]);
 
   useEffect(() => {
     setSubcategories(props.subcategories);
   }, []);
 
   const transactions = props.transactions.filter((transaction) => {
-    return transaction.category === props.category;
+    return transaction.category === props.category.title;
   });
 
   const onSubmit = (data: any) => {
@@ -30,9 +32,9 @@ const DashboardCategory = (props: {
     newSubcategory = newSubcategory[0].toUpperCase() + newSubcategory.slice(1);
     axios
       .post(
-        `http://localhost:4000/dashboard/addSubcategory/${props.category}`,
+        `http://localhost:4000/dashboard/addSubcategory/${props.category.title}`,
         {
-          subcategory: newSubcategory,
+          subcategory: {title: newSubcategory, budget: 0},
         },
         {
           withCredentials: true,
@@ -40,9 +42,13 @@ const DashboardCategory = (props: {
       )
       .then((res) => {
         setSubcategories((prev) => {
-          return [...prev, newSubcategory];
+          if (!prev.includes(newSubcategory)) {
+            return [...prev, {title: newSubcategory, budget: 0}];
+          } else {
+            return [...prev];
+          }
         });
-        props.onAddSubcategory(newSubcategory, props.category);
+        props.onAddSubcategory(newSubcategory, props.category.title);
       });
 
     reset();
@@ -57,16 +63,18 @@ const DashboardCategory = (props: {
     setIsFormShown(false);
   };
 
-  const deleteSubcategory = (subcategory: string) => {
+  const deleteSubcategory = (subcategory: {title?: string, budget?: number}) => {
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteSubcategory/${props.category}/${subcategory}`,
+        `http://localhost:4000/dashboard/deleteSubcategory/${props.category.title}/${subcategory.title}`,
         {
           withCredentials: true,
         }
       )
       .then((res) => {
-        const newSubcategories = subcategories.filter((currSubcategory) => currSubcategory !== subcategory);
+        const newSubcategories = subcategories.filter(
+          (currSubcategory) => currSubcategory !== subcategory
+        );
         setSubcategories(newSubcategories);
       })
       .catch((err) => {
@@ -74,11 +82,20 @@ const DashboardCategory = (props: {
       });
   };
 
+  const deleteCategory = () => {
+    props.onDeleteCategory(props.category.title);
+  }
+
   return (
     <>
       <div className={style["income-header"]}>
-        <h2>{props.category}</h2>
-        <AiOutlineClose size={"25px"}></AiOutlineClose>
+        <h2>{props.category.title}</h2>
+        {props.category.title !== 'Income' && props.category.title !== 'Spending' ? (
+           <AiOutlineClose size={"25px"} onClick={deleteCategory}></AiOutlineClose>
+        ) : (
+          ''
+        )}
+       
       </div>
       <div>
         {subcategories.map((subcategory, index) => {
@@ -87,7 +104,7 @@ const DashboardCategory = (props: {
               key={index}
               subcategory={subcategory}
               transactions={transactions}
-              category={props.category}
+              category={props.category.title}
               onDeleteSubcategory={deleteSubcategory}
             />
           );
