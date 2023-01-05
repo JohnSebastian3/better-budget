@@ -38,7 +38,10 @@ module.exports = {
 
               const categoryIncome = new Category({
                 title: 'Income',
-                subcategories: ['Paychecks'],
+                subcategories: [{
+                  title: 'Paychecks',
+                  budget: 0
+                }],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -46,7 +49,10 @@ module.exports = {
 
               const categorySpending = new Category({
                 title: 'Spending',
-                subcategories: ['Groceries'],
+                subcategories: [{
+                  title: 'Groceries',
+                  budget: 0
+                }],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -54,7 +60,10 @@ module.exports = {
 
               const categoryBills = new Category({
                 title: 'Bills',
-                subcategories: ['Rent'],
+                subcategories: [{
+                  title: 'Rent',
+                  budget: 0
+                }],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -62,7 +71,10 @@ module.exports = {
 
               const categorySubscriptions = new Category({
                 title: 'Subscriptions',
-                subcategories: ['Streaming'],
+                subcategories: [{
+                  title: 'Streaming',
+                  budget: 0
+                }],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -70,7 +82,10 @@ module.exports = {
 
               const categoryDebt = new Category({
                 title: 'Debt',
-                subcategories: ['Credit Card'],
+                subcategories: [{
+                  title: 'Credit Card',
+                  budget: 0
+                }],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -78,7 +93,10 @@ module.exports = {
 
               const categoryGifts = new Category({
                 title: 'Gifts',
-                subcategories: ['Charity'],
+                subcategories: [{
+                  title: 'Charity',
+                  budget: 0
+                },],
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
