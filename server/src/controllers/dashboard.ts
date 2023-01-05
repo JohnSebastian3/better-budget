@@ -32,13 +32,17 @@ module.exports = {
   },
   addCategory: async (req: any, res: any) => {
     try {
+      console.log(req.body);
       let newCategory = new Category({
         title: req.body.newCategory.title,
-        subcategories: req.body.newCategory.subcategories,
+        subcategories: {
+          titles: req.body.newCategory.subcategories.titles,
+          budget: 0,
+        },
         user: new mongoose.Types.ObjectId(req.user.id),
       });
 
-      const createdCategory = await newCategory.save();
+      await newCategory.save();
       res.sendStatus(200);
     } catch (err) {
       console.log(err);
@@ -49,40 +53,63 @@ module.exports = {
       await Category.findOneAndUpdate(
         { user: req.user._id, title: req.params.category },
         {
-          $push: { subcategories: req.body.subcategory },
-        }
+          $push: {
+            subcategories: {
+              title: req.body.subcategory.title,
+              budget: Number(req.body.subcategory.budget),
+            },
+          },
+        },
       );
-
+      
       res.sendStatus(200);
     } catch (err) {}
   },
   deleteCategory: async (req: any, res: any) => {
     try {
-      await Category.findOneAndDelete({title: req.params.category});
-      await Transaction.deleteMany({user: req.user.id, category: req.params.category});
+    await Category.findOneAndDelete({ title: req.params.category });
+      await Transaction.deleteMany({
+        user: req.user.id,
+        category: req.params.category,
+      });
       res.sendStatus(200);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   },
   deleteSubcategory: async (req: any, res: any) => {
     try {
-      console.log('trying to delete');
       const updatedCategory = await Category.findOneAndUpdate(
         { user: req.user._id, title: req.params.category },
         {
           $pull: {
-            subcategories: req.params.subcategory
-          }
-        }
+            subcategories: {
+              title: req.params.subcategory
+            }
+          },
+        },
       );
-      await Transaction.deleteMany({user: req.user.id, subcategory: req.params.subcategory});
-      res.send(updatedCategory);  
-    } catch(err) {
+      await Transaction.deleteMany({
+        user: req.user.id,
+        subcategory: req.params.subcategory,
+      });
+      res.send(updatedCategory);
+    } catch (err) {
       console.log(err);
     }
   },
   setSubcategoryBudget: async (req: any, res: any) => {
-
-  }
+    try {
+      await Category.findOneAndUpdate(
+        { user: req.user._id, title: req.params.category },
+        {
+          $set: {
+            subcategories: {},
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
