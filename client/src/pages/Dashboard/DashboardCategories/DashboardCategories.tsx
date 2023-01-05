@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 import style from "./DashboardCategories.module.css";
