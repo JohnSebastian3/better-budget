@@ -2,8 +2,21 @@
   border: 1px solid red;
 }
 
-.test {
+.dashboard__transaction {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.test {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10rem;
+  align-items: center;
+  position: relative;
+}
+
+.testtwo {
+  position: absolute;
+  right: 10px;
 }
