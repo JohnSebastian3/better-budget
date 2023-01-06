@@ -36,14 +36,19 @@ module.exports = {
               });
               const createdUser = await newUser.save();
 
+              const month = new Date().getUTCMonth();
+              const year = new Date().getUTCFullYear();
+              
+              const date = new Date(year, month, 1);
+
               const categoryIncome = new Category({
                 title: 'Income',
                 subcategories: [{
                   title: 'Paychecks',
                   budget: 0,
-                  date: new Date,
+                  date,
                 }],
-                date: new Date,
+                date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -54,9 +59,9 @@ module.exports = {
                 subcategories: [{
                   title: 'Groceries',
                   budget: 0,
-                  date: new Date,
+                  date,
                 }],
-                date: new Date,
+                date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -67,9 +72,9 @@ module.exports = {
                 subcategories: [{
                   title: 'Rent',
                   budget: 0,
-                  date: new Date,
+                  date,
                 }],
-                date: new Date,
+                date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -80,9 +85,9 @@ module.exports = {
                 subcategories: [{
                   title: 'Streaming',
                   budget: 0,
-                  date: new Date,
+                  date,
                 }],
-                date: new Date,
+                date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -93,9 +98,9 @@ module.exports = {
                 subcategories: [{
                   title: 'Credit Card',
                   budget: 0,
-                  date: new Date,
+                  date,
                 }],
-                date: new Date,
+                date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -106,9 +111,9 @@ module.exports = {
                 subcategories: [{
                   title: 'Charity',
                   budget: 0,
-                  date: new Date,
-                },],
-                date: new Date,
+                  date,
+                }],
+                date: date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
