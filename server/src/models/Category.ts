@@ -7,7 +7,9 @@ const CategorySchema = new Schema({
   subcategories: [{
     title: String,
     budget: Number,
+    date: Date
   }],
+  date: Date,
   user: mongoose.Types.ObjectId,
 })
 
