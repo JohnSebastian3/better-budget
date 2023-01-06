@@ -11,10 +11,16 @@ const DashboardCategories = (props: {
   transactions: TransactionInterface[];
   categories: CategoryInterface[];
   addCategory: (category: CategoryInterface) => void;
-  onAddSubcategory: (subcategory: string, category: string) => void;
-  onDeleteCategory: (category: string | undefined) => void; 
+  onAddSubcategory: (subcategory: string, category: string, date: Date) => void;
+  onDeleteCategory: (category: string) => void;
+  onUpdateBudget: (
+    subcategory: {
+      title: string;
+      budget: number;
+    },
+    category: string
+  ) => void;
 }) => {
-
   const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setisFormShown] = useState<boolean>(false);
 
@@ -29,7 +35,7 @@ const DashboardCategories = (props: {
   const onSubmit = (data: any) => {
     let categoryTitle = data.category.toLowerCase();
     categoryTitle = categoryTitle[0].toUpperCase() + categoryTitle.slice(1);
-    let newCategory = { title: categoryTitle, subcategories: [{}] };
+    let newCategory = { title: String(categoryTitle), subcategories: [], date: new Date() };
     axios
       .post(
         "http://localhost:4000/dashboard/addCategory",
@@ -51,58 +57,72 @@ const DashboardCategories = (props: {
     setisFormShown(false);
   };
 
-  const deleteCategory = (category: string | undefined) => {
-    axios.delete(
-      `http://localhost:4000/dashboard/deleteCategory/${category}`,
-      { withCredentials: true }
-    ).then((res) => {
-      props.onDeleteCategory(category);
-    }).catch((err) => {
-      console.log(err);
-    });
+  const deleteCategory = (category: string) => {
+    axios
+      .delete(`http://localhost:4000/dashboard/deleteCategory/${category}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        props.onDeleteCategory(category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  const onAddSubcategory = (subcategory: string, category: string, date: Date) => {
+    props.onAddSubcategory(subcategory, category, date);
+  };
 
-  const onAddSubcategory = (subcategory: string, category: string) => {
-    props.onAddSubcategory(subcategory, category);
-  }
+  const onUpdateBudget = (
+    subcategory: { title: string; budget: number },
+    category: string
+  ) => {
+    props.onUpdateBudget(subcategory, category);
+  };
 
   return (
     <div className={style["dashboard__categories"]}>
-      {props.categories.map((category, index) => {
-        return (
-          <Card key={index}>
-            <DashboardCategory
-              transactions={props.transactions}
-              category={category}
-              subcategories={category.subcategories}
-              onDeleteCategory={deleteCategory}
-              onAddSubcategory={onAddSubcategory}
-            />
-          </Card>
-        );
-      })}
-
-      {isFormShown ? (
-        <form
-          className={style["dashboard__categories__form"]}
-          method="POST"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <input type="text" placeholder="Category" {...register("category")} />
-          <button type="submit">Add</button>
-          <button type="button" onClick={hideForm}>
-            Cancel
-          </button>
-        </form>
+      {props.categories.length === 0 ? (
+        <button>Start a budget here</button>
       ) : (
-        <Button
-          type="submit"
-          value="Add Category"
-          kind="btn--primary--green"
-          disabled={false}
-          onClick={showForm}
-        ></Button>
+        <>
+        {props.categories.map((category, index) => {
+          return (
+            <Card key={index}>
+              <DashboardCategory
+                transactions={props.transactions}
+                category={category}
+                subcategories={category.subcategories}
+                onDeleteCategory={deleteCategory}
+                onAddSubcategory={onAddSubcategory}
+                onUpdateBudget={onUpdateBudget}
+              />
+            </Card>
+          );
+        })}
+        {isFormShown ? (
+          <form
+            className={style["dashboard__categories__form"]}
+            method="POST"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <input type="text" placeholder="Category" {...register("category")} />
+            <button type="submit">Add</button>
+            <button type="button" onClick={hideForm}>
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <Button
+            type="submit"
+            value="Add Category"
+            kind="btn--primary--green"
+            disabled={false}
+            onClick={showForm}
+          ></Button>
+        )}
+      </>
       )}
     </div>
   );
