@@ -10,14 +10,17 @@ import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 const DashboardCategory = (props: {
   transactions: TransactionInterface[];
   category: CategoryInterface;
-  subcategories: {title?: string, budget?: number}[];
-  onAddSubcategory: (newSubcategory: string, category: string) => void;
-  onDeleteCategory: (category: string | undefined) => void;
+  subcategories: { title: string; budget: number, date: Date }[];
+  onUpdateBudget: (subcategory: { title: string; budget: number }, category: string) => void;
+  onAddSubcategory: (newSubcategory: string, category: string, date: Date) => void;
+  onDeleteCategory: (category: string) => void;
 }) => {
-  const { register, handleSubmit, reset } = useForm();
 
+  const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
-  const [subcategories, setSubcategories] = useState<{title?: string, budget?: number}[]>([]);
+  const [subcategories, setSubcategories] = useState<
+    { title: string; budget: number, date: Date }[]
+  >([]);
 
   useEffect(() => {
     setSubcategories(props.subcategories);
@@ -30,11 +33,12 @@ const DashboardCategory = (props: {
   const onSubmit = (data: any) => {
     let newSubcategory = data.subcategory.toLowerCase();
     newSubcategory = newSubcategory[0].toUpperCase() + newSubcategory.slice(1);
+    const subcategory =  { title: newSubcategory, budget: 0, date: new Date() }
     axios
       .post(
         `http://localhost:4000/dashboard/addSubcategory/${props.category.title}`,
         {
-          subcategory: {title: newSubcategory, budget: 0},
+          subcategory: subcategory,
         },
         {
           withCredentials: true,
@@ -43,12 +47,12 @@ const DashboardCategory = (props: {
       .then((res) => {
         setSubcategories((prev) => {
           if (!prev.includes(newSubcategory)) {
-            return [...prev, {title: newSubcategory, budget: 0}];
+            return [...prev, subcategory];
           } else {
             return [...prev];
           }
         });
-        props.onAddSubcategory(newSubcategory, props.category.title);
+        props.onAddSubcategory(newSubcategory, props.category.title, subcategory.date);
       });
 
     reset();
@@ -63,7 +67,10 @@ const DashboardCategory = (props: {
     setIsFormShown(false);
   };
 
-  const deleteSubcategory = (subcategory: {title?: string, budget?: number}) => {
+  const deleteSubcategory = (subcategory: {
+    title: string;
+    budget: number;
+  }) => {
     axios
       .delete(
         `http://localhost:4000/dashboard/deleteSubcategory/${props.category.title}/${subcategory.title}`,
@@ -84,18 +91,25 @@ const DashboardCategory = (props: {
 
   const deleteCategory = () => {
     props.onDeleteCategory(props.category.title);
-  }
+  };
+
+  const onUpdateBudget = (subcategory: { title: string; budget: number }) => {
+    props.onUpdateBudget(subcategory, props.category.title);
+  };
 
   return (
     <>
       <div className={style["income-header"]}>
         <h2>{props.category.title}</h2>
-        {props.category.title !== 'Income' && props.category.title !== 'Spending' ? (
-           <AiOutlineClose size={"25px"} onClick={deleteCategory}></AiOutlineClose>
+        {props.category.title !== "Income" &&
+        props.category.title !== "Spending" ? (
+          <AiOutlineClose
+            size={"25px"}
+            onClick={deleteCategory}
+          ></AiOutlineClose>
         ) : (
-          ''
+          ""
         )}
-       
       </div>
       <div>
         {subcategories.map((subcategory, index) => {
@@ -106,6 +120,7 @@ const DashboardCategory = (props: {
               transactions={transactions}
               category={props.category.title}
               onDeleteSubcategory={deleteSubcategory}
+              onUpdateBudget={onUpdateBudget}
             />
           );
         })}
