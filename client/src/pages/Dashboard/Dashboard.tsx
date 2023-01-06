@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { ChangeEvent, useContext, useEffect, useState} from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { userContext } from "../../context/UserContext";
 import { TransactionInterface } from "../../Interfaces/TransactionInterface";
 import DashboardExpenseForm from "./DashboardTransactionForm/DashboardTransactionForm";
@@ -16,7 +16,6 @@ export default function Dashboard() {
   const [day, setDay] = useState<number>(new Date().getDate());
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
-
 
   useEffect(() => {
     axios
@@ -84,33 +83,34 @@ export default function Dashboard() {
     setDay(new Date(event.target.value).getUTCDate());
   };
 
-  const filteredTransactions = transactions.filter((expense: TransactionInterface) => {
-    const expenseMonth = new Date(expense.date).getUTCMonth();
-    const expenseYear = new Date(expense.date).getUTCFullYear();
-    // console.log(`expense ${expense.title} was bought on ${expenseMonth}, ${expenseYear}`);
-    return expenseMonth === month && expenseYear === year;
-  });
+  const filteredTransactions = transactions.filter(
+    (expense: TransactionInterface) => {
+      const expenseMonth = new Date(expense.date).getUTCMonth();
+      const expenseYear = new Date(expense.date).getUTCFullYear();
+      return expenseMonth === month && expenseYear === year;
+    }
+  );
 
   const totalExpenses = filteredTransactions.reduce((acc, curr) => {
-    if(!curr.isIncome) {
-      return acc += curr.value;
+    if (!curr.isIncome) {
+      return (acc += curr.value);
     } else {
       return acc;
     }
   }, 0);
 
   const totalIncome = filteredTransactions.reduce((acc, curr) => {
-    if(curr.isIncome) {
-      return acc += curr.value;
+    if (curr.isIncome) {
+      return (acc += curr.value);
     } else {
       return acc;
     }
-  }, 0)
+  }, 0);
 
   return (
     <div className={style.dashboard}>
       <DashboardNav />
-      <DashboardBudget />
+      <DashboardBudget month={month} year={year} />
     </div>
   );
 }
