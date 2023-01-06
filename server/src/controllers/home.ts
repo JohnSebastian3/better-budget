@@ -40,8 +40,10 @@ module.exports = {
                 title: 'Income',
                 subcategories: [{
                   title: 'Paychecks',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 }],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -51,8 +53,10 @@ module.exports = {
                 title: 'Spending',
                 subcategories: [{
                   title: 'Groceries',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 }],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -62,8 +66,10 @@ module.exports = {
                 title: 'Bills',
                 subcategories: [{
                   title: 'Rent',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 }],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -73,8 +79,10 @@ module.exports = {
                 title: 'Subscriptions',
                 subcategories: [{
                   title: 'Streaming',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 }],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -84,8 +92,10 @@ module.exports = {
                 title: 'Debt',
                 subcategories: [{
                   title: 'Credit Card',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 }],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -95,8 +105,10 @@ module.exports = {
                 title: 'Gifts',
                 subcategories: [{
                   title: 'Charity',
-                  budget: 0
+                  budget: 0,
+                  date: new Date,
                 },],
+                date: new Date,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
