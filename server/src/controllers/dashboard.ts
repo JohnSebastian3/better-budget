@@ -32,14 +32,10 @@ module.exports = {
   },
   addCategory: async (req: any, res: any) => {
     try {
-      console.log(req.body);
       let newCategory = new Category({
         title: req.body.newCategory.title,
-        subcategories: {
-          titles: req.body.newCategory.subcategories.titles,
-          budget: 0,
-        },
         user: new mongoose.Types.ObjectId(req.user.id),
+        date: new Date(req.body.date)
       });
 
       await newCategory.save();
@@ -57,17 +53,18 @@ module.exports = {
             subcategories: {
               title: req.body.subcategory.title,
               budget: Number(req.body.subcategory.budget),
+              date: new Date(req.body.date)
             },
           },
-        },
+        }
       );
-      
+
       res.sendStatus(200);
     } catch (err) {}
   },
   deleteCategory: async (req: any, res: any) => {
     try {
-    await Category.findOneAndDelete({ title: req.params.category });
+      await Category.findOneAndDelete({ title: req.params.category });
       await Transaction.deleteMany({
         user: req.user.id,
         category: req.params.category,
@@ -84,10 +81,10 @@ module.exports = {
         {
           $pull: {
             subcategories: {
-              title: req.params.subcategory
-            }
+              title: req.params.subcategory,
+            },
           },
-        },
+        }
       );
       await Transaction.deleteMany({
         user: req.user.id,
@@ -100,14 +97,14 @@ module.exports = {
   },
   setSubcategoryBudget: async (req: any, res: any) => {
     try {
-      await Category.findOneAndUpdate(
+      const updatedCategory = await Category.findOneAndUpdate(
         { user: req.user._id, title: req.params.category },
+        { $set: { "subcategories.$[el].budget": req.body.budgetAmount } },
         {
-          $set: {
-            subcategories: {},
-          },
+          arrayFilters: [{ "el.title": req.params.subcategory }],
         }
       );
+      res.send(updatedCategory);
     } catch (err) {
       console.log(err);
     }
