@@ -8,7 +8,9 @@ const TransactionSchema = new Schema({
   subcategory: String,
   value: Number,
   isIncome: Boolean,
-  date: Date,
+  dateDay: Number,
+  dateMonth: Number,
+  dateYear: Number,
   user: mongoose.Types.ObjectId,
 })
 
