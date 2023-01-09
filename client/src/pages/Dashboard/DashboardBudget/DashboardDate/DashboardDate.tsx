@@ -57,24 +57,28 @@ const DashboardDate = (props: {
 
   return (
     <div className={style["dashboard__date"]}>
-      <button
-        type="button"
-        onClick={goToPrevMonth}
-        className={style["dashboard__month-control"]}
-      >
-        <IoIosArrowBack size={"30px"} />
-      </button>
-      <div>
-        <h1 className={style['dashboard__date__month']}>{months[props.month]}</h1>
-        <h2 className={style['dashboard__date__year']}>{props.year}</h2>
+      <div className={style["dashboard__date__container"]}>
+        <button
+          type="button"
+          onClick={goToPrevMonth}
+          className={style["dashboard__month-control"]}
+        >
+          <IoIosArrowBack size={"30px"} />
+        </button>
+        <div className={style["dashboard__date__current"]}>
+          <h1 className={style["dashboard__date__month"]}>
+            {months[props.month]}
+          </h1>
+          <h2 className={style["dashboard__date__year"]}>{props.year}</h2>
+        </div>
+        <button
+          type="button"
+          onClick={goToNextMonth}
+          className={style["dashboard__month-control"]}
+        >
+          <IoIosArrowForward size={"30px"} />
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={goToNextMonth}
-        className={style["dashboard__month-control"]}
-      >
-        <IoIosArrowForward size={"30px"} />
-      </button>
     </div>
   );
 };
