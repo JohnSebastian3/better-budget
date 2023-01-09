@@ -1,7 +1,8 @@
 import Category from "../models/Category";
 import Transaction from "../models/Transaction";
 import Subcategory from "../models/Category";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import CategoryModel from "../models/Category";
 module.exports = {
   getDashboard: async (req: any, res: any) => {
     try {
@@ -21,7 +22,9 @@ module.exports = {
         category: req.body.category,
         subcategory: req.body.subcategory,
         isIncome: req.body.isIncome,
-        date: new Date(req.body.date),
+        dateDay: req.body.dateDay,
+        dateMonth: req.body.dateMonth,
+        dateYear: req.body.dateYear,
         user: req.user.id,
       });
       const createdTransaction = await newTransaction.save();
@@ -32,7 +35,7 @@ module.exports = {
   },
   createBudget: async (req: any, res: any) => {
     try {
-      const date = new Date(req.body.year, req.body.month, 1);
+      const resArr: any[] = [];
 
       const categoryIncome = new Category({
         title: "Income",
@@ -40,12 +43,16 @@ module.exports = {
           {
             title: "Paychecks",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
+
+      resArr.push(categoryIncome);
 
       await categoryIncome.save();
 
@@ -55,12 +62,16 @@ module.exports = {
           {
             title: "Groceries",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
+
+      resArr.push(categorySpending);
 
       await categorySpending.save();
 
@@ -70,12 +81,16 @@ module.exports = {
           {
             title: "Rent",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
+
+      resArr.push(categoryBills);
 
       await categoryBills.save();
 
@@ -85,12 +100,16 @@ module.exports = {
           {
             title: "Streaming",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
+
+      resArr.push(categorySubscriptions);
 
       await categorySubscriptions.save();
 
@@ -100,12 +119,16 @@ module.exports = {
           {
             title: "Credit Card",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
+
+      resArr.push(categoryDebt);
 
       await categoryDebt.save();
 
@@ -115,16 +138,20 @@ module.exports = {
           {
             title: "Charity",
             budget: 0,
-            date,
+            dateMonth: Number(req.body.month),
+            dateYear: Number(req.body.year),
           },
         ],
-        date,
+        dateMonth: Number(req.body.month),
+        dateYear: Number(req.body.year),
         user: new mongoose.Types.ObjectId(req.user._id),
       });
 
+      resArr.push(categoryGifts);
+
       await categoryGifts.save();
 
-      res.sendStatus(200);
+      res.send(resArr);
     } catch (err) {
       console.log(err);
     }
@@ -134,7 +161,8 @@ module.exports = {
       let newCategory = new Category({
         title: req.body.newCategory.title,
         user: new mongoose.Types.ObjectId(req.user.id),
-        date: req.body.newCategory.date,
+        dateMonth: Number(req.body.newCategory.dateMonth),
+        dateYear: Number(req.body.newCategory.dateYear),
       });
 
       await newCategory.save();
@@ -145,23 +173,20 @@ module.exports = {
   },
   addSubcategory: async (req: any, res: any) => {
     try {
-      // const date = new Date(
-      //   new Date(req.body.subcategory.date).getUTCFullYear(),
-      //   new Date(req.body.subcategory.date).getUTCMonth(),
-      //   1
-      // );
       await Category.findOneAndUpdate(
         {
           user: req.user._id,
           title: req.params.category,
-          date: req.body.subcategory.date,
+          dateMonth: Number(req.body.subcategory.dateMonth),
+          dateYear: Number(req.body.subcategory.dateYear),
         },
         {
           $push: {
             subcategories: {
               title: req.body.subcategory.title,
               budget: Number(req.body.subcategory.budget),
-              date: req.body.subcategory.date,
+              dateMonth: Number(req.body.subcategory.dateMonth),
+              dateYear: Number(req.body.subcategory.dateYear),
             },
           },
         }
@@ -172,24 +197,18 @@ module.exports = {
   },
   deleteCategory: async (req: any, res: any) => {
     try {
-      let categoryMatchDate = new Date(req.params.year, req.params.month, 1);
       await Category.findOneAndDelete({
         title: req.params.category,
-        date: categoryMatchDate,
+        dateMonth: Number(req.params.month),
+        dateYear: Number(req.params.year),
       });
 
-      let transactionMatchDate = new Date(
-        req.params.year,
-        req.params.month,
-        req.params.day
-      );
-      transactionMatchDate = new Date(
-        transactionMatchDate.getTime() - 300 * 10000 * 6
-      );
       await Transaction.deleteMany({
         user: req.user.id,
         category: req.params.category,
-        date: transactionMatchDate,
+        dateDay: Number(req.params.day),
+        dateMonth: Number(req.params.month),
+        dateYear: Number(req.params.year),
       });
       res.sendStatus(200);
     } catch (err) {
@@ -198,15 +217,13 @@ module.exports = {
   },
   deleteSubcategory: async (req: any, res: any) => {
     try {
-      console.log(req.params);
-      const date = new Date(
-        req.params.year,
-        req.params.month,
-        1
-      )
-      console.log(date);
       const updatedCategory = await Category.findOneAndUpdate(
-        { user: req.user._id, title: req.params.category, date: date },
+        {
+          user: req.user._id,
+          title: req.params.category,
+          dateMonth: Number(req.params.month),
+          dateYear: Number(req.params.year)
+        },
         {
           $pull: {
             subcategories: {
@@ -216,19 +233,12 @@ module.exports = {
         }
       );
 
-      let transactionMatchDate = new Date(
-        req.params.year,
-        req.params.month,
-        req.params.day
-      );
-      transactionMatchDate = new Date(
-        transactionMatchDate.getTime() - 300 * 10000 * 6
-      );
-
       await Transaction.deleteMany({
         user: req.user.id,
         subcategory: req.params.subcategory,
-        date: transactionMatchDate,
+        dateDay: req.params.day,
+        dateMonth: req.params.month,
+        dateYear: req.params.year,
       });
       res.send(updatedCategory);
     } catch (err) {
@@ -238,7 +248,12 @@ module.exports = {
   setSubcategoryBudget: async (req: any, res: any) => {
     try {
       const updatedCategory = await Category.findOneAndUpdate(
-        { user: req.user._id, title: req.params.category, date: new Date(req.params.year, req.params.month, 1) },
+        {
+          user: req.user._id,
+          title: req.params.category,
+          dateMonth: req.params.month,
+          dateYear: req.params.year
+        },
         { $set: { "subcategories.$[el].budget": req.body.budgetAmount } },
         {
           arrayFilters: [{ "el.title": req.params.subcategory }],
