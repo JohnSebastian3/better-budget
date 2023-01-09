@@ -39,16 +39,16 @@ module.exports = {
               const month = new Date().getUTCMonth();
               const year = new Date().getUTCFullYear();
               
-              const date = new Date(year, month, 1);
-
               const categoryIncome = new Category({
                 title: 'Income',
                 subcategories: [{
                   title: 'Paychecks',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -59,9 +59,11 @@ module.exports = {
                 subcategories: [{
                   title: 'Groceries',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -72,9 +74,11 @@ module.exports = {
                 subcategories: [{
                   title: 'Rent',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -85,9 +89,11 @@ module.exports = {
                 subcategories: [{
                   title: 'Streaming',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -98,9 +104,11 @@ module.exports = {
                 subcategories: [{
                   title: 'Credit Card',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
@@ -111,9 +119,11 @@ module.exports = {
                 subcategories: [{
                   title: 'Charity',
                   budget: 0,
-                  date,
+                  dateMonth: month,
+                  dateYear: year
                 }],
-                date: date,
+                dateMonth: month,
+                dateYear: year,
                 user: new mongoose.Types.ObjectId(createdUser._id)
               })
           
