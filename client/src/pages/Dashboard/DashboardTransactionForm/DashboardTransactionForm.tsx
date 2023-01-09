@@ -16,18 +16,22 @@ const DashboardTransactionForm = (props: {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isIncome, setIsIncome] = useState<boolean>(true);
   const [currentCategory, setCurrentCategory] = useState<string>("");
-  const [currentSubcategory, setCurrentSubcategory] = useState<string | undefined>("");
+  const [currentSubcategory, setCurrentSubcategory] = useState<
+    string | undefined
+  >("");
   const { register, handleSubmit, reset } = useForm();
 
-  
   const filteredCategory = props.categories.filter((category) => {
     return category.title === currentCategory;
   });
-  
+
   useEffect(() => {
     if (filteredCategory.length >= 1) {
-      console.log("reached");
-      setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
+      if (filteredCategory[0].subcategories.length >= 1) {
+        setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
+      } else {
+        setCurrentSubcategory("");
+      }
     }
   }, [currentCategory]);
 
@@ -42,7 +46,6 @@ const DashboardTransactionForm = (props: {
     reset();
   }, [isIncome]);
 
-
   const onSubmit = (data: any) => {
     axios
       .post(
@@ -50,10 +53,12 @@ const DashboardTransactionForm = (props: {
         {
           title: data.title || "Unknown",
           category: isIncome ? "Income" : currentCategory,
-          subcategory: currentSubcategory ? currentSubcategory : '',
+          subcategory: currentSubcategory ? currentSubcategory : "",
           value: Number(data.value),
           isIncome: isIncome,
-          date: new Date(data.date),
+          dateDay: props.selectedDay,
+          dateMonth: props.selectedMonth,
+          dateYear: props.selectedYear
         },
         {
           withCredentials: true,
@@ -139,7 +144,7 @@ const DashboardTransactionForm = (props: {
             />
           </label>
           <select
-            defaultValue={currentSubcategory ? currentSubcategory : 'default'}
+            defaultValue={currentSubcategory ? currentSubcategory : "default"}
             onChange={(event) => onChangeSubcategory(event)}
           >
             <option value="default" disabled>
@@ -159,23 +164,24 @@ const DashboardTransactionForm = (props: {
           </select>
           <input
             type="number"
+            step=".01"
             placeholder="amount earned?"
             {...register("value")}
           />
           {currentSubcategory ? (
             <Button
-            type="submit"
-            value="Add Income"
-            kind="btn--primary--green"
-            disabled={false}
-          ></Button>
+              type="submit"
+              value="Add Income"
+              kind="btn--primary--green"
+              disabled={false}
+            ></Button>
           ) : (
             <Button
-            type="submit"
-            value="Must select subcategory"
-            kind="btn--primary--green"
-            disabled={true}
-          ></Button>
+              type="submit"
+              value="Must select subcategory"
+              kind="btn--primary--green"
+              disabled={true}
+            ></Button>
           )}
         </>
       ) : (
@@ -206,7 +212,7 @@ const DashboardTransactionForm = (props: {
             />
           </label>
           <select
-            defaultValue={currentCategory ? currentCategory : 'default'}
+            defaultValue={currentCategory ? currentCategory : "default"}
             {...register("category")}
             onChange={(event) => onChangeCategory(event)}
           >
@@ -214,7 +220,7 @@ const DashboardTransactionForm = (props: {
               Category
             </option>
             {props.categories.map((category, index) => {
-              if(category.title !== "Income") {
+              if (category.title !== "Income") {
                 return (
                   <option
                     key={index}
@@ -228,7 +234,7 @@ const DashboardTransactionForm = (props: {
             })}
           </select>
           <select
-            defaultValue={currentSubcategory ? currentSubcategory : 'default'}
+            defaultValue={currentSubcategory ? currentSubcategory : "default"}
             onChange={(event) => onChangeSubcategory(event)}
           >
             <option value="default" disabled>
@@ -256,25 +262,25 @@ const DashboardTransactionForm = (props: {
           </select>
           <input
             type="number"
+            step=".01"
             placeholder="amount spent?"
             {...register("value")}
           />
           {currentSubcategory ? (
             <Button
-            type="submit"
-            value="Add Expense"
-            kind="btn--primary--green"
-            disabled={false}
-          ></Button>
+              type="submit"
+              value="Add Expense"
+              kind="btn--primary--green"
+              disabled={false}
+            ></Button>
           ) : (
             <Button
-            type="submit"
-            value="Must select subcategory"
-            kind="btn--primary--green"
-            disabled={true}
-          ></Button>
+              type="submit"
+              value="Must select subcategory"
+              kind="btn--primary--green"
+              disabled={true}
+            ></Button>
           )}
-          
         </>
       )}
     </form>
