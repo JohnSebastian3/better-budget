@@ -1,9 +1,7 @@
 .dashboard__date {
   height: 105px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 2rem;
   border-bottom: 1px solid rgba(162, 173, 164, 0.6);
 }
 
@@ -21,6 +19,21 @@
 .dashboard__date__year {
   font-size: 2.4rem;
 }
+
+.dashboard__date__container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+}
+
+.dashboard__date__current {
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 @media screen and (min-width: 560px) {
   .dashboard__date {
