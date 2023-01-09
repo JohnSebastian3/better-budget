@@ -4,6 +4,8 @@ export interface TransactionInterface {
   subcategory: string;
   value: number;
   isIncome: boolean;
-  date: Date;
+  dateDay: Number;
+  dateMonth: Number;
+  dateYear: Number;
   user: string;
 }

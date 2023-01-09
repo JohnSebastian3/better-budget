@@ -3,7 +3,9 @@ export interface CategoryInterface {
   subcategories: {
     title: string;
     budget: number;
-    date: Date
+    dateMonth: number;
+    dateYear: number;
   }[],
-  date: Date
+  dateMonth: number;
+  dateYear: number;
 }
