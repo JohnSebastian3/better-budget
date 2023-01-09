@@ -5,9 +5,12 @@ import style from "./DashboardSubcategory.module.css";
 import axios from "axios";
 // import { CategoryInterface } from "../../../../../Interfaces/CategoryInterface";
 const DashboardSubcategory = (props: {
-  subcategory: { title: string; budget: number };
+  subcategory: { title: string; budget: number, dateMonth: number, dateYear: number};
   category: string;
   transactions: TransactionInterface[];
+  year: number;
+  month: number;
+  day: number;
   onDeleteSubcategory: (subcategory: {
     title: string;
     budget: number;
@@ -15,7 +18,9 @@ const DashboardSubcategory = (props: {
   onUpdateBudget: (subcategory: {
     title: string;
     budget: number;
-  }) => void;
+    dateMonth: number;
+    dateYear: number;
+  }, budgetAmount: number) => void;
 }) => {
   let transactions = props.transactions.filter((transaction) => {
     return transaction.subcategory === props.subcategory.title;
@@ -37,7 +42,7 @@ const DashboardSubcategory = (props: {
 
   useEffect(() => {
     setBudgetAmount(props.subcategory.budget);
-  }, [])
+  }, [props.subcategory.budget])
 
   const showSubcategoryDeleteOption = (event: any) => {
     setSubcategoryDeleteIsVisible(true);
@@ -66,14 +71,13 @@ const DashboardSubcategory = (props: {
   const updateBudget = () => {
     axios
       .put(
-        `http://localhost:4000/dashboard/setSubcategoryBudget/${props.category}/${props.subcategory.title}`,
+        `http://localhost:4000/dashboard/setSubcategoryBudget/${props.category}/${props.subcategory.title}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
       .then((res) => {
-        console.log('setting budget')
         setBudgetAmount(budgetAmount);
-        props.onUpdateBudget({title: props.subcategory.title, budget: budgetAmount});
+        props.onUpdateBudget(props.subcategory, budgetAmount);
       })
       .catch((err) => {
         console.log(err);
@@ -90,6 +94,7 @@ const DashboardSubcategory = (props: {
           <h3>{props.subcategory.title}</h3>
           <input
             type="number"
+            step=".01"
             value={budgetAmount}
             onChange={(event) => setBudget(event)}
             onBlur={updateBudget}
