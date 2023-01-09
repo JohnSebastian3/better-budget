@@ -10,16 +10,24 @@ import axios from "axios";
 const DashboardCategories = (props: {
   transactions: TransactionInterface[];
   categories: CategoryInterface[];
+  year: number;
+  month: number;
+  day: number;
   addCategory: (category: CategoryInterface) => void;
-  onAddSubcategory: (subcategory: string, category: string, date: Date) => void;
-  onDeleteCategory: (category: string) => void;
+  onAddSubcategory: (subcategory: string, category: string, dateMonth: number, dateYear: number) => void;
+  onDeleteCategory: (category: string, dateMonth: number, dateYear: number) => void;
   onUpdateBudget: (
     subcategory: {
       title: string;
       budget: number;
+      dateMonth: number;
+      dateYear: number;
     },
-    category: string
+    category: string,
+    budgetAmount: number,
   ) => void;
+  onCreateBudget: () => void;
+  deleteTransactions: (transactionsToDelete: TransactionInterface[]) => void;
 }) => {
   const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setisFormShown] = useState<boolean>(false);
@@ -35,7 +43,7 @@ const DashboardCategories = (props: {
   const onSubmit = (data: any) => {
     let categoryTitle = data.category.toLowerCase();
     categoryTitle = categoryTitle[0].toUpperCase() + categoryTitle.slice(1);
-    let newCategory = { title: String(categoryTitle), subcategories: [], date: new Date() };
+    let newCategory = { title: String(categoryTitle), subcategories: [], dateMonth: props.month, dateYear: props.year };
     axios
       .post(
         "http://localhost:4000/dashboard/addCategory",
@@ -59,32 +67,38 @@ const DashboardCategories = (props: {
 
   const deleteCategory = (category: string) => {
     axios
-      .delete(`http://localhost:4000/dashboard/deleteCategory/${category}`, {
+      .delete(`http://localhost:4000/dashboard/deleteCategory/${category}/${props.month}/${props.year}/${props.day}`, {
         withCredentials: true,
       })
       .then((res) => {
-        props.onDeleteCategory(category);
+        props.onDeleteCategory(category, props.month, props.year);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const onAddSubcategory = (subcategory: string, category: string, date: Date) => {
-    props.onAddSubcategory(subcategory, category, date);
+  const onAddSubcategory = (subcategory: string, category: string, dateMonth: number, dateYear: number) => {
+    props.onAddSubcategory(subcategory, category, dateMonth, dateYear);
   };
 
   const onUpdateBudget = (
-    subcategory: { title: string; budget: number },
-    category: string
+    subcategory: { title: string; budget: number, dateMonth: number, dateYear: number },
+    category: string,
+    budgetAmount: number,
   ) => {
-    props.onUpdateBudget(subcategory, category);
+    props.onUpdateBudget(subcategory, category, budgetAmount);
   };
+
+  const deleteTransactions = (transactionsToDelete: TransactionInterface[]) => {
+    props.deleteTransactions(transactionsToDelete);
+  }
+
 
   return (
     <div className={style["dashboard__categories"]}>
       {props.categories.length === 0 ? (
-        <button>Start a budget here</button>
+        <button onClick={props.onCreateBudget}>Start a budget here</button>
       ) : (
         <>
         {props.categories.map((category, index) => {
@@ -94,9 +108,13 @@ const DashboardCategories = (props: {
                 transactions={props.transactions}
                 category={category}
                 subcategories={category.subcategories}
+                year={props.year}
+                month={props.month}
+                day={props.day}
                 onDeleteCategory={deleteCategory}
                 onAddSubcategory={onAddSubcategory}
                 onUpdateBudget={onUpdateBudget}
+                deleteTransactions={deleteTransactions}
               />
             </Card>
           );
