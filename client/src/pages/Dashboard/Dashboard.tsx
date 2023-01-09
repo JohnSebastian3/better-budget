@@ -85,8 +85,8 @@ export default function Dashboard() {
 
   const filteredTransactions = transactions.filter(
     (expense: TransactionInterface) => {
-      const expenseMonth = new Date(expense.date).getUTCMonth();
-      const expenseYear = new Date(expense.date).getUTCFullYear();
+      const expenseMonth = expense.dateMonth;
+      const expenseYear = expense.dateYear;
       return expenseMonth === month && expenseYear === year;
     }
   );
