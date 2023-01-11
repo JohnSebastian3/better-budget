@@ -17,18 +17,23 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const [month, setMonth] = useState<number>(new Date().getMonth());
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
+  const [currentFilteredCategories, setCurrentFilteredCategories] = useState<
+    CategoryInterface[]
+  >([]);
+  const [totalSetBudget, setTotalSetBudget] = useState<number>(0);
+  const [totalSetIncome, setTotalSetIncome] = useState<number>(0);
+  const [isOverBudget, setIsOverBudget] = useState<boolean>(false);
 
-  console.log("OUR CATEGORIES:", categories);
-  console.log("OUR TRANSACTIONS:", transactions);
-
-  const filteredCategories = categories.filter((category) => {
-    if (categories) {
-      return category.dateMonth === month && category.dateYear === year;
-    }
-    return category;
-  });
-
-  console.log("filtered categories:", filteredCategories);
+  useEffect(() => {
+    const filteredCategories = categories.filter((category) => {
+      if (categories) {
+        return category.dateMonth === month && category.dateYear === year;
+      }
+      return category;
+    });
+    setCurrentFilteredCategories(filteredCategories);
+    determineIsOverBudget(filteredCategories);
+  }, [categories, month, year]);
 
   useEffect(() => {
     axios
@@ -44,6 +49,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
             };
           }
         );
+
         setCategories(categories);
         setTransactions(data.data.transactions);
       })
@@ -51,6 +57,32 @@ const DashboardBudget = (props: { month: number; year: number }) => {
         console.log(err);
       });
   }, []);
+
+  const determineIsOverBudget = (filteredCategories: CategoryInterface[]) => {
+    const incomeCategory = filteredCategories.find(
+      (cat) => cat.title === "Income"
+    );
+    console.log(incomeCategory);
+    if (incomeCategory) {
+      const totalIncomeAmount = incomeCategory.subcategories.reduce(
+        (acc, curr) => {
+          return (acc += curr.budget);
+        },
+        0
+      );
+      let totalBudgetAmount = 0;
+      for (const cat of filteredCategories) {
+        if (cat.title !== "Income") {
+          totalBudgetAmount += cat.subcategories.reduce((acc, curr) => {
+            return (acc += curr.budget);
+          }, 0);
+        }
+      }
+      setTotalSetBudget(totalBudgetAmount);
+      setTotalSetIncome(totalIncomeAmount);
+      setIsOverBudget(totalIncomeAmount < totalBudgetAmount);
+    }
+  };
 
   const addExpense = (expense: TransactionInterface): void => {
     setTransactions((prev) => {
@@ -73,7 +105,21 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   const addCategory = (newCategory: CategoryInterface) => {
     setCategories((prev) => {
-      return [...prev, newCategory];
+      let foundDuplicate = false;
+      for (const cat of categories) {
+        if (
+          cat.title === newCategory.title &&
+          cat.dateMonth === newCategory.dateMonth &&
+          cat.dateYear === newCategory.dateYear
+        ) {
+          foundDuplicate = true;
+        }
+      }
+      if (!foundDuplicate) {
+        return [...prev, newCategory];
+      } else {
+        return [...prev];
+      }
     });
   };
 
@@ -84,36 +130,66 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     dateYear: number
   ) => {
     setCategories((prev) => {
-      for (const cat of prev) {
+      const updated = prev.map((cat) => {
         if (
           cat.title === category &&
           cat.dateMonth === dateMonth &&
           cat.dateYear === dateYear
         ) {
-          console.log(
-            `Adding subcat ${subcategory.toUpperCase()} to ${category.toUpperCase()}`
-          );
           cat.subcategories.push({
             title: subcategory,
             budget: 0,
             dateMonth,
             dateYear,
           });
+          return cat;
         }
-      }
-      return prev;
+        return cat;
+      });
+      return updated;
     });
   };
 
-  const deleteCategory = (category: string, dateMonth: number, dateYear: number) => {
+  const deleteCategory = (
+    category: string,
+    dateMonth: number,
+    dateYear: number
+  ) => {
     setCategories((prev) => {
       return prev.filter((cat) => {
-        if(cat.dateMonth === dateMonth && cat.dateYear === dateYear) {
+        if (cat.dateMonth === dateMonth && cat.dateYear === dateYear) {
           return cat.title !== category;
         } else {
           return true;
         }
       });
+    });
+  };
+
+  const deleteSubcategory = (
+    subcategories: {
+      title: string;
+      budget: number;
+      dateMonth: number;
+      dateYear: number;
+    }[],
+    category: string,
+    dateMonth: number,
+    dateYear: number
+  ) => {
+    setCategories((prev) => {
+      const updated = prev.map((cat) => {
+        if (
+          cat.title === category &&
+          cat.dateMonth === dateMonth &&
+          cat.dateYear === dateYear
+        ) {
+          cat.subcategories = subcategories;
+          return cat;
+        }
+        return cat;
+      });
+      return updated;
     });
   };
 
@@ -125,7 +201,6 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     }
   );
 
-  console.log("OUR filtered transactions:", filteredTransactions);
 
   const totalExpenses = filteredTransactions.reduce((acc, curr) => {
     if (!curr.isIncome) {
@@ -193,17 +268,19 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   };
 
   const deleteTransactions = (transactionsToDelete: TransactionInterface[]) => {
+    console.log(transactionsToDelete);
     const filteredTransactions = transactions.filter(
       (trxToRemove) =>
         !transactionsToDelete.find(
           (trx) =>
             trx.title === trxToRemove.title &&
-            trx.dateDay === trxToRemove.dateDay &&
             trx.dateMonth === trxToRemove.dateMonth &&
-            trx.dateYear === trxToRemove.dateYear
+            trx.dateYear === trxToRemove.dateYear &&
+            trx.category === trxToRemove.category &&
+            trx.subcategory === trxToRemove.subcategory
         )
     );
-    setTransactions(filteredTransactions)
+    setTransactions(filteredTransactions);
   };
 
   return (
@@ -217,13 +294,17 @@ const DashboardBudget = (props: { month: number; year: number }) => {
         />
         <DashboardCategories
           transactions={filteredTransactions}
-          categories={filteredCategories}
+          categories={currentFilteredCategories}
+          totalSetBudget={totalSetBudget}
+          totalSetIncome={totalSetIncome}
+          isOverBudget={isOverBudget}
           month={month}
           year={year}
           day={day}
           addCategory={addCategory}
           onAddSubcategory={addSubcategory}
           onDeleteCategory={deleteCategory}
+          onDeleteSubcategory={deleteSubcategory}
           onUpdateBudget={updateBudget}
           onCreateBudget={createBudget}
           deleteTransactions={deleteTransactions}
@@ -233,11 +314,11 @@ const DashboardBudget = (props: { month: number; year: number }) => {
         <DashboardStats
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
-          transactions={transactions}
+          transactions={filteredTransactions}
         />
         <DashboardTransactionForm
           onAddExpense={addExpense}
-          categories={categories}
+          filteredCategories={currentFilteredCategories}
           onChangeDay={changeDay}
           selectedMonth={month}
           selectedYear={year}
