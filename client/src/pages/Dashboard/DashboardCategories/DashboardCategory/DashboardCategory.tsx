@@ -10,35 +10,54 @@ import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 const DashboardCategory = (props: {
   transactions: TransactionInterface[];
   category: CategoryInterface;
-  subcategories: { title: string; budget: number; dateMonth: number, dateYear: number }[];
+  subcategories: {
+    title: string;
+    budget: number;
+    dateMonth: number;
+    dateYear: number;
+  }[];
   year: number;
   month: number;
   day: number;
   onUpdateBudget: (
-    subcategory: { title: string; budget: number, dateMonth: number, dateYear: number },
+    subcategory: {
+      title: string;
+      budget: number;
+      dateMonth: number;
+      dateYear: number;
+    },
     category: string,
     budgetAmount: number
   ) => void;
   onAddSubcategory: (
     newSubcategory: string,
     category: string,
-    dateMonth: number, 
-    dateYear: number,
+    dateMonth: number,
+    dateYear: number
   ) => void;
   onDeleteCategory: (category: string) => void;
+  onDeleteSubcategory: (
+    subcategories: {
+      title: string;
+      budget: number;
+      dateMonth: number;
+      dateYear: number;
+    }[],
+    category: string,
+    dateMonth: number,
+    dateYear: number
+  ) => void;
   deleteTransactions: (transactionsToDelete: TransactionInterface[]) => void;
 }) => {
   const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
   const [subcategories, setSubcategories] = useState<
-    { title: string; budget: number; dateMonth: number, dateYear: number }[]
+    { title: string; budget: number; dateMonth: number; dateYear: number }[]
   >([]);
-
-  console.log(`SUBCATEGORIES FOR ${props.category.title}:`, subcategories);
 
   useEffect(() => {
     setSubcategories(props.subcategories);
-  }, [props.month]);
+  }, []);
 
   const transactions = props.transactions.filter((transaction) => {
     return transaction.category === props.category.title;
@@ -47,8 +66,21 @@ const DashboardCategory = (props: {
   const onSubmit = (data: any) => {
     let newSubcategory = data.subcategory.toLowerCase();
     newSubcategory = newSubcategory[0].toUpperCase() + newSubcategory.slice(1);
-    const subcategory = { title: newSubcategory, budget: 0, dateMonth: props.month, dateYear: props.year };
-    axios
+    const subcategory = {
+      title: newSubcategory,
+      budget: 0,
+      dateMonth: props.month,
+      dateYear: props.year,
+    };
+
+    let valid = true;
+    for(const subcat of props.category.subcategories) {
+      if(subcat.title === newSubcategory) {
+        valid = false;
+      }
+    }
+    if(valid) {
+      axios
       .post(
         `http://localhost:4000/dashboard/addSubcategory/${props.category.title}`,
         {
@@ -60,7 +92,13 @@ const DashboardCategory = (props: {
       )
       .then((res) => {
         setSubcategories((prev) => {
-          if (!prev.includes(subcategory)) {
+          let foundDuplicate = false;
+          for(const subcat of props.category.subcategories) {
+            if(subcat.title === subcategory.title) {
+              foundDuplicate = true;
+            }
+          }
+          if (!foundDuplicate) {
             return [...prev, subcategory];
           } else {
             return [...prev];
@@ -73,6 +111,10 @@ const DashboardCategory = (props: {
           subcategory.dateYear
         );
       });
+    } else {
+      alert('Subcategory already exists');
+    }
+   
 
     reset();
     setIsFormShown(false);
@@ -98,12 +140,13 @@ const DashboardCategory = (props: {
         }
       )
       .then((res) => {
-        const newSubcategories = subcategories.filter(
-          (currSubcategory) => currSubcategory.title !== subcategory.title
-        );
+        const newSubcategories = props.subcategories.filter((currSubcategory) => {
+            return currSubcategory.title !== subcategory.title;
+        });
         setSubcategories(newSubcategories);
+        props.onDeleteSubcategory(newSubcategories, props.category.title, props.month, props.year);
 
-        props.deleteTransactions(props.transactions);
+        props.deleteTransactions(transactions);
       })
       .catch((err) => {
         console.log(err);
@@ -114,7 +157,15 @@ const DashboardCategory = (props: {
     props.onDeleteCategory(props.category.title);
   };
 
-  const onUpdateBudget = (subcategory: { title: string; budget: number, dateMonth: number, dateYear: number }, budgetAmount: number) => {
+  const onUpdateBudget = (
+    subcategory: {
+      title: string;
+      budget: number;
+      dateMonth: number;
+      dateYear: number;
+    },
+    budgetAmount: number
+  ) => {
     props.onUpdateBudget(subcategory, props.category.title, budgetAmount);
   };
 
@@ -133,21 +184,28 @@ const DashboardCategory = (props: {
         )}
       </div>
       <div>
-        {subcategories.map((subcategory, index) => {
-          return (
-            <DashboardSubcategory
-              key={index}
-              subcategory={subcategory}
-              transactions={transactions}
-              year={props.year}
-              month={props.month}
-              day={props.day}
-              category={props.category.title}
-              onDeleteSubcategory={deleteSubcategory}
-              onUpdateBudget={onUpdateBudget}
-            />
-          );
-        })}
+        {props.subcategories.length === 0 ? (
+          <p>No subcateogires. Add one now!</p>
+        ) : (
+          <>
+          {props.subcategories.map((subcategory, index) => {
+            return (
+              <DashboardSubcategory
+                key={index}
+                subcategory={subcategory}
+                transactions={transactions}
+                year={props.year}
+                month={props.month}
+                day={props.day}
+                category={props.category.title}
+                onDeleteSubcategory={deleteSubcategory}
+                onUpdateBudget={onUpdateBudget}
+              />
+            );
+          })}
+          </>
+        ) }
+        
       </div>
 
       {isFormShown ? (
