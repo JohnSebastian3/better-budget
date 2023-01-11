@@ -15,7 +15,7 @@ const app = express();
 // Passport config
 require("./config/passport")(passport);
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true}))
+app.use(cors({ origin: "https://better-budget-production.up.railway.app/", credentials: true}))
 
 // Add a list of allowed origins.
 // If you have more origins you would like to add, you can add them to the array below.
