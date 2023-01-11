@@ -235,8 +235,8 @@ module.exports = {
 
       await Transaction.deleteMany({
         user: req.user.id,
+        category: req.params.category,
         subcategory: req.params.subcategory,
-        dateDay: req.params.day,
         dateMonth: req.params.month,
         dateYear: req.params.year,
       });
