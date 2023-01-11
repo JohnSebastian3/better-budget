@@ -62,11 +62,6 @@ const BudgetBar = (props: {
                 / ${props.totalBudgetValue} left
               </span>
             )}
-            {/* $
-            {props.totalBudgetValue - props.currentValue <= 0
-              ? 0
-              : props.totalBudgetValue - props.currentValue}{" "}
-            / ${props.totalBudgetValue} left */}
           </div>
           <div className={style["chart-bar__inner"]}>
             <div
