@@ -9,8 +9,7 @@ const DashboardGraph = (props: {
   totalExpenses: number;
   totalIncome: number;
 }) => {
-  const moneyLeft =
-    props.totalIncome - props.totalExpenses ;
+  const moneyLeft = props.totalIncome - props.totalExpenses;
   const config = {
     type: "Doughnut",
     data: {
@@ -19,12 +18,11 @@ const DashboardGraph = (props: {
         {
           data: [
             moneyLeft > 0 ? props.totalIncome - moneyLeft : props.totalExpenses,
-            props.totalExpenses > 0 && moneyLeft > 0 ? props.totalIncome - props.totalExpenses : 1,
+            props.totalExpenses > 0 && moneyLeft > 0
+              ? props.totalIncome - props.totalExpenses
+              : 1,
           ],
-          backgroundColor: [
-            "#ff6961",
-            "#40b480"
-          ],
+          backgroundColor: ["#ff6961", "#40b480"],
           hoverOffset: 5,
           borderRadius: 6,
           spacing: 1,
@@ -48,7 +46,18 @@ const DashboardGraph = (props: {
             <span className={style["dashboard__total-value"]}>
               Spent: ${props.totalExpenses} of ${props.totalIncome}
               <br></br>
-              Left: ${moneyLeft}
+              {moneyLeft < 0 ? (
+                <span style={{color: 'red'}}>${Math.abs(moneyLeft).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} over budget</span>
+              ) : (
+                <span>
+                  $
+                  {moneyLeft.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}{" "}
+                  remaining
+                </span>
+              )}
             </span>
           </div>
         </div>
