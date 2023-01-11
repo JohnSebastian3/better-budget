@@ -3,7 +3,8 @@ import { TransactionInterface } from "../../../../../Interfaces/TransactionInter
 import { FaRegTrashAlt } from "react-icons/fa";
 import style from "./DashboardSubcategory.module.css";
 import axios from "axios";
-// import { CategoryInterface } from "../../../../../Interfaces/CategoryInterface";
+import BudgetBar from "./BudgetBar/BudgetBar";
+
 const DashboardSubcategory = (props: {
   subcategory: { title: string; budget: number, dateMonth: number, dateYear: number};
   category: string;
@@ -84,6 +85,7 @@ const DashboardSubcategory = (props: {
       });
   };
 
+
   return props.subcategory.title !== undefined ? (
     <div className={style["dashboard__subcategory"]}>
         <div
@@ -95,7 +97,8 @@ const DashboardSubcategory = (props: {
           <input
             type="number"
             step=".01"
-            value={budgetAmount}
+            value={budgetAmount.toString()}
+            min="0"
             onChange={(event) => setBudget(event)}
             onBlur={updateBudget}
             placeholder={String(budgetAmount)}
@@ -133,13 +136,13 @@ const DashboardSubcategory = (props: {
         </ul>
         <div>
           {props.category === 'Income' ? (
-          <div></div>
+            <BudgetBar totalBudgetValue={budgetAmount} currentValue={expenseAmount} isIncome={true} />
           ) : (
-            <p>Left: {budgetAmount - expenseAmount < 0 ? 0 : budgetAmount - expenseAmount} of {budgetAmount}</p>
+            <BudgetBar totalBudgetValue={budgetAmount} currentValue={expenseAmount} isIncome={false} />
           )}
           
         </div>
-  </div>
+    </div>
   ) : (
     <div></div>
   )
