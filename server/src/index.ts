@@ -15,7 +15,7 @@ const app = express();
 // Passport config
 require("./config/passport")(passport);
 
-app.use(cors({ origin: "https://better-budget.netlify.app/", credentials: true}))
+app.use(cors({ origin: "https://better-budget.netlify.app", credentials: true}))
 // app.use(cors({ origin: "http://localhost:3000", credentials: true}))
 
 // Add a list of allowed origins.
