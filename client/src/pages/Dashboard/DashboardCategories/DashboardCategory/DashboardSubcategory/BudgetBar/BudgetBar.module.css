@@ -6,10 +6,10 @@
 }
 
 .chart-bar__inner {
-  height: 15px;
+  height: 8px;
   width: 100%;
   border: 1px solid #cee0da;
-  border-radius: 12px;
+  border-radius: 2px;
   background-color: #eff2f1;
   overflow: hidden;
   display: flex;
