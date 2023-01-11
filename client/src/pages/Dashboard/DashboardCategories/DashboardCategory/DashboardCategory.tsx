@@ -82,7 +82,7 @@ const DashboardCategory = (props: {
     if(valid) {
       axios
       .post(
-        `http://localhost:4000/dashboard/addSubcategory/${props.category.title}`,
+        `https://better-budget-production.up.railway.app/dashboard/addSubcategory/${props.category.title}`,
         {
           subcategory,
         },

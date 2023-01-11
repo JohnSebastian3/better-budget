@@ -21,7 +21,7 @@ export default function Register() {
   const register = () => {
     axios
       .post(
-        "http://localhost:4000/register",
+        "https://better-budget-production.up.railway.app/register",
         {
           email,
           username,
