@@ -9,13 +9,23 @@ const BudgetBar = (props: {
   let barFillAmount = "0%";
 
   if (props.totalBudgetValue > 0) {
-    if(props.isIncome) {
-      barFillAmount =
-        Math.round((props.currentValue / props.totalBudgetValue) * 100) + "%";
+    if (props.totalBudgetValue - props.currentValue >= 0) {
+      if (props.isIncome) {
+        barFillAmount =
+          Math.round((props.currentValue / props.totalBudgetValue) * 100) + "%";
+      } else {
+        barFillAmount =
+          Math.round(
+            ((props.totalBudgetValue - props.currentValue) /
+              props.totalBudgetValue) *
+              100
+          ) + "%";
+      }
     } else {
-      barFillAmount = Math.round(((props.totalBudgetValue - props.currentValue) / props.totalBudgetValue) * 100) + "%";
+      barFillAmount = "0%";
     }
-    
+  } else {
+    barFillAmount = "0%";
   }
 
   return (
@@ -23,7 +33,9 @@ const BudgetBar = (props: {
       {props.isIncome ? (
         <>
           <div className={style["chart-bar__label chart-bar--income"]}>
-            Received ${props.currentValue} of ${props.totalBudgetValue}
+            <span>
+              Received ${props.currentValue} of ${props.totalBudgetValue}
+            </span>
           </div>
           <div className={style["chart-bar__inner"]}>
             <div
@@ -35,8 +47,26 @@ const BudgetBar = (props: {
       ) : (
         <>
           <div className={style["chart-bar__label chart-bar--expense"]}>
-            ${props.totalBudgetValue - props.currentValue} / $
-            {props.totalBudgetValue} left
+            {props.totalBudgetValue - props.currentValue < 0 ? (
+              <span style={{ color: "red" }}>
+                ${Math.abs(props.totalBudgetValue - props.currentValue).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} over
+                budget
+              </span>
+            ) : (
+              <span>
+                $
+                {(props.totalBudgetValue - props.currentValue).toLocaleString(
+                  "en-US",
+                  { maximumFractionDigits: 2, minimumFractionDigits: 2 }
+                )}{" "}
+                / ${props.totalBudgetValue} left
+              </span>
+            )}
+            {/* $
+            {props.totalBudgetValue - props.currentValue <= 0
+              ? 0
+              : props.totalBudgetValue - props.currentValue}{" "}
+            / ${props.totalBudgetValue} left */}
           </div>
           <div className={style["chart-bar__inner"]}>
             <div
