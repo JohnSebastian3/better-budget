@@ -8,40 +8,123 @@ import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 const DashboardTransactionForm = (props: {
   onAddExpense: (expense: TransactionInterface) => void;
   onChangeDay: (event: ChangeEvent<HTMLInputElement>) => void;
-  categories: CategoryInterface[];
+  // categories: CategoryInterface[];
+  filteredCategories: CategoryInterface[];
   selectedMonth: number;
   selectedYear: number;
   selectedDay: number;
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [isIncome, setIsIncome] = useState<boolean>(true);
+  const [isIncome, setIsIncome] = useState<boolean>(false);
+  const [currentFilteredCategories, setCurrentFilteredCategories] = useState<
+    CategoryInterface[]
+  >([]);
   const [currentCategory, setCurrentCategory] = useState<string>("");
   const [currentSubcategory, setCurrentSubcategory] = useState<
     string | undefined
   >("");
   const { register, handleSubmit, reset } = useForm();
 
-  const filteredCategory = props.categories.filter((category) => {
+  console.log(currentCategory, currentSubcategory);
+
+  const filteredCategory = currentFilteredCategories.filter((category) => {
     return category.title === currentCategory;
   });
 
   useEffect(() => {
+    // console.log("there was a change");
+    setCurrentFilteredCategories(props.filteredCategories);
+    if (props.filteredCategories.length >= 1) {
+      if (isIncome) {
+        setCurrentCategory(props.filteredCategories[0].title);
+        if (props.filteredCategories[0].subcategories.length >= 1) {
+          setCurrentSubcategory(
+            props.filteredCategories[0].subcategories[0].title
+          );
+        } else {
+          setCurrentCategory("");
+        }
+      } else if (!isIncome) {
+        const currentCat = props.filteredCategories.find(
+          (cat) => cat.title === currentCategory
+        );
+        if (currentCat) {
+          setCurrentCategory(currentCat?.title);
+          if (currentCat.subcategories.length >= 1) {
+            setCurrentSubcategory(currentCat.subcategories[0].title);
+          } else {
+            setCurrentSubcategory("");
+          }
+        } else {
+          setCurrentCategory("Spending");
+          setCurrentSubcategory("");
+        }
+      }
+    } else {
+      setCurrentCategory("");
+      setCurrentSubcategory("");
+    }
+  }, [props.filteredCategories]);
+
+  useEffect(() => {
     if (filteredCategory.length >= 1) {
+      setCurrentCategory(filteredCategory[0].title)
       if (filteredCategory[0].subcategories.length >= 1) {
         setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
       } else {
         setCurrentSubcategory("");
       }
     }
+  }, []);
+
+  useEffect(() => {
+    console.log("there was a change 3");
+    const filteredCategory = currentFilteredCategories.filter((category) => {
+      return category.title === currentCategory;
+    });
+    if (filteredCategory.length >= 1) {
+      setCurrentCategory(filteredCategory[0].title);
+      if (filteredCategory[0].subcategories.length >= 1) {
+        setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
+      } else {
+        setCurrentSubcategory("");
+      }
+    } else {
+      setCurrentCategory("");
+      setCurrentSubcategory("");
+    }
   }, [currentCategory]);
+
+  useEffect(() => {
+    setIsIncome(false);
+  }, [props.selectedMonth, props.selectedYear]);
 
   useEffect(() => {
     if (isIncome) {
       setCurrentCategory("Income");
-      setCurrentSubcategory("");
+      const incomeCategory = currentFilteredCategories.filter((category) => {
+        return category.title === "Income";
+      });
+      if (incomeCategory.length >= 1) {
+        if (incomeCategory[0].subcategories.length >= 1) {
+          console.log("setting to:", incomeCategory);
+          setCurrentSubcategory(incomeCategory[0].subcategories[0].title);
+        } else {
+          setCurrentSubcategory("");
+        }
+      }
     } else {
       setCurrentCategory("Spending");
-      setCurrentSubcategory("");
+      if (filteredCategory.length >= 1) {
+        const spendingCategory = currentFilteredCategories.filter(
+          (category) => {
+            return category.title === "Spending";
+          }
+        );
+        if (spendingCategory[0].subcategories.length >= 1) {
+          setCurrentSubcategory(spendingCategory[0].subcategories[0].title);
+        }
+      }
     }
     reset();
   }, [isIncome]);
@@ -51,14 +134,14 @@ const DashboardTransactionForm = (props: {
       .post(
         "http://localhost:4000/dashboard/addTransaction",
         {
-          title: data.title || "Unknown",
+          title: data.title || "N/A",
           category: isIncome ? "Income" : currentCategory,
           subcategory: currentSubcategory ? currentSubcategory : "",
           value: Number(data.value),
           isIncome: isIncome,
           dateDay: props.selectedDay,
           dateMonth: props.selectedMonth,
-          dateYear: props.selectedYear
+          dateYear: props.selectedYear,
         },
         {
           withCredentials: true,
@@ -72,7 +155,7 @@ const DashboardTransactionForm = (props: {
       });
 
     reset();
-    setIsIncome(true);
+    setIsIncome(false);
   };
 
   const onChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
@@ -144,7 +227,7 @@ const DashboardTransactionForm = (props: {
             />
           </label>
           <select
-            defaultValue={currentSubcategory ? currentSubcategory : "default"}
+            defaultValue={currentSubcategory}
             onChange={(event) => onChangeSubcategory(event)}
           >
             <option value="default" disabled>
@@ -162,6 +245,7 @@ const DashboardTransactionForm = (props: {
               <></>
             )}
           </select>
+          <input type="text" placeholder="Description" {...register("title")}/>
           <input
             type="number"
             step=".01"
@@ -178,7 +262,7 @@ const DashboardTransactionForm = (props: {
           ) : (
             <Button
               type="submit"
-              value="Must select subcategory"
+              value="Disabled"
               kind="btn--primary--green"
               disabled={true}
             ></Button>
@@ -212,14 +296,14 @@ const DashboardTransactionForm = (props: {
             />
           </label>
           <select
-            defaultValue={currentCategory ? currentCategory : "default"}
+            defaultValue={currentCategory}
             {...register("category")}
             onChange={(event) => onChangeCategory(event)}
           >
             <option value="default" disabled>
               Category
             </option>
-            {props.categories.map((category, index) => {
+            {props.filteredCategories.map((category, index) => {
               if (category.title !== "Income") {
                 return (
                   <option
@@ -240,7 +324,7 @@ const DashboardTransactionForm = (props: {
             <option value="default" disabled>
               Subcategory
             </option>
-            {currentCategory ? (
+            {filteredCategory.length > 0 ? (
               filteredCategory[0].subcategories.map((subcategory, index) => {
                 if (subcategory.title === currentSubcategory) {
                   return (
@@ -276,7 +360,7 @@ const DashboardTransactionForm = (props: {
           ) : (
             <Button
               type="submit"
-              value="Must select subcategory"
+              value="Disabled"
               kind="btn--primary--green"
               disabled={true}
             ></Button>
