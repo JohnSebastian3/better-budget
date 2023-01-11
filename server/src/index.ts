@@ -15,13 +15,20 @@ const app = express();
 // Passport config
 require("./config/passport")(passport);
 
-// const allowedOrigins = ['http://localhost:3000', 'https://better-budget-production.up.railway.app'];
+app.use(cors({ origin: "http://localhost:3000", credentials: true}))
+
+// Add a list of allowed origins.
+// If you have more origins you would like to add, you can add them to the array below.
+// const allowedOrigins = ['http://localhost:3000'];
 
 // const options: cors.CorsOptions = {
-//   origin: allowedOrigins,
+//   origin: allowedOrigins
 // };
 
-app.use(cors({credentials: true, origin: true}));
+// // Then pass these options to cors:
+// app.use(cors(options));
+
+// app.use(cors({credentials: true, origin: true}));
 
 // Body parser middleware
 app.use(express.urlencoded({ extended: true }));
