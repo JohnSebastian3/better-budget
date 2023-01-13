@@ -1,0 +1,25 @@
+.category-header {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  /* border-bottom: 1px solid rgba(162, 173, 164, 0.6); */
+  padding: .5rem 0;
+  font-size: 2rem;
+  /* color: #69757a; */
+}
+
+.category-header h3 {
+  flex-basis: 50%;
+}
+
+.category-header span {
+  flex-basis: 25%;
+}
+
+.category-header svg {
+  cursor: pointer;
+}
+
+.subcategory-info {
+  padding: .5rem 0;
+}

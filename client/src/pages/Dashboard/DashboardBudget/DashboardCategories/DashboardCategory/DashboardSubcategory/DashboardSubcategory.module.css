@@ -1,0 +1,47 @@
+.dashboard__subcategory {
+  
+}
+
+.subcategory__container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.subcategory__container h3 {
+  font-size: 2rem;
+  color: #69757a;
+  flex-basis: 50%;
+}
+
+.subcategory__container span {
+  flex-basis: 25%;
+}
+
+.subcategory__container input {
+  text-align: right;
+  width: 75%;
+}
+
+.subcategory__container input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.subcategory__budget-amount {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 25%;
+  /* gap: .5rem; */
+}
+
+.dashboard__transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.testtwo {
+  position: absolute;
+  right: 10px;
+}
