@@ -173,10 +173,14 @@ module.exports = {
   },
   addSubcategory: async (req: any, res: any) => {
     try {
+      let category = req.params.category;
+      if(category.includes('&dash')) {
+        category = category.replace('&dash', '/');
+      }
       await Category.findOneAndUpdate(
         {
           user: req.user._id,
-          title: req.params.category,
+          title: category,
           dateMonth: Number(req.body.subcategory.dateMonth),
           dateYear: Number(req.body.subcategory.dateYear),
         },
@@ -197,15 +201,21 @@ module.exports = {
   },
   deleteCategory: async (req: any, res: any) => {
     try {
+      let category = req.params.category;
+
+      if(category.includes('&dash')) {
+        category = category.replace('&dash', '/');
+      }
+      console.log(category);
       await Category.findOneAndDelete({
-        title: req.params.category,
+        title: category,
         dateMonth: Number(req.params.month),
         dateYear: Number(req.params.year),
       });
 
       await Transaction.deleteMany({
         user: req.user.id,
-        category: req.params.category,
+        category: category,
         dateDay: Number(req.params.day),
         dateMonth: Number(req.params.month),
         dateYear: Number(req.params.year),
@@ -217,17 +227,26 @@ module.exports = {
   },
   deleteSubcategory: async (req: any, res: any) => {
     try {
+      let category = req.params.category;
+      let subcategory = req.params.subcategory;
+      if(category.includes('&dash')) {
+        category = category.replace('&dash', '/');
+      }
+
+      if(subcategory.includes('&dash')) {
+        subcategory = subcategory.replace('/&dash', '/');
+      }
       const updatedCategory = await Category.findOneAndUpdate(
         {
           user: req.user._id,
-          title: req.params.category,
+          title: category,
           dateMonth: Number(req.params.month),
           dateYear: Number(req.params.year)
         },
         {
           $pull: {
             subcategories: {
-              title: req.params.subcategory,
+              title: subcategory,
             },
           },
         }
@@ -235,8 +254,8 @@ module.exports = {
 
       await Transaction.deleteMany({
         user: req.user.id,
-        category: req.params.category,
-        subcategory: req.params.subcategory,
+        category: category,
+        subcategory: subcategory,
         dateMonth: req.params.month,
         dateYear: req.params.year,
       });
@@ -247,16 +266,25 @@ module.exports = {
   },
   setSubcategoryBudget: async (req: any, res: any) => {
     try {
+      let category = req.params.category;
+      let subcategory = req.params.subcategory;
+      if(category.includes('&dash')) {
+        category = category.replace('&dash', '/');
+      }
+
+      if(subcategory.includes('&dash')) {
+        subcategory = subcategory.replace('&dash', '/');
+      }
       const updatedCategory = await Category.findOneAndUpdate(
         {
           user: req.user._id,
-          title: req.params.category,
+          title: category,
           dateMonth: req.params.month,
           dateYear: req.params.year
         },
         { $set: { "subcategories.$[el].budget": req.body.budgetAmount } },
         {
-          arrayFilters: [{ "el.title": req.params.subcategory }],
+          arrayFilters: [{ "el.title": subcategory }],
         }
       );
       res.send(updatedCategory);
