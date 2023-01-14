@@ -138,29 +138,6 @@ const DashboardSubcategory = (props: {
           ""
         )}
       </div>
-      {/* <ul>
-          {transactions?.map((transaction, index) => {
-            return (
-              <li
-                key={index}
-                className={style["dashboard__transaction"]}
-                onMouseOver={(event) => showTransactionDeleteOption(event)}
-                onMouseLeave={(event) => hideTransactionDeleteOption(event)}
-              >
-                <div>
-                  {transaction.title} for {(transaction.value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                </div>
-                <div>
-                  {transactionDeleteIsVisible ? (
-                    <FaRegTrashAlt size={"15px"}></FaRegTrashAlt>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ul> */}
       <div>
         {props.category === "Income" ? (
           <BudgetBar
