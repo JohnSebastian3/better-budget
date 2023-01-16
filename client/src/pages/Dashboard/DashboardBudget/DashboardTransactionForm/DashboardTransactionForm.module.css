@@ -1,0 +1,11 @@
+.add-transaction-btn {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  cursor: pointer;
+  color: rgba(81, 197, 145, 0.8);
+}
+
+.add-transaction-btn:hover {
+  color: #51c591;
+}
