@@ -5,6 +5,7 @@ import { HiTrash } from "react-icons/hi";
 
 const DashboardTransactionItem = (props: {
   transaction: TransactionInterface;
+  onDeleteTransaction: (transaction: TransactionInterface) => void;
 }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -23,6 +24,10 @@ const DashboardTransactionItem = (props: {
     "Dec",
   ];
 
+  const onDeleteTransaction = () => {
+    props.onDeleteTransaction(props.transaction);
+  }
+
   return (
     <div
       className={style["transactions-item__container"]}
@@ -39,7 +44,7 @@ const DashboardTransactionItem = (props: {
               {Number(props.transaction.dateDay)}
             </div>
           </div>
-          {isHovered ? <HiTrash size={"17px"} color="#666"></HiTrash> : ""}
+          {isHovered ? <HiTrash size={"17px"} color="#666" onClick={onDeleteTransaction}></HiTrash> : ""}
         </div>
 
         <div className={style["transactions-info"]}>
