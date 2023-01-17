@@ -1,6 +1,8 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import style from './DashboardTransactionForm.module.css'
+import {BsFillPlusCircleFill} from 'react-icons/bs';
 import Button from "../../../../components/UI/Button/Button";
 import Modal from "../../../../components/UI/Modal/Modal";
 import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
@@ -191,9 +193,10 @@ const DashboardTransactionForm = (props: {
 
   return (
     <>
-      <button onClick={() => (modalOpen ? closeModal() : openModal())}>
+      {/* <button onClick={() => (modalOpen ? closeModal() : openModal())} className={style['add-transaction-btn']}>
         Add Transaction
-      </button>
+      </button> */}
+      <BsFillPlusCircleFill size={'25px'} className={style['add-transaction-btn']} onClick={openModal}></BsFillPlusCircleFill>
       <AnimatePresence initial={false}>
         {modalOpen && (
           <Modal handleClose={closeModal}>
