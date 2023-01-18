@@ -14,7 +14,9 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       type={props.type}
-      className={`${style.btn} ${style[props.kind]} ${props.modifier ? style[props.modifier] : ''}`}
+      className={`${style.btn} ${style[props.kind]} ${
+        props.modifier ? style[props.modifier] : ""
+      } `}
       disabled={props.disabled}
       onClick={props.onClick ? props.onClick : () => {}}
     >

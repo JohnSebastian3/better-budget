@@ -1,21 +1,21 @@
 .btn {
   border: none;
-  border-radius: 10px;
-  padding: 12px 25px;
+  border-radius: 6px;
+  padding: 8px 12px;
   cursor: pointer;
   font-weight: bold;
   color: #777;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .btn--primary--purple,
 .btn--primary--green {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 1px;
   color: #EFF2F1;
 }
+
 
 .btn--primary--purple {
   background-color: #967AA1;
@@ -29,8 +29,14 @@
   background-color: #b694c3;
 }
 
+
 .btn--primary--green:hover {
   background-color: #51c591;
+}
+
+.btn--primary--green:disabled {
+  background-color: #98b6a9;
+  cursor: not-allowed;
 }
 
 .btn--tab--green {
@@ -38,9 +44,10 @@
   background-color: transparent;
   border-radius: 0px;
   padding: 20px 15px;
+  font-size: 1.4rem;
 }
 
-.btn--tab--green-selected{
+.btn--tab--green--selected{
   color: #3D9970;
   font-weight: bold;
   border-bottom: 3px solid #3D9970;
@@ -55,4 +62,33 @@
 .btn--secondary--green:hover {
   color: #EFF2F1;
   background-color: #3D9970;
+}
+
+.btn--secondary--transparent {
+  border: none;
+  outline: none;
+  background-color: #fafafa;
+  color: #3D9970;
+}
+
+
+.btn--secondary--transparent:hover,
+.btn--secondary--transparent--dark:hover
+ {
+  background-color: #ddf3ea;
+  /* color: #EFF2F1; */
+}
+
+.btn--secondary--transparent--dark {
+  border: none;
+  outline: none;
+  background-color: #EFF2F1;
+  color: #3D9970;
+}
+
+
+@media screen and (min-width: 840px) {
+  .btn {
+
+  }
 }
