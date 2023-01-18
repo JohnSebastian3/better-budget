@@ -26,7 +26,7 @@ const DashboardTransactionItem = (props: {
 
   const onDeleteTransaction = () => {
     props.onDeleteTransaction(props.transaction);
-  }
+  };
 
   return (
     <div
@@ -34,7 +34,7 @@ const DashboardTransactionItem = (props: {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={style['transactions-wrapper']}>
+      <div className={style["transactions-wrapper"]}>
         <div className={style["transactions-date__wrapper"]}>
           <div className={style["transactions-date"]}>
             <div className={style["transactions-month"]}>
@@ -44,13 +44,24 @@ const DashboardTransactionItem = (props: {
               {Number(props.transaction.dateDay)}
             </div>
           </div>
-          {isHovered ? <HiTrash size={"17px"} color="#666" onClick={onDeleteTransaction}></HiTrash> : ""}
+          {isHovered ? (
+            <div className={style['transaction-delete']}>
+              <HiTrash
+                size={"18px"}
+                onClick={onDeleteTransaction}
+              ></HiTrash>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className={style["transactions-info"]}>
           <div className={style["transactions-title"]}>
-            <span className={style['title']}>{props.transaction.title}</span>
-            <span className={style['subcategory']}>{props.transaction.subcategory}</span>
+            <span className={style["title"]}>{props.transaction.title}</span>
+            <span className={style["subcategory"]}>
+              {props.transaction.subcategory}
+            </span>
           </div>
 
           <div className={style["transactions-value"]}>
