@@ -5,6 +5,14 @@
   gap: 3rem;
 }
 
+
+.dashboard__categories__form {
+  border-top: 1px solid rgba(162, 173, 164, 0.6);
+  padding: 1rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
 .start-budget-btn {
   width: 50%;
   margin: 0 auto;
@@ -13,11 +21,17 @@
 
 .budget-left p{
   font-size: 2rem;
+  height: 25px;
 }
 
 .budget-dollars {
   font-size: 2.2rem;
   font-weight: 600;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
 }
 
 
