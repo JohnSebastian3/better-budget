@@ -4,6 +4,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import style from "./DashboardSubcategory.module.css";
 import axios from "axios";
 import BudgetBar from "./BudgetBar/BudgetBar";
+import { AiOutlineClose } from "react-icons/ai";
 
 const DashboardSubcategory = (props: {
   subcategory: {
@@ -87,7 +88,7 @@ const DashboardSubcategory = (props: {
     }
     axios
       .put(
-        `http://localhost:4000/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `https://betterbudget.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
@@ -107,9 +108,26 @@ const DashboardSubcategory = (props: {
         onMouseOver={(event) => showSubcategoryDeleteOption(event)}
         onMouseLeave={(event) => hideSubcategoryDeleteOption(event)}
       >
-        <h3>{props.subcategory.title}</h3>
+        <div className={style["subcategory-header"]}>
+          <h3>{props.subcategory.title}</h3>
+          <div className={style["delete-icon"]}>
+            {subcategoryDeleteIsVisible ? (
+              <div className={style['subcategory-delete']}>
+                <AiOutlineClose
+                  size={"15px"}
+                  onClick={onDeleteSubcategory}
+                  style={{ cursor: "pointer" }}
+                ></AiOutlineClose>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
         <div className={style["subcategory__budget-amount"]}>
+          <label htmlFor="budgetAmount">Budget</label>
           <input
+            className={style["budget-input"]}
             type="number"
             step=".01"
             value={budgetAmount.toString()}
@@ -117,25 +135,25 @@ const DashboardSubcategory = (props: {
             id="budgetAmount"
             onChange={(event) => setBudget(event)}
             onBlur={updateBudget}
-            placeholder={String(budgetAmount)}
+            placeholder={`$${String(budgetAmount)}`}
           />
         </div>
         {props.category === "Income" ? (
-          <span>{expenseAmount}</span>
+          <div className={style["received-spent"]}>
+            <span>Received</span>
+            <span className={style["budget-expense"]}>${expenseAmount}</span>
+          </div>
         ) : (
-          <span>
-            {(budgetAmount - expenseAmount).toLocaleString("en-US", {
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2,
-            })}
-          </span>
-        )}
-        {subcategoryDeleteIsVisible ? (
-          <a onClick={onDeleteSubcategory} className={style.testtwo}>
-            X
-          </a>
-        ) : (
-          ""
+          <div className={style["received-spent"]}>
+            <span>Spent</span>
+            <span className={style["budget-expense"]}>
+              $
+              {expenseAmount.toLocaleString("en-US", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </span>
+          </div>
         )}
       </div>
       <div>

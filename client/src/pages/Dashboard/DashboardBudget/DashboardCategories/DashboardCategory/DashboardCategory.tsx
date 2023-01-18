@@ -87,7 +87,7 @@ const DashboardCategory = (props: {
     if (valid) {
       axios
         .post(
-          `http://localhost:4000/dashboard/addSubcategory/${categoryTitle}`,
+          `https://betterbudget.up.railway.app/dashboard/addSubcategory/${categoryTitle}`,
           {
             subcategory,
           },
@@ -137,17 +137,17 @@ const DashboardCategory = (props: {
     budget: number;
   }) => {
     let categoryTitle = props.category.title;
-    if(categoryTitle.includes('/')) {
-      categoryTitle = categoryTitle.replace('/', '&dash');
+    if (categoryTitle.includes("/")) {
+      categoryTitle = categoryTitle.replace("/", "&dash");
     }
 
     let subcategoryTitle = subcategory.title;
-    if(subcategoryTitle.includes('/')) {
-      subcategoryTitle = subcategoryTitle.replace('/', '&dash');
+    if (subcategoryTitle.includes("/")) {
+      subcategoryTitle = subcategoryTitle.replace("/", "&dash");
     }
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://betterbudget.up.railway.app/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -190,22 +190,24 @@ const DashboardCategory = (props: {
   };
 
   return (
-    <>
+    <div className={style["categories"]}>
       <div className={style["category-header"]}>
-        <h3>{props.category.title}</h3>
-        {props.category.title !== "Income" &&
-        props.category.title !== "Spending" ? (
-          <AiOutlineClose
-            size={"25px"}
-            onClick={deleteCategory}
-          ></AiOutlineClose>
-        ) : (
-          ""
-        )}
-        <span>Budget</span>
-        {props.category.title === 'Income' ? (<span>Received</span>) : (<span>Remaining</span>)}
+        <div className={style["header-title"]}>
+          <h3>{props.category.title}</h3>
+          {props.category.title !== "Income" &&
+          props.category.title !== "Spending" ? (
+            <div className={style['category-delete']}>
+              <AiOutlineClose
+                size={"18px"}
+                onClick={deleteCategory}
+              ></AiOutlineClose>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-      <div className={style['subcategory-info']}>
+      <div className={style["subcategory-info"]}>
         {props.subcategories.length === 0 ? (
           <p>No subcateogires. Add one now!</p>
         ) : (
@@ -248,12 +250,12 @@ const DashboardCategory = (props: {
         <Button
           type="submit"
           value="Add Subcategory"
-          kind="btn--primary--green"
+          kind="btn--secondary--green"
           disabled={false}
           onClick={showForm}
         ></Button>
       )}
-    </>
+    </div>
   );
 };
 

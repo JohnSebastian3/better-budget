@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { userContext } from "../../context/UserContext";
 import { TransactionInterface } from "../../Interfaces/TransactionInterface";
-import DashboardExpenseForm from "./DashboardTransactionForm/DashboardTransactionForm";
-import DashboardExpenses from "./DashboardCategories/DashboardCategories";
-import DashboardGraph from "./DashboardGraph/DashboardGraph";
+import DashboardExpenseForm from "./DashboardBudget/DashboardTransactionForm/DashboardTransactionForm";
+import DashboardExpenses from "./DashboardBudget/DashboardCategories/DashboardCategories";
+import DashboardGraph from "./DashboardBudget/DashboardStats/DashboardGraph/DashboardGraph";
 import style from "./Dashboard.module.css";
 import DashboardNav from "./DashboardNav/DashboardNav";
 import DashboardBudget from "./DashboardBudget/DashboardBudget";
@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
+      .get("https://betterbudget.up.railway.app/dashboard", { withCredentials: true })
       .then((data) => {
         setTransactions(data.data.transactions);
       })

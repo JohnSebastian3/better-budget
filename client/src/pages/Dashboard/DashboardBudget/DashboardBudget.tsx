@@ -5,8 +5,8 @@ import { userContext } from "../../../context/UserContext";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 import DashboardDate from "./DashboardDate/DashboardDate";
 import DashboardStats from "./DashboardStats/DashboardStats";
-import DashboardTransactionForm from "../DashboardTransactionForm/DashboardTransactionForm";
-import DashboardCategories from "../DashboardCategories/DashboardCategories";
+import DashboardTransactionForm from "./DashboardTransactionForm/DashboardTransactionForm";
+import DashboardCategories from "./DashboardCategories/DashboardCategories";
 import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 
 const DashboardBudget = (props: { month: number; year: number }) => {
@@ -37,7 +37,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   useEffect(() => {
     axios
-      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
+      .get("https://betterbudget.up.railway.app", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -201,7 +201,6 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     }
   );
 
-
   const totalExpenses = filteredTransactions.reduce((acc, curr) => {
     if (!curr.isIncome) {
       return (acc += curr.value);
@@ -253,7 +252,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const createBudget = () => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/createBudget",
+        "https://betterbudget.up.railway.app",
         { month, year },
         { withCredentials: true }
       )
@@ -283,6 +282,22 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     setTransactions(filteredTransactions);
   };
 
+  const deleteTransaction = (transaction: TransactionInterface) => {
+    console.log('deleting:', transaction);
+    axios
+      .delete(
+        `https://betterbudget.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
+      )
+      .then((res) => {
+        console.log('next step');
+        const filteredTransactions = transactions.filter(trx => {
+          return trx._id !== transaction._id;
+        })
+        setTransactions(filteredTransactions);
+      })
+      .catch((err) => {});
+  };
+
   return (
     <div className={style["dashboard__budget"]}>
       <div className={style["dashboard__content"]}>
@@ -310,11 +325,12 @@ const DashboardBudget = (props: { month: number; year: number }) => {
           deleteTransactions={deleteTransactions}
         />
       </div>
-      <div className={style["dashboard__stats"]}>
+      <div className={style["dashboard-info"]}>
         <DashboardStats
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
           transactions={filteredTransactions}
+          onDeleteTransaction={deleteTransaction}
         />
         <DashboardTransactionForm
           onAddExpense={addExpense}

@@ -73,42 +73,44 @@ const DashboardCategories = (props: {
     };
 
     let valid = true;
-    for(const cat of props.categories) {
-      if(cat.title === categoryTitle) {
+    for (const cat of props.categories) {
+      if (cat.title === categoryTitle) {
         valid = false;
       }
     }
-    if(valid) {
+    if (valid) {
       axios
-      .post(
-        "http://localhost:4000/dashboard/addCategory",
-        {
-          newCategory,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        props.addCategory(newCategory);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .post(
+          "https://betterbudget.up.railway.app/dashboard/addCategory",
+          {
+            newCategory,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          props.addCategory(newCategory);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       //PLaceholder for now
-      alert('Category already exists');
+      alert("Category already exists");
     }
-    
+
     reset();
     setisFormShown(false);
   };
 
   const deleteCategory = (category: string) => {
-    let categoryTitle = category.includes('/') ? category.replace('/', '&dash') : category;
+    let categoryTitle = category.includes("/")
+      ? category.replace("/", "&dash")
+      : category;
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://betterbudget.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -150,20 +152,54 @@ const DashboardCategories = (props: {
   return (
     <div className={style["dashboard__categories"]}>
       {props.categories.length === 0 ? (
-        <button onClick={props.onCreateBudget}>Start a budget here</button>
+        <div className={style["start-budget-btn"]}>
+          <Button
+            onClick={props.onCreateBudget}
+            type="button"
+            kind="btn--secondary--green"
+            value="Start Budget"
+            disabled={false}
+          ></Button>
+        </div>
       ) : (
         <>
-        {props.isOverBudget ? (
-        <p style={{color: 'red'}}>${(props.totalSetBudget - props.totalSetIncome).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} over budget</p>
-      ) : (
-        <>
-        {props.totalSetIncome === props.totalSetBudget ? (
-          <p style={{color: 'green'}}>You've got a Better Budget!</p>
-        ) : (
-          <p>${(props.totalSetIncome - props.totalSetBudget).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} left to budget</p>
-        )}
-        </>
-      )}
+          {props.isOverBudget ? (
+            <div className={style["budget-left"]}>
+              <p style={{ color: "red" }}>
+                <span className={style["budget-dollars"]}>
+                  $
+                  {(props.totalSetBudget - props.totalSetIncome).toLocaleString(
+                    "en-US",
+                    { maximumFractionDigits: 2, minimumFractionDigits: 2 }
+                  )}{" "}
+                </span>
+                over budget
+              </p>
+            </div>
+          ) : (
+            <>
+              {props.totalSetIncome === props.totalSetBudget ? (
+                <div className={style["budget-left"]}>
+                  <p style={{ color: "green" }}>You've got a Better Budget!</p>
+                </div>
+              ) : (
+                <div className={style["budget-left"]}>
+                  <p>
+                    <span className={style['budget-dollars']}>
+                      $
+                      {(
+                        props.totalSetIncome - props.totalSetBudget
+                      ).toLocaleString("en-US", {
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                      })}{" "}
+                    </span>
+                    left to budget
+                  </p>
+                </div>
+              )}
+            </>
+          )}
           {props.categories.map((category, index) => {
             return (
               <Card key={index}>
