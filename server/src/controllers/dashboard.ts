@@ -1,7 +1,7 @@
 import Category from "../models/Category";
 import Transaction from "../models/Transaction";
 import Subcategory from "../models/Category";
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 import CategoryModel from "../models/Category";
 module.exports = {
   getDashboard: async (req: any, res: any) => {
@@ -292,4 +292,13 @@ module.exports = {
       console.log(err);
     }
   },
+  deleteTransaction: async (req: any, res: any) => {
+    try {
+      await Transaction.findOneAndDelete({_id: new mongoose.Types.ObjectId(req.params.id)});
+      console.log('should be deleted');
+      res.sendStatus(200);
+    } catch(err) {
+      console.log(err);
+    } 
+  }
 };
