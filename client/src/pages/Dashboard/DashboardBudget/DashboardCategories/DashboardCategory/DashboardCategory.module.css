@@ -44,7 +44,6 @@
 .subcategory-info {
   display: flex;
   flex-direction: column;
-  /* gap: 2.5rem; */
 }
 
 .category-delete {
@@ -54,4 +53,18 @@
 .category-delete:hover {
   cursor: pointer;
   color: #777;
+}
+
+.dashboard__subcategories__form {
+  border-top: 1px solid rgba(162, 173, 164, 0.6);
+  padding: 1rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }

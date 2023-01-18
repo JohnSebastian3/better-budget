@@ -54,6 +54,9 @@ const DashboardCategory = (props: {
   const [subcategories, setSubcategories] = useState<
     { title: string; budget: number; dateMonth: number; dateYear: number }[]
   >([]);
+  const [newSubcategoryInput, setNewSubcategoryInput] = useState<string>("");
+
+  console.log(newSubcategoryInput);
 
   useEffect(() => {
     setSubcategories(props.subcategories);
@@ -64,9 +67,6 @@ const DashboardCategory = (props: {
   });
 
   const onSubmit = (data: any) => {
-    // let newSubcategory = data.subcategory.toLowerCase();
-    // newSubcategory = newSubcategory[0].toUpperCase() + newSubcategory.slice(1);
-    // let newSubcategory = data.subcategory.includes('/') ? data.subcategory.replace('/', '&dash') : data.subcategory;
     let categoryTitle = props.category.title.includes("/")
       ? props.category.title.replace("/", "&dash")
       : props.category.title;
@@ -87,7 +87,7 @@ const DashboardCategory = (props: {
     if (valid) {
       axios
         .post(
-          `https://better-budget-production.up.railway.app/dashboard/addSubcategory/${categoryTitle}`,
+          `http://localhost:4000/dashboard/addSubcategory/${categoryTitle}`,
           {
             subcategory,
           },
@@ -130,6 +130,8 @@ const DashboardCategory = (props: {
 
   const hideForm = () => {
     setIsFormShown(false);
+    setNewSubcategoryInput('');
+    reset();
   };
 
   const deleteSubcategory = (subcategory: {
@@ -147,7 +149,7 @@ const DashboardCategory = (props: {
     }
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `http://localhost:4000/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -196,7 +198,7 @@ const DashboardCategory = (props: {
           <h3>{props.category.title}</h3>
           {props.category.title !== "Income" &&
           props.category.title !== "Spending" ? (
-            <div className={style['category-delete']}>
+            <div className={style["category-delete"]}>
               <AiOutlineClose
                 size={"18px"}
                 onClick={deleteCategory}
@@ -209,7 +211,7 @@ const DashboardCategory = (props: {
       </div>
       <div className={style["subcategory-info"]}>
         {props.subcategories.length === 0 ? (
-          <p>No subcateogires. Add one now!</p>
+          <p style={{padding: '2rem 0', fontSize: '1.75rem', color: '#666', fontStyle: 'italic'}}>No subcateogires. Add one now!</p>
         ) : (
           <>
             {props.subcategories.map((subcategory, index) => {
@@ -233,18 +235,31 @@ const DashboardCategory = (props: {
 
       {isFormShown ? (
         <form
-          className={style["dashboard__categories__form"]}
+          className={style["dashboard__subcategories__form"]}
           onSubmit={handleSubmit(onSubmit)}
         >
           <input
             type="text"
-            placeholder="Sub Category"
+            value={newSubcategoryInput}
+            placeholder="New Subcategory"
             {...register("subcategory")}
+            onChange={(event) => setNewSubcategoryInput(event.target.value)}
           />
-          <button type="submit">Add</button>
-          <button type="button" onClick={hideForm}>
-            Cancel
-          </button>
+          <div className={style['form-buttons']}>
+            <Button
+              type="button"
+              value="Cancel"
+              kind="btn--secondary--transparent"
+              disabled={false}
+              onClick={hideForm}
+            ></Button>
+            <Button
+              type="submit"
+              value="Add"
+              kind="btn--primary--green"
+              disabled={newSubcategoryInput ? false : true}
+            ></Button>
+          </div>
         </form>
       ) : (
         <Button
