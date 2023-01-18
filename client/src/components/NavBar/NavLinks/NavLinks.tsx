@@ -14,7 +14,7 @@ const NavLinks: React.FC<{
 
   const logout = () => {
     axios
-      .get("https://better-budget-production.up.railway.app/logout", { withCredentials: true })
+      .get("http://localhost:4000/logout", { withCredentials: true })
       .then((res) => {
         if (res.data === "OK") {
           document.body.style.overflow = "visible";
