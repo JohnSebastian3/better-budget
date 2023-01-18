@@ -15,7 +15,7 @@
 
 @media screen and (min-width: 840px) {
   .dashboard__budget {
-    height: 100vh;
+    height: auto;
     /* flex-direction: row; */
     display: block;
     width: calc(65% - 150px);
