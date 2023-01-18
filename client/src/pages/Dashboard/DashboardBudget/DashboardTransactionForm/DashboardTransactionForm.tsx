@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import style from './DashboardTransactionForm.module.css'
-import {BsFillPlusCircleFill} from 'react-icons/bs';
+import style from "./DashboardTransactionForm.module.css";
+import { BsFillPlusCircleFill } from "react-icons/bs";
 import Button from "../../../../components/UI/Button/Button";
 import Modal from "../../../../components/UI/Modal/Modal";
 import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
@@ -31,10 +31,12 @@ const DashboardTransactionForm = (props: {
 
   const closeModal = () => {
     setModalOpen(false);
+    setIsIncome(false);
   };
 
   const openModal = () => {
     setModalOpen(true);
+    setIsIncome(false);
   };
 
   const filteredCategory = currentFilteredCategories.filter((category) => {
@@ -87,13 +89,13 @@ const DashboardTransactionForm = (props: {
   }, []);
 
   useEffect(() => {
-    console.log("there was a change 3");
     const filteredCategory = currentFilteredCategories.filter((category) => {
       return category.title === currentCategory;
     });
     if (filteredCategory.length >= 1) {
       setCurrentCategory(filteredCategory[0].title);
       if (filteredCategory[0].subcategories.length >= 1) {
+        console.log("should set");
         setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
       } else {
         setCurrentSubcategory("");
@@ -116,7 +118,7 @@ const DashboardTransactionForm = (props: {
       });
       if (incomeCategory.length >= 1) {
         if (incomeCategory[0].subcategories.length >= 1) {
-          console.log("setting to:", incomeCategory);
+          console.log("setting to:", incomeCategory[0].subcategories[0].title);
           setCurrentSubcategory(incomeCategory[0].subcategories[0].title);
         } else {
           setCurrentSubcategory("");
@@ -139,12 +141,11 @@ const DashboardTransactionForm = (props: {
   }, [isIncome]);
 
   const onSubmit = (data: any) => {
-    console.log("I Tzry");
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/addTransaction",
+        "http://localhost:4000/dashboard/addTransaction",
         {
-          title: data.title || "N/A",
+          title: data.title || "No Description",
           category: isIncome ? "Income" : currentCategory,
           subcategory: currentSubcategory ? currentSubcategory : "",
           value: Number(data.value),
@@ -193,48 +194,72 @@ const DashboardTransactionForm = (props: {
 
   return (
     <>
-      {/* <button onClick={() => (modalOpen ? closeModal() : openModal())} className={style['add-transaction-btn']}>
-        Add Transaction
-      </button> */}
-      <BsFillPlusCircleFill size={'25px'} className={style['add-transaction-btn']} onClick={openModal}></BsFillPlusCircleFill>
+      <BsFillPlusCircleFill
+        
+        className={style["add-transaction-btn"]}
+        onClick={openModal}
+      ></BsFillPlusCircleFill>
       <AnimatePresence initial={false}>
         {modalOpen && (
           <Modal handleClose={closeModal}>
             <form
               action="dashboard/addExpense"
               method="POST"
+              className={style["dashboard__form"]}
               onSubmit={handleSubmit(onSubmit)}
             >
-              <input
-                type="radio"
-                id="income"
-                name="income/expense"
-                value="Income"
-                checked={isIncome}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  setIncome(event)
-                }
-              />
-              <label htmlFor="income">Income</label>
-              <input
-                type="radio"
-                id="expense"
-                name="income/expense"
-                value="Expense"
-                checked={!isIncome}
-                onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                  setIncome(event)
-                }
-              />
-              <label htmlFor="expense">Expense</label>
+              <div className={style["form-header"]}>
+                <h2>Add {isIncome ? "Income" : "Expense"}</h2>
+              </div>
+              <div className={style["income-expense-inputs"]}>
+                <div className={style["radio-label"]}>
+                  <input
+                    type="radio"
+                    id="income"
+                    name="income/expense"
+                    value="Income"
+                    checked={isIncome}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setIncome(event)
+                    }
+                  />
+                  <label htmlFor="income">Income</label>
+                </div>
+
+                <div className={style["radio-label"]}>
+                  <input
+                    type="radio"
+                    id="expense"
+                    name="income/expense"
+                    value="Expense"
+                    checked={!isIncome}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setIncome(event)
+                    }
+                  />
+                  <label htmlFor="expense">Expense</label>
+                </div>
+              </div>
               {isIncome ? (
                 <>
-                  <label htmlFor="dateOfExpense">
-                    Enter Income Date
+                  <input
+                    type="text"
+                    placeholder="Income Description"
+                    {...register("title")}
+                  />
+                  <div className={style["amount-date-inputs"]}>
+                    <input
+                      type="number"
+                      step=".01"
+                      placeholder="$0.00"
+                      {...register("value")}
+                      className={style["amount-input"]}
+                    />
                     <input
                       type="date"
                       {...register("date")}
                       id="dateOfIncome"
+                      className={style["date-input"]}
                       value={`${
                         selectedDate.toLocaleDateString().split("/")[2]
                       }-${selectedDate
@@ -248,160 +273,171 @@ const DashboardTransactionForm = (props: {
                         onChangeDate(event);
                       }}
                     />
-                  </label>
-                  <select
-                    defaultValue={currentSubcategory}
-                    onChange={(event) => onChangeSubcategory(event)}
-                  >
-                    <option value="default" disabled>
-                      Subcategory
-                    </option>
-                    {filteredCategory.length > 0 ? (
-                      filteredCategory[0].subcategories.map(
-                        (subcategory, index) => {
-                          return (
-                            <option key={index} value={subcategory.title}>
-                              {subcategory.title}
-                            </option>
-                          );
-                        }
-                      )
-                    ) : (
-                      <></>
-                    )}
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Description"
-                    {...register("title")}
-                  />
-                  <input
-                    type="number"
-                    step=".01"
-                    placeholder="amount earned?"
-                    {...register("value")}
-                  />
-                  {currentSubcategory ? (
-                    <Button
-                      type="submit"
-                      value="Add Income"
-                      kind="btn--primary--green"
-                      disabled={false}
-                    ></Button>
-                  ) : (
-                    <Button
-                      type="submit"
-                      value="Disabled"
-                      kind="btn--primary--green"
-                      disabled={true}
-                    ></Button>
-                  )}
-                </>
-              ) : (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Where you spend"
-                    {...register("title")}
-                  ></input>
-                  <label htmlFor="dateOfExpense">
-                    Enter Expense Date
-                    <input
-                      type="date"
-                      {...register("date")}
-                      id="dateOfExpense"
-                      value={`${
-                        selectedDate.toLocaleDateString().split("/")[2]
-                      }-${selectedDate
-                        .toLocaleDateString()
-                        .split("/")[0]
-                        .padStart(2, "0")}-${selectedDate
-                        .toLocaleDateString()
-                        .split("/")[1]
-                        .padStart(2, "0")}`}
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        onChangeDate(event);
-                      }}
-                    />
-                  </label>
-                  <select
-                    defaultValue={currentCategory}
-                    {...register("category")}
-                    onChange={(event) => onChangeCategory(event)}
-                  >
-                    <option value="default" disabled>
-                      Category
-                    </option>
-                    {props.filteredCategories.map((category, index) => {
-                      if (category.title !== "Income") {
-                        return (
-                          <option
-                            key={index}
-                            // {...register("category")}
-                            value={category.title}
-                          >
-                            {category.title}
-                          </option>
-                        );
-                      }
-                    })}
-                  </select>
-                  <select
-                    defaultValue={
-                      currentSubcategory ? currentSubcategory : "default"
-                    }
-                    onChange={(event) => onChangeSubcategory(event)}
-                  >
-                    <option value="default" disabled>
-                      Subcategory
-                    </option>
-                    {filteredCategory.length > 0 ? (
-                      filteredCategory[0].subcategories.map(
-                        (subcategory, index) => {
-                          if (subcategory.title === currentSubcategory) {
-                            return (
-                              <option
-                                key={index}
-                                value={subcategory.title}
-                                selected
-                              >
-                                {subcategory.title}
-                              </option>
-                            );
-                          } else {
+                  </div>
+                    <select
+                      defaultValue={currentSubcategory}
+                      onChange={(event) => onChangeSubcategory(event)}
+                      className={style['income-select']}
+                    >
+                      <option value="default" disabled>
+                        Subcategory
+                      </option>
+                      {filteredCategory.length > 0 ? (
+                        filteredCategory[0].subcategories.map(
+                          (subcategory, index) => {
                             return (
                               <option key={index} value={subcategory.title}>
                                 {subcategory.title}
                               </option>
                             );
                           }
-                        }
-                      )
-                    ) : (
-                      <></>
-                    )}
-                  </select>
-                  <input
-                    type="number"
-                    step=".01"
-                    placeholder="amount spent?"
-                    {...register("value")}
-                  />
-                  {currentSubcategory ? (
+                        )
+                      ) : (
+                        <></>
+                      )}
+                    </select>
+                  <div className={style["form-buttons"]}>
                     <Button
-                      type="submit"
-                      value="Add Expense"
-                      kind="btn--primary--green"
+                      type="button"
+                      value="Cancel"
+                      kind="btn--secondary--transparent"
+                      onClick={() => setModalOpen(false)}
                       disabled={false}
                     ></Button>
-                  ) : (
+                    {currentSubcategory ? (
+                      <Button
+                        type="submit"
+                        value="Add Income"
+                        kind="btn--primary--green"
+                        disabled={false}
+                      ></Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        value="Add Income"
+                        kind="btn--primary--green"
+                        disabled={true}
+                      ></Button>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Expense Description"
+                    {...register("title")}
+                  ></input>
+                  <div className={style["amount-date-inputs"]}>
+                    <input
+                      type="number"
+                      step=".01"
+                      placeholder="$0.00"
+                      {...register("value")}
+                      className={style["amount-input"]}
+                    />
+                    <input
+                      type="date"
+                      {...register("date")}
+                      id="dateOfExpense"
+                      className={style["date-input"]}
+                      value={`${
+                        selectedDate.toLocaleDateString().split("/")[2]
+                      }-${selectedDate
+                        .toLocaleDateString()
+                        .split("/")[0]
+                        .padStart(2, "0")}-${selectedDate
+                        .toLocaleDateString()
+                        .split("/")[1]
+                        .padStart(2, "0")}`}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        onChangeDate(event);
+                      }}
+                    />
+                  </div>
+                  <div className={style["form-selects"]}>
+                    <select
+                      defaultValue={currentCategory}
+                      {...register("category")}
+                      onChange={(event) => onChangeCategory(event)}
+                    >
+                      <option value="default" disabled>
+                        Category
+                      </option>
+                      {props.filteredCategories.map((category, index) => {
+                        if (category.title !== "Income") {
+                          return (
+                            <option
+                              key={index}
+                              // {...register("category")}
+                              value={category.title}
+                            >
+                              {category.title}
+                            </option>
+                          );
+                        }
+                      })}
+                    </select>
+                    <select
+                      defaultValue={
+                        currentSubcategory ? currentSubcategory : "default"
+                      }
+                      onChange={(event) => onChangeSubcategory(event)}
+                    >
+                      <option value="default" disabled>
+                        Subcategory
+                      </option>
+                      {filteredCategory.length > 0 ? (
+                        filteredCategory[0].subcategories.map(
+                          (subcategory, index) => {
+                            if (subcategory.title === currentSubcategory) {
+                              return (
+                                <option
+                                  key={index}
+                                  value={subcategory.title}
+                                  selected
+                                >
+                                  {subcategory.title}
+                                </option>
+                              );
+                            } else {
+                              return (
+                                <option key={index} value={subcategory.title}>
+                                  {subcategory.title}
+                                </option>
+                              );
+                            }
+                          }
+                        )
+                      ) : (
+                        <></>
+                      )}
+                    </select>
+                  </div>
+                  <div className={style["form-buttons"]}>
                     <Button
-                      type="submit"
-                      value="Disabled"
-                      kind="btn--primary--green"
-                      disabled={true}
+                      type="button"
+                      value="Cancel"
+                      kind="btn--secondary--transparent"
+                      onClick={() => setModalOpen(false)}
+                      disabled={false}
                     ></Button>
-                  )}
+                    {currentSubcategory ? (
+                      <Button
+                        type="submit"
+                        value="Add Expense"
+                        kind="btn--primary--green"
+                        disabled={false}
+                      ></Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        value="Add Expense"
+                        kind="btn--primary--green"
+                        disabled={true}
+                      ></Button>
+                    )}
+                  </div>
                 </>
               )}
             </form>
