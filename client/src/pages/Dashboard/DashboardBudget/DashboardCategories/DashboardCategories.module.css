@@ -5,6 +5,22 @@
   gap: 3rem;
 }
 
+.start-budget-btn {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.budget-left p{
+  font-size: 2rem;
+}
+
+.budget-dollars {
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+
 @media screen and (min-width: 840px) {
   .dashboard__categories {
     padding: 0 2rem;

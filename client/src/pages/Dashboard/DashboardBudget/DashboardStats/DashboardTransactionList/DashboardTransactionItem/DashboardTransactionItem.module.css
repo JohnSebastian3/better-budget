@@ -1,6 +1,6 @@
 .transactions-item__container {
   padding: 1.4rem 1.5rem;
-  height: 120px;
+  height: 140px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +30,16 @@
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  gap: .2rem;
+  gap: 0.2rem;
+}
+
+.transaction-delete {
+  color: #cc7878;
+}
+
+.transaction-delete:hover {
+  cursor: pointer;
+  color: #ed5959;
 }
 
 .title {
@@ -39,7 +48,7 @@
 
 .subcategory {
   font-size: 1.5rem;
-  color: #3D9970;
+  color: #3d9970;
   font-weight: bold;
 }
 
@@ -56,7 +65,7 @@
   align-items: center;
   width: 40px;
   height: 40px;
-  padding: .2rem 0;
-  border: 1px solid  rgba(162, 173, 164, 0.6);
+  padding: 0.2rem 0;
+  border: 1px solid rgba(162, 173, 164, 0.6);
   border-radius: 50%;
 }
