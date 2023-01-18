@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface TransactionInterface {
   title: string;
   category: string;
@@ -8,4 +10,5 @@ export interface TransactionInterface {
   dateMonth: Number;
   dateYear: Number;
   user: string;
+  _id: Types.ObjectId;
 }
