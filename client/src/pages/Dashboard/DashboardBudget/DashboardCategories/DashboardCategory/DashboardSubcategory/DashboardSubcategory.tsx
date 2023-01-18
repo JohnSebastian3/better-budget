@@ -88,7 +88,7 @@ const DashboardSubcategory = (props: {
     }
     axios
       .put(
-        `https://betterbudget.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `https://better-budget-production.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )

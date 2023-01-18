@@ -37,7 +37,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   useEffect(() => {
     axios
-      .get("https://betterbudget.up.railway.app", { withCredentials: true })
+      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -252,7 +252,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const createBudget = () => {
     axios
       .post(
-        "https://betterbudget.up.railway.app",
+        "https://better-budget-production.up.railway.app/dashboard/createBudget",
         { month, year },
         { withCredentials: true }
       )
@@ -286,7 +286,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     console.log('deleting:', transaction);
     axios
       .delete(
-        `https://betterbudget.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
+        `https://better-budget-production.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
       )
       .then((res) => {
         console.log('next step');

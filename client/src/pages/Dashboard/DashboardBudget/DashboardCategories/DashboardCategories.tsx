@@ -81,7 +81,7 @@ const DashboardCategories = (props: {
     if (valid) {
       axios
         .post(
-          "https://betterbudget.up.railway.app/dashboard/addCategory",
+          "https://better-budget-production.up.railway.app/dashboard/addCategory",
           {
             newCategory,
           },
@@ -110,7 +110,7 @@ const DashboardCategories = (props: {
       : category;
     axios
       .delete(
-        `https://betterbudget.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://better-budget-production.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }

@@ -8,7 +8,7 @@ export default function Login() {
   const login = () => {
     axios
       .post(
-        "https://betterbudget.up.railway.app/login",
+        "https://better-budget-production.up.railway.app/login",
         {
           email,
           password,

@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get("https://betterbudget.up.railway.app/dashboard", { withCredentials: true })
+      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
       .then((data) => {
         setTransactions(data.data.transactions);
       })
