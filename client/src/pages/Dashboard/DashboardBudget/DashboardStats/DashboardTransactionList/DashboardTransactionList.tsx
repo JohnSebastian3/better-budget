@@ -10,21 +10,31 @@ const DashboardTransactionList = (props: {
 
   const onDeleteTransaction = (transaction: TransactionInterface) => {
     props.onDeleteTransaction(transaction);
-  }
+  };
 
   return (
-    <ul className={style["transactions-list"]}>
-      {reversedTransactions.map((transaction, index) => {
-        return (
-          <li key={index} className={style["transactions-item"]}>
-            <DashboardTransactionItem
-              transaction={transaction}
-              onDeleteTransaction={onDeleteTransaction}
-            ></DashboardTransactionItem>
-          </li>
-        );
-      })}
-    </ul>
+    <div className={style["dashboard-stats__transactions"]}>
+      <ul className={style["transactions-list"]}>
+        {props.transactions.length > 0 ? (
+          <>
+            {reversedTransactions.map((transaction, index) => {
+              return (
+                <li key={index} className={style["transactions-item"]}>
+                  <DashboardTransactionItem
+                    transaction={transaction}
+                    onDeleteTransaction={onDeleteTransaction}
+                  ></DashboardTransactionItem>
+                </li>
+              );
+            })}
+          </>
+        ) : (
+          <div className={style["empty-msg"]}>
+            <span>No transactions</span>
+          </div>
+        )}
+      </ul>
+    </div>
   );
 };
 

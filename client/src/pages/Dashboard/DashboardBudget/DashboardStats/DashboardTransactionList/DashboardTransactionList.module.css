@@ -1,3 +1,8 @@
+.dashboard-stats__transactions {
+  height: 350px;
+  overflow-y: auto;
+}
+
 .transactions-list {
   font-size: 1.6rem;
   height: 100%;
@@ -12,3 +17,21 @@
   border-bottom: 1px solid rgba(162, 173, 164, 0.6);
 }
 
+.empty-msg {
+  padding: 1rem;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.empty-msg span {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #999;
+}
+
+@media screen and (min-width: 840px) {
+  .dashboard-stats__transactions {
+    height: 91%;
+  }
+}
