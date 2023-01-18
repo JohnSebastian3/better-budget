@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Button from "../../../../components/UI/Button/Button";
+import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 import { TransactionInterface } from "../../../../Interfaces/TransactionInterface";
 import DashboardGraph from "./DashboardGraph/DashboardGraph";
 import style from "./DashboardStats.module.css";
+import DashboardSummary from "./DashboardSummary/DashboardSummary";
 import DashboardTransactionList from "./DashboardTransactionList/DashboardTransactionList";
 const DashboardStats = (props: {
   totalExpenses: number;
   totalIncome: number;
   transactions: TransactionInterface[];
+  categories: CategoryInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
 }) => {
   const [currentlySelected, setCurrentlySelected] = useState<string>("Graph");
@@ -22,7 +25,7 @@ const DashboardStats = (props: {
 
   const onDeleteTransaction = (transaction: TransactionInterface) => {
     props.onDeleteTransaction(transaction);
-  }
+  };
 
   return (
     <div className={style["dashboard-stats"]}>
@@ -33,9 +36,7 @@ const DashboardStats = (props: {
           value="Breakdown"
           kind={`btn--tab--green`}
           modifier={`${
-            currentlySelected === "Graph"
-              ? "btn--tab--green-selected"
-              : ""
+            currentlySelected === "Graph" ? "btn--tab--green--selected" : ""
           }`}
           disabled={false}
         />
@@ -46,7 +47,7 @@ const DashboardStats = (props: {
           kind={`btn--tab--green`}
           modifier={`${
             currentlySelected === "Transactions"
-              ? "btn--tab--green-selected"
+              ? "btn--tab--green--selected"
               : ""
           }`}
           disabled={false}
@@ -54,19 +55,18 @@ const DashboardStats = (props: {
       </div>
       <>
         {currentlySelected === "Graph" ? (
-          <div className={style["dashboard-stats__graph"]}>
+          <>
             <DashboardGraph
               totalExpenses={props.totalExpenses}
               totalIncome={props.totalIncome}
             />
-          </div>
+            <DashboardSummary categories={props.categories} transactions={props.transactions}></DashboardSummary>
+          </>
         ) : (
-          <div className={style['dashboard-stats__transactions']}>
-            <DashboardTransactionList
-              transactions={props.transactions}
-              onDeleteTransaction={onDeleteTransaction}
-            ></DashboardTransactionList>
-          </div>
+          <DashboardTransactionList
+            transactions={props.transactions}
+            onDeleteTransaction={onDeleteTransaction}
+          ></DashboardTransactionList>
         )}
       </>
     </div>
