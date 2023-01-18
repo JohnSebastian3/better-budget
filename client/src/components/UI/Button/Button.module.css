@@ -33,19 +33,26 @@
   background-color: #51c591;
 }
 
-.btn--secondary--green {
+.btn--tab--green {
   width: 120px;
   background-color: transparent;
   border-radius: 0px;
   padding: 20px 15px;
 }
 
-.btn--secondary--green-selected{
+.btn--tab--green-selected{
   color: #3D9970;
   font-weight: bold;
   border-bottom: 3px solid #3D9970;
 }
 
-.btn--secondary--green:hover {
+.btn--secondary--green {
+  border: 1px solid #3D9970;
+  color: #3D9970;
+  background-color: transparent;
+}
 
+.btn--secondary--green:hover {
+  color: #EFF2F1;
+  background-color: #3D9970;
 }
