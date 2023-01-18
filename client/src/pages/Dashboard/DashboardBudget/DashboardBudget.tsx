@@ -37,7 +37,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   useEffect(() => {
     axios
-      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
+      .get("http://localhost:4000/dashboard", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -252,7 +252,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const createBudget = () => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/createBudget",
+        "http://localhost:4000/dashboard/createBudget",
         { month, year },
         { withCredentials: true }
       )
@@ -286,7 +286,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     console.log('deleting:', transaction);
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
+        `http://localhost:4000/dashboard/deleteTransaction/${transaction._id}`
       )
       .then((res) => {
         console.log('next step');
@@ -331,6 +331,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
           totalIncome={totalIncome}
           transactions={filteredTransactions}
           onDeleteTransaction={deleteTransaction}
+          categories={currentFilteredCategories}
         />
         <DashboardTransactionForm
           onAddExpense={addExpense}
