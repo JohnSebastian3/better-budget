@@ -1,5 +1,3 @@
-import { E } from "chart.js/dist/chunks/helpers.core";
-import React from "react";
 import style from "./BudgetBar.module.css";
 
 const BudgetBar = (props: {
@@ -39,7 +37,7 @@ const BudgetBar = (props: {
         <>
           <div className={style["chart-bar__label chart-bar--income"]}>
             <span>
-              Received ${props.currentValue} of ${props.totalBudgetValue}
+              ${props.currentValue} / ${props.totalBudgetValue}
             </span>
           </div>
           <div className={style["chart-bar__inner"]}>
@@ -55,7 +53,7 @@ const BudgetBar = (props: {
             {props.totalBudgetValue - props.currentValue < 0 ? (
               <span style={{ color: "red" }}>
                 ${Math.abs(props.totalBudgetValue - props.currentValue).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} over
-                budget
+                spent
               </span>
             ) : (
               <span>
@@ -64,7 +62,7 @@ const BudgetBar = (props: {
                   "en-US",
                   { maximumFractionDigits: 2, minimumFractionDigits: 2 }
                 )}{" "}
-                / ${props.totalBudgetValue} left
+                / ${props.totalBudgetValue} 
               </span>
             )}
           </div>
