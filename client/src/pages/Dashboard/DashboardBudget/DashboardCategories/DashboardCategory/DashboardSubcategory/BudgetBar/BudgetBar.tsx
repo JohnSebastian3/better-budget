@@ -21,8 +21,8 @@ const BudgetBar = (props: {
           ) + "%";
       }
     } else {
-      if(props.isIncome) {
-        barFillAmount = '100%';
+      if (props.isIncome) {
+        barFillAmount = "100%";
       } else {
         barFillAmount = "0%";
       }
@@ -37,7 +37,11 @@ const BudgetBar = (props: {
         <>
           <div className={style["chart-bar__label chart-bar--income"]}>
             <span>
-              ${props.currentValue} / ${props.totalBudgetValue}
+              ${props.currentValue} / $
+              {props.totalBudgetValue.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </span>
           </div>
           <div className={style["chart-bar__inner"]}>
@@ -52,8 +56,14 @@ const BudgetBar = (props: {
           <div className={style["chart-bar__label chart-bar--expense"]}>
             {props.totalBudgetValue - props.currentValue < 0 ? (
               <span style={{ color: "red" }}>
-                ${Math.abs(props.totalBudgetValue - props.currentValue).toLocaleString('en-US', {maximumFractionDigits: 2, minimumFractionDigits: 2})} over
-                spent
+                $
+                {Math.abs(
+                  props.totalBudgetValue - props.currentValue
+                ).toLocaleString("en-US", {
+                  maximumFractionDigits: 2,
+                  minimumFractionDigits: 2,
+                })}{" "}
+                over spent
               </span>
             ) : (
               <span>
@@ -62,7 +72,7 @@ const BudgetBar = (props: {
                   "en-US",
                   { maximumFractionDigits: 2, minimumFractionDigits: 2 }
                 )}{" "}
-                / ${props.totalBudgetValue} 
+                / ${(props.totalBudgetValue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
               </span>
             )}
           </div>
