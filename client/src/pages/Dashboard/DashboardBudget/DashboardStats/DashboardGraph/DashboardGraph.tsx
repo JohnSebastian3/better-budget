@@ -13,7 +13,7 @@ const DashboardGraph = (props: {
   const config = {
     type: "Doughnut",
     data: {
-      labels: ["Amount Spent", "Amount Left"],
+      labels: ["Spent", "Remaining"],
       datasets: [
         {
           data: [
@@ -37,37 +37,39 @@ const DashboardGraph = (props: {
   };
 
   return (
-    <div className={style["dashboard__graph"]}>
-      <div className={style["dashboard__item"]}>
-        <div className={style["dashboard__chart"]}>
-          <Doughnut {...config}></Doughnut>
-          <div className={style["dashboard__info"]}>
-            <span className={style["dashboard__total-value"]}>
-              <div className={style["dashboard__spent"]}>
-                Spent: <br></br>${props.totalExpenses} of ${props.totalIncome}
-              </div>
-              <br></br>
-              <div className={style["dashboard__remaining"]}>
-                {moneyLeft < 0 ? (
-                  <span style={{ color: "red" }}>
-                    $
-                    {Math.abs(moneyLeft).toLocaleString("en-US", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                    })}{" "}
-                    over budget
-                  </span>
-                ) : (
-                  <span>
-                    Remaining: <br></br>$
-                    {moneyLeft.toLocaleString("en-US", {
-                      maximumFractionDigits: 2,
-                      minimumFractionDigits: 2,
-                    })}{" "}
-                  </span>
-                )} 
-              </div>
-            </span>
+    <div className={style["dashboard-stats__graph"]}>
+      <div className={style["dashboard__graph"]}>
+        <div className={style["dashboard__item"]}>
+          <div className={style["dashboard__chart"]}>
+            <Doughnut {...config}></Doughnut>
+            <div className={style["dashboard__info"]}>
+              <span className={style["dashboard__total-value"]}>
+                <div className={style["dashboard__spent"]}>
+                  Spent: <br></br>${props.totalExpenses} of ${props.totalIncome}
+                </div>
+                <br></br>
+                <div className={style["dashboard__remaining"]}>
+                  {moneyLeft < 0 ? (
+                    <span style={{ color: "red" }}>
+                      $
+                      {Math.abs(moneyLeft).toLocaleString("en-US", {
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                      })}{" "}
+                      over budget
+                    </span>
+                  ) : (
+                    <span>
+                      Remaining: <br></br>$
+                      {moneyLeft.toLocaleString("en-US", {
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                      })}{" "}
+                    </span>
+                  )}
+                </div>
+              </span>
+            </div>
           </div>
         </div>
       </div>

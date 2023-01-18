@@ -1,6 +1,10 @@
+.dashboard-stats__graph {
+  height: 350px;
+}
+
 .dashboard__graph {
   position: relative;
-  margin: 5rem 0;
+  padding: 5rem 0;
 }
 
 .dashboard__chart {
