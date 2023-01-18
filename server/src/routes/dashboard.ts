@@ -10,4 +10,5 @@ router.post('/createBudget', dashboardController.createBudget);
 router.put('/setSubcategoryBudget/:category/:subcategory/:year/:month', dashboardController.setSubcategoryBudget);
 router.delete('/deleteSubcategory/:category/:subcategory/:month/:year/:day', dashboardController.deleteSubcategory);
 router.delete('/deleteCategory/:category/:month/:year/:day', dashboardController.deleteCategory);
+router.delete('/deleteTransaction/:id', dashboardController.deleteTransaction)
 module.exports = router;
