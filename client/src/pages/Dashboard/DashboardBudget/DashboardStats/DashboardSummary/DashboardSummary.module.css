@@ -1,0 +1,21 @@
+.dashboard-stats__summary {
+  display: none;
+}
+
+.summary-tabs {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid rgba(162, 173, 164, 0.6);
+}
+
+.summary-info {
+  padding: 2rem 3rem;
+}
+
+@media screen and (min-width: 840px) {
+  .dashboard-stats__summary {
+    display: block;
+    padding: 1rem 2rem;
+  }
+
+}
