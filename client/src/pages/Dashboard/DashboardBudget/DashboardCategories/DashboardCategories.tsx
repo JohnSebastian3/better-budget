@@ -54,6 +54,7 @@ const DashboardCategories = (props: {
 }) => {
   const { register, handleSubmit, reset } = useForm();
   const [isFormShown, setisFormShown] = useState<boolean>(false);
+  const [newCategoryInput, setNewCategoryInput] = useState<string>("");
 
   const showForm = () => {
     setisFormShown(true);
@@ -61,6 +62,8 @@ const DashboardCategories = (props: {
 
   const hideForm = () => {
     setisFormShown(false);
+    setNewCategoryInput('');
+    reset();
   };
 
   const onSubmit = (data: any) => {
@@ -81,7 +84,7 @@ const DashboardCategories = (props: {
     if (valid) {
       axios
         .post(
-          "https://better-budget-production.up.railway.app/dashboard/addCategory",
+          "http://localhost:4000/dashboard/addCategory",
           {
             newCategory,
           },
@@ -110,7 +113,7 @@ const DashboardCategories = (props: {
       : category;
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `http://localhost:4000/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -185,7 +188,7 @@ const DashboardCategories = (props: {
               ) : (
                 <div className={style["budget-left"]}>
                   <p>
-                    <span className={style['budget-dollars']}>
+                    <span className={style["budget-dollars"]}>
                       $
                       {(
                         props.totalSetIncome - props.totalSetBudget
@@ -227,13 +230,26 @@ const DashboardCategories = (props: {
             >
               <input
                 type="text"
-                placeholder="Category"
+                placeholder="New Category"
+                value={newCategoryInput}
                 {...register("category")}
+                onChange={(event) => setNewCategoryInput(event.target.value)}
               />
-              <button type="submit">Add</button>
-              <button type="button" onClick={hideForm}>
-                Cancel
-              </button>
+              <div className={style["form-buttons"]}>
+                <Button
+                  type="button"
+                  value="Cancel"
+                  kind="btn--secondary--transparent--dark"
+                  disabled={false}
+                  onClick={hideForm}
+                ></Button>
+                <Button
+                  type="submit"
+                  value="Add"
+                  kind="btn--primary--green"
+                  disabled={newCategoryInput ? false : true}
+                ></Button>
+              </div>
             </form>
           ) : (
             <Button
