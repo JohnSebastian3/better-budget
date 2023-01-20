@@ -56,7 +56,7 @@ const DashboardGraph = (props: {
                         maximumFractionDigits: 2,
                         minimumFractionDigits: 2,
                       })}{" "}
-                      over budget
+                      over spent
                     </span>
                   ) : (
                     <span>
