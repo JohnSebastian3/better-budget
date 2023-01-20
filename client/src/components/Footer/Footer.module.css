@@ -1,7 +1,11 @@
 .footer {
   background-color: #3d9970;
   color: #eff2f1;
-  padding: 40px 0;
+  padding: 50px 0;
+}
+
+.footer__content {
+  text-align: center;
 }
 
 .footer__logo {
@@ -10,6 +14,7 @@
   font-size: 2rem;
   text-align: center;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
@@ -25,6 +30,12 @@
   justify-content: space-between;
 }
 
+.footer-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
 .footer__links__explore {
   display: flex;
   flex-direction: column;
@@ -32,12 +43,14 @@
 }
 
 .footer__links__explore a,
-.footer__links__get-started a {
+.footer__links__get-started a,
+.footer-icons a {
   color: #eff2f1;
 }
 
 .footer__links__explore a:hover,
-.footer__links__get-started a:hover {
+.footer__links__get-started a:hover,
+.footer-icons a:hover {
   color: #51c591;
 }
 
@@ -48,6 +61,7 @@
 }
 
 @media screen and (min-width: 840px) {
+
   .footer__logo {
     font-size: 3rem;
   }

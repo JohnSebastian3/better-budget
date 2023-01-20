@@ -1,16 +1,16 @@
 .btn {
   border: none;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
   color: #777;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
 }
 
 .btn--primary--purple,
 .btn--primary--green {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 1px;
   color: #EFF2F1;
@@ -23,6 +23,11 @@
 
 .btn--primary--green {
   background-color: #3D9970;
+}
+
+.btn--small {
+  padding: 8px 12px;
+  font-size: 1.25rem;
 }
 
 .btn--primary--purple:hover {

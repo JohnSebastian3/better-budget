@@ -31,7 +31,10 @@
     background-color: transparent;
     flex-direction: row;
     border-top: none;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    padding: 0;
+    justify-content: flex-end;
+    gap: 5rem;
     height: auto;
     pointer-events: auto;
   }
