@@ -12,7 +12,7 @@ const MainIntro = () => {
           ></GiReceiveMoney>
           <h2>Money matters, and so do you.</h2>
           <p>
-            BetterBudger is a tool to help you get a headstart on your finances
+            BetterBudget is a tool to help you get a headstart on your finances
             and build the tomorrow that you want.
           </p>
           <p>

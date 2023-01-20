@@ -13,7 +13,7 @@ const MainFooter = () => {
             style={{ marginBottom: "20px" }}
           ></AiOutlineDashboard>
           <h2>Stop feeling guilty when you spend.</h2>
-          <p>Start spending with condifence and without guilt.</p>
+          <p>Start spending with confidence and without guilt.</p>
           <Link to={"/register"}>
             <Button
               type={"button"}
