@@ -1,0 +1,23 @@
+.budget-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(162, 173, 164, 0.6);
+  display: flex;
+  justify-content: space-between;
+}
+
+.budget-title {
+  font-weight: 600;
+}
+
+.budget-amount {
+  display: flex;
+  /* gap: 1rem; */
+}
+
+.budget-amount span {
+  text-align: right;
+}
+
+.budget-percentage {
+  min-width: 80px;
+}

@@ -1,7 +1,7 @@
 .main__footer {
   background-color: rgba(81, 197, 145, 0.2);
   color: #02452d;
-  padding: 40px 0;
+  padding: 50px 0;
 }
 
 .main__footer-content {
@@ -9,5 +9,11 @@
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+}
+
+@media screen and (min-width: 840px) {
+  .main__footer {
+    padding: 100px 0;
+  }
 }
 

@@ -1,7 +1,7 @@
 .main__intro{
   background-color: #3D9970;
   color: #EFF2F1;
-  padding: 40px 0;
+  padding: 50px 0;
 }
 
 .main__intro-content {
@@ -9,4 +9,16 @@
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+}
+
+@media screen and (min-width: 840px) {
+
+  .main__intro {
+    padding: 100px 0;
+  }
+
+  .main__intro-content p{
+    width: 100%;
+    text-align: left;
+  }
 }

@@ -9,7 +9,10 @@
 }
 
 .summary-info {
-  padding: 2rem 3rem;
+  padding: 2rem 1rem;
+  font-size: 1.6rem;
+  height: 320px;
+  overflow-y: auto;
 }
 
 @media screen and (min-width: 840px) {

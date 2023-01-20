@@ -1,0 +1,23 @@
+.remaining-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(162, 173, 164, 0.6);
+  display: flex;
+  justify-content: space-between;
+}
+
+.remaining-title {
+  font-weight: 600;
+}
+
+.remaining-amount {
+  display: flex;
+  /* gap: 1rem; */
+}
+
+.remaining-amount span {
+  text-align: right;
+}
+
+.remaining-percentage {
+  min-width: 80px;
+}

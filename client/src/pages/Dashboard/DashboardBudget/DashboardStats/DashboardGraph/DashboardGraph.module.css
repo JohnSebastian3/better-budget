@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.dashboard__spent {
+  color: #666;
+}
+
 
 .dashboard__info {
   width: 175px;

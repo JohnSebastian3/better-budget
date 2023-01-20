@@ -1,0 +1,23 @@
+.spent-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(162, 173, 164, 0.6);
+  display: flex;
+  justify-content: space-between;
+}
+
+.spent-title {
+  font-weight: 600;
+}
+
+.spent-amount {
+  display: flex;
+  /* gap: 1rem; */
+}
+
+.spent-amount span {
+  text-align: right;
+}
+
+.spent-percentage {
+  min-width: 80px;
+}
