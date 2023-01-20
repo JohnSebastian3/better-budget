@@ -29,7 +29,7 @@ const MainDescription = () => {
             <h3>Profit</h3>
             <p>
               Over time, budgeting will help bolster your savings as well as
-              your condifence in your financial future.
+              your confidence in your financial future.
             </p>
           </div>
         </div>
