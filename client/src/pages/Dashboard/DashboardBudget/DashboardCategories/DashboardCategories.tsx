@@ -84,7 +84,7 @@ const DashboardCategories = (props: {
     if (valid) {
       axios
         .post(
-          "http://localhost:4000/dashboard/addCategory",
+          "https://better-budget-production.up.railway.app/dashboard/addCategory",
           {
             newCategory,
           },
@@ -103,8 +103,8 @@ const DashboardCategories = (props: {
       alert("Category already exists");
     }
 
-    reset();
     setisFormShown(false);
+    reset();
   };
 
   const deleteCategory = (category: string) => {
@@ -113,7 +113,7 @@ const DashboardCategories = (props: {
       : category;
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://better-budget-production.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -240,6 +240,7 @@ const DashboardCategories = (props: {
                   type="button"
                   value="Cancel"
                   kind="btn--secondary--transparent--dark"
+                  modifier="btn--small"
                   disabled={false}
                   onClick={hideForm}
                 ></Button>
@@ -247,6 +248,7 @@ const DashboardCategories = (props: {
                   type="submit"
                   value="Add"
                   kind="btn--primary--green"
+                  modifier="btn--small"
                   disabled={newCategoryInput ? false : true}
                 ></Button>
               </div>
@@ -256,6 +258,7 @@ const DashboardCategories = (props: {
               type="submit"
               value="Add Category"
               kind="btn--primary--green"
+              modifier="btn--small"
               disabled={false}
               onClick={showForm}
             ></Button>
