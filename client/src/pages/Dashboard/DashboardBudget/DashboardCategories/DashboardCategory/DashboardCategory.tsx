@@ -56,8 +56,6 @@ const DashboardCategory = (props: {
   >([]);
   const [newSubcategoryInput, setNewSubcategoryInput] = useState<string>("");
 
-  console.log(newSubcategoryInput);
-
   useEffect(() => {
     setSubcategories(props.subcategories);
   }, []);
@@ -87,7 +85,7 @@ const DashboardCategory = (props: {
     if (valid) {
       axios
         .post(
-          `http://localhost:4000/dashboard/addSubcategory/${categoryTitle}`,
+          `https://better-budget-production.up.railway.app/dashboard/addSubcategory/${categoryTitle}`,
           {
             subcategory,
           },
@@ -115,6 +113,7 @@ const DashboardCategory = (props: {
             subcategory.dateMonth,
             subcategory.dateYear
           );
+          reset();
         });
     } else {
       alert("Subcategory already exists");
@@ -149,7 +148,7 @@ const DashboardCategory = (props: {
     }
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://better-budget-production.up.railway.app/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -195,7 +194,7 @@ const DashboardCategory = (props: {
     <div className={style["categories"]}>
       <div className={style["category-header"]}>
         <div className={style["header-title"]}>
-          <h3>{props.category.title}</h3>
+          <h2>{props.category.title}</h2>
           {props.category.title !== "Income" &&
           props.category.title !== "Spending" ? (
             <div className={style["category-delete"]}>
@@ -250,6 +249,7 @@ const DashboardCategory = (props: {
               type="button"
               value="Cancel"
               kind="btn--secondary--transparent"
+              modifier="btn--small"
               disabled={false}
               onClick={hideForm}
             ></Button>
@@ -257,6 +257,7 @@ const DashboardCategory = (props: {
               type="submit"
               value="Add"
               kind="btn--primary--green"
+              modifier="btn--small"
               disabled={newSubcategoryInput ? false : true}
             ></Button>
           </div>
@@ -266,6 +267,7 @@ const DashboardCategory = (props: {
           type="submit"
           value="Add Subcategory"
           kind="btn--secondary--green"
+          modifier="btn--small"
           disabled={false}
           onClick={showForm}
         ></Button>
