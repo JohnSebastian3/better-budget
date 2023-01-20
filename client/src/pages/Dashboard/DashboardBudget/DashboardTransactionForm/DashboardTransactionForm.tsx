@@ -31,7 +31,7 @@ const DashboardTransactionForm = (props: {
 
   const closeModal = () => {
     setModalOpen(false);
-    setIsIncome(false);
+    setIsIncome(false); 
   };
 
   const openModal = () => {
@@ -95,7 +95,6 @@ const DashboardTransactionForm = (props: {
     if (filteredCategory.length >= 1) {
       setCurrentCategory(filteredCategory[0].title);
       if (filteredCategory[0].subcategories.length >= 1) {
-        console.log("should set");
         setCurrentSubcategory(filteredCategory[0].subcategories[0].title);
       } else {
         setCurrentSubcategory("");
@@ -118,7 +117,6 @@ const DashboardTransactionForm = (props: {
       });
       if (incomeCategory.length >= 1) {
         if (incomeCategory[0].subcategories.length >= 1) {
-          console.log("setting to:", incomeCategory[0].subcategories[0].title);
           setCurrentSubcategory(incomeCategory[0].subcategories[0].title);
         } else {
           setCurrentSubcategory("");
@@ -143,22 +141,23 @@ const DashboardTransactionForm = (props: {
   const onSubmit = (data: any) => {
     axios
       .post(
-        "http://localhost:4000/dashboard/addTransaction",
+        "https://better-budget-production.up.railway.app/dashboard/addTransaction",
         {
           title: data.title || "No Description",
           category: isIncome ? "Income" : currentCategory,
           subcategory: currentSubcategory ? currentSubcategory : "",
           value: Number(data.value),
           isIncome: isIncome,
-          dateDay: props.selectedDay,
-          dateMonth: props.selectedMonth,
-          dateYear: props.selectedYear,
+          dateDay: selectedDate.getUTCDate(),
+          dateMonth: selectedDate.getUTCMonth(),
+          dateYear: selectedDate.getUTCFullYear(),
         },
         {
           withCredentials: true,
         }
       )
       .then((res) => {
+        setSelectedDate(new Date());
         props.onAddExpense(res.data);
       })
       .catch((err) => {
@@ -301,6 +300,7 @@ const DashboardTransactionForm = (props: {
                       type="button"
                       value="Cancel"
                       kind="btn--secondary--transparent"
+                      modifier="btn--small"
                       onClick={() => setModalOpen(false)}
                       disabled={false}
                     ></Button>
@@ -309,6 +309,7 @@ const DashboardTransactionForm = (props: {
                         type="submit"
                         value="Add Income"
                         kind="btn--primary--green"
+                        modifier="btn--small"
                         disabled={false}
                       ></Button>
                     ) : (
@@ -419,6 +420,7 @@ const DashboardTransactionForm = (props: {
                       type="button"
                       value="Cancel"
                       kind="btn--secondary--transparent"
+                      modifier="btn--small"
                       onClick={() => setModalOpen(false)}
                       disabled={false}
                     ></Button>
@@ -427,6 +429,7 @@ const DashboardTransactionForm = (props: {
                         type="submit"
                         value="Add Expense"
                         kind="btn--primary--green"
+                        modifier="btn--small"
                         disabled={false}
                       ></Button>
                     ) : (
@@ -434,6 +437,7 @@ const DashboardTransactionForm = (props: {
                         type="submit"
                         value="Add Expense"
                         kind="btn--primary--green"
+                        modifier="btn--small"
                         disabled={true}
                       ></Button>
                     )}
