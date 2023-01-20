@@ -6,7 +6,10 @@ const DashboardTransactionList = (props: {
   transactions: TransactionInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
 }) => {
-  const reversedTransactions = [...props.transactions].reverse();
+
+  const sortedTransactions = props.transactions.sort((a, b) => {
+    return Number(b.dateDay) - Number(a.dateDay);
+  })
 
   const onDeleteTransaction = (transaction: TransactionInterface) => {
     props.onDeleteTransaction(transaction);
@@ -17,7 +20,7 @@ const DashboardTransactionList = (props: {
       <ul className={style["transactions-list"]}>
         {props.transactions.length > 0 ? (
           <>
-            {reversedTransactions.map((transaction, index) => {
+            {sortedTransactions.map((transaction, index) => {
               return (
                 <li key={index} className={style["transactions-item"]}>
                   <DashboardTransactionItem
