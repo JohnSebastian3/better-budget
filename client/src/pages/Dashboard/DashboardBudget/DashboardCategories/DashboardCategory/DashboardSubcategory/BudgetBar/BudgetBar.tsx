@@ -37,7 +37,12 @@ const BudgetBar = (props: {
         <>
           <div className={style["chart-bar__label chart-bar--income"]}>
             <span>
-              ${props.currentValue} / $
+              $
+              {props.currentValue.toLocaleString("en-US", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}{" "}
+              / $
               {props.totalBudgetValue.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -72,7 +77,11 @@ const BudgetBar = (props: {
                   "en-US",
                   { maximumFractionDigits: 2, minimumFractionDigits: 2 }
                 )}{" "}
-                / ${(props.totalBudgetValue).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                / $
+                {props.totalBudgetValue.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </span>
             )}
           </div>
