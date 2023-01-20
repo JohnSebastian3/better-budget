@@ -37,7 +37,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/dashboard", { withCredentials: true })
+      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -62,7 +62,6 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     const incomeCategory = filteredCategories.find(
       (cat) => cat.title === "Income"
     );
-    console.log(incomeCategory);
     if (incomeCategory) {
       const totalIncomeAmount = incomeCategory.subcategories.reduce(
         (acc, curr) => {
@@ -99,7 +98,6 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   };
 
   const changeDay = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log(new Date(event.target.value).getMonth());
     setDay(new Date(event.target.value).getUTCDate());
   };
 
@@ -252,7 +250,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const createBudget = () => {
     axios
       .post(
-        "http://localhost:4000/dashboard/createBudget",
+        "https://better-budget-production.up.railway.app/dashboard/createBudget",
         { month, year },
         { withCredentials: true }
       )
@@ -267,7 +265,6 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   };
 
   const deleteTransactions = (transactionsToDelete: TransactionInterface[]) => {
-    console.log(transactionsToDelete);
     const filteredTransactions = transactions.filter(
       (trxToRemove) =>
         !transactionsToDelete.find(
@@ -283,13 +280,11 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   };
 
   const deleteTransaction = (transaction: TransactionInterface) => {
-    console.log('deleting:', transaction);
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteTransaction/${transaction._id}`
+        `https://better-budget-production.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
       )
       .then((res) => {
-        console.log('next step');
         const filteredTransactions = transactions.filter(trx => {
           return trx._id !== transaction._id;
         })

@@ -41,10 +41,6 @@ const DashboardSubcategory = (props: {
     );
   }, [transactions]);
 
-  const [subcategoryDeleteIsVisible, setSubcategoryDeleteIsVisible] =
-    useState<boolean>(false);
-  const [transactionDeleteIsVisible, setTransactionDeleteIsVisible] =
-    useState<boolean>(false);
   const [budgetAmount, setBudgetAmount] = useState<number>(0);
   const [expenseAmount, setExpenseAmount] = useState<number>(0);
 
@@ -52,21 +48,6 @@ const DashboardSubcategory = (props: {
     setBudgetAmount(props.subcategory.budget);
   }, [props.subcategory.budget]);
 
-  const showSubcategoryDeleteOption = (event: any) => {
-    setSubcategoryDeleteIsVisible(true);
-  };
-
-  const hideSubcategoryDeleteOption = (event: any) => {
-    setSubcategoryDeleteIsVisible(false);
-  };
-
-  const showTransactionDeleteOption = (event: any) => {
-    setTransactionDeleteIsVisible(true);
-  };
-
-  const hideTransactionDeleteOption = (event: any) => {
-    setTransactionDeleteIsVisible(false);
-  };
 
   const onDeleteSubcategory = () => {
     props.onDeleteSubcategory(props.subcategory);
@@ -88,7 +69,7 @@ const DashboardSubcategory = (props: {
     }
     axios
       .put(
-        `http://localhost:4000/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `https://better-budget-production.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
@@ -105,13 +86,10 @@ const DashboardSubcategory = (props: {
     <div className={style["dashboard__subcategory"]}>
       <div
         className={style["subcategory__container"]}
-        onMouseOver={(event) => showSubcategoryDeleteOption(event)}
-        onMouseLeave={(event) => hideSubcategoryDeleteOption(event)}
       >
         <div className={style["subcategory-header"]}>
           <h3>{props.subcategory.title}</h3>
           <div className={style["delete-icon"]}>
-            {subcategoryDeleteIsVisible ? (
               <div className={style['subcategory-delete']}>
                 <AiOutlineClose
                   size={"15px"}
@@ -119,9 +97,6 @@ const DashboardSubcategory = (props: {
                   style={{ cursor: "pointer" }}
                 ></AiOutlineClose>
               </div>
-            ) : (
-              ""
-            )}
           </div>
         </div>
         <div className={style["subcategory__budget-amount"]}>
