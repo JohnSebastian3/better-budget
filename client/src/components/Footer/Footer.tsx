@@ -28,9 +28,9 @@ const Footer = () => {
           </div>
           <div className={style['footer__copyright']}>
             <div className={style['footer-icons']}>
-              <a href="https://github.com/JohnSebastian3" target="_blank"><AiFillGithub size={'25px'}/></a>
-              <a href="https://www.linkedin.com/in/johnsguerrero/" target="_blank"><AiFillLinkedin size={'25px'}/></a>
-              <a href="https://twitter.com/SebaCodes" target="_blank"><AiOutlineTwitter size={'25px'}/></a>
+              <a href="https://github.com/JohnSebastian3" target="_blank"><AiFillGithub size={'30px'}/></a>
+              <a href="https://www.linkedin.com/in/johnsguerrero/" target="_blank"><AiFillLinkedin size={'30px'}/></a>
+              <a href="https://twitter.com/SebaCodes" target="_blank"><AiOutlineTwitter size={'30px'}/></a>
             </div>
             <small>Developed by John Guerrero &copy; 2023</small>
           </div>
