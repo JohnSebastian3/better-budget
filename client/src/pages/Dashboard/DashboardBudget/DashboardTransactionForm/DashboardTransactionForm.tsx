@@ -141,7 +141,7 @@ const DashboardTransactionForm = (props: {
   const onSubmit = (data: any) => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/addTransaction",
+        "http://localhost:4000/dashboard/addTransaction",
         {
           title: data.title || "No Description",
           category: isIncome ? "Income" : currentCategory,
@@ -245,6 +245,7 @@ const DashboardTransactionForm = (props: {
                     type="text"
                     placeholder="Income Description"
                     {...register("title")}
+                    required
                   />
                   <div className={style["amount-date-inputs"]}>
                     <input
@@ -253,6 +254,7 @@ const DashboardTransactionForm = (props: {
                       placeholder="$0.00"
                       {...register("value")}
                       className={style["amount-input"]}
+                      required
                     />
                     <input
                       type="date"
@@ -328,6 +330,7 @@ const DashboardTransactionForm = (props: {
                     type="text"
                     placeholder="Expense Description"
                     {...register("title")}
+                    required
                   ></input>
                   <div className={style["amount-date-inputs"]}>
                     <input
@@ -336,6 +339,7 @@ const DashboardTransactionForm = (props: {
                       placeholder="$0.00"
                       {...register("value")}
                       className={style["amount-input"]}
+                      required
                     />
                     <input
                       type="date"
