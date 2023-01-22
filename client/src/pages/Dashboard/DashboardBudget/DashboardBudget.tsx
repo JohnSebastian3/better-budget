@@ -9,7 +9,7 @@ import DashboardTransactionForm from "./DashboardTransactionForm/DashboardTransa
 import DashboardCategories from "./DashboardCategories/DashboardCategories";
 import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 
-const DashboardBudget = (props: { month: number; year: number }) => {
+const DashboardBudget = () => {
   const ctx = useContext(userContext);
 
   const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
@@ -37,7 +37,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
 
   useEffect(() => {
     axios
-      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
+      .get("http://localhost:4000/dashboard", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -247,10 +247,47 @@ const DashboardBudget = (props: { month: number; year: number }) => {
     });
   };
 
+  const updateSubcategory = (
+    oldTitle: string,
+    newTitle: string,
+    category: string,
+    month: number,
+    year: number
+  ) => {
+    console.log('shouold be setting iwth:', oldTitle, newTitle, category, month, year);
+    setCategories((prev) => {
+      const updatedCats = prev.map((cat) => {
+        if(cat.title === category && cat.dateMonth === month && cat.dateYear === year) {
+          cat.subcategories = cat.subcategories.map((subcat) => {
+            if(subcat.title === oldTitle) {
+              subcat.title = newTitle;
+              return subcat;
+            }
+            return subcat;
+          });
+          return cat;
+        }
+        return cat;
+      })
+      return updatedCats;
+    });
+
+   setTransactions((prev) => {
+    const updatedTrx = prev.map((trx) => {
+      if(trx.category === category && trx.subcategory === oldTitle && trx.dateMonth === month && trx.dateYear === year) {
+        trx.subcategory = newTitle;
+      }
+      return trx;
+    })
+    return updatedTrx;
+   })
+
+  };
+
   const createBudget = () => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/createBudget",
+        "http://localhost:4000/dashboard/createBudget",
         { month, year },
         { withCredentials: true }
       )
@@ -282,12 +319,12 @@ const DashboardBudget = (props: { month: number; year: number }) => {
   const deleteTransaction = (transaction: TransactionInterface) => {
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
+        `http://localhost:4000/dashboard/deleteTransaction/${transaction._id}`
       )
       .then((res) => {
-        const filteredTransactions = transactions.filter(trx => {
+        const filteredTransactions = transactions.filter((trx) => {
           return trx._id !== transaction._id;
-        })
+        });
         setTransactions(filteredTransactions);
       })
       .catch((err) => {});
@@ -315,6 +352,7 @@ const DashboardBudget = (props: { month: number; year: number }) => {
           onAddSubcategory={addSubcategory}
           onDeleteCategory={deleteCategory}
           onDeleteSubcategory={deleteSubcategory}
+          onUpdateSubcategory={updateSubcategory}
           onUpdateBudget={updateBudget}
           onCreateBudget={createBudget}
           deleteTransactions={deleteTransactions}
