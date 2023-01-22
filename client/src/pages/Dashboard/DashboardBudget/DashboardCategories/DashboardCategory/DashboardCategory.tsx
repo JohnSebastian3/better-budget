@@ -35,6 +35,13 @@ const DashboardCategory = (props: {
     dateMonth: number,
     dateYear: number
   ) => void;
+  onUpdateSubcategory: (
+    oldTitle: string,
+    newTitle: string,
+    category: string,
+    month: number,
+    year: number
+  ) => void;
   onDeleteCategory: (category: string) => void;
   onDeleteSubcategory: (
     subcategories: {
@@ -66,7 +73,7 @@ const DashboardCategory = (props: {
 
   const onSubmit = (data: any) => {
     let categoryTitle = props.category.title.includes("/")
-      ? props.category.title.replace("/", "&dash")
+      ? props.category.title.replaceAll("/", "&dash")
       : props.category.title;
     let newSubcategory = data.subcategory;
     const subcategory = {
@@ -85,7 +92,7 @@ const DashboardCategory = (props: {
     if (valid) {
       axios
         .post(
-          `https://better-budget-production.up.railway.app/dashboard/addSubcategory/${categoryTitle}`,
+          `http://localhost:4000/dashboard/addSubcategory/${categoryTitle}`,
           {
             subcategory,
           },
@@ -129,7 +136,7 @@ const DashboardCategory = (props: {
 
   const hideForm = () => {
     setIsFormShown(false);
-    setNewSubcategoryInput('');
+    setNewSubcategoryInput("");
     reset();
   };
 
@@ -139,16 +146,16 @@ const DashboardCategory = (props: {
   }) => {
     let categoryTitle = props.category.title;
     if (categoryTitle.includes("/")) {
-      categoryTitle = categoryTitle.replace("/", "&dash");
+      categoryTitle = categoryTitle.replaceAll("/", "&dash");
     }
 
     let subcategoryTitle = subcategory.title;
     if (subcategoryTitle.includes("/")) {
-      subcategoryTitle = subcategoryTitle.replace("/", "&dash");
+      subcategoryTitle = subcategoryTitle.replaceAll("/", "&dash");
     }
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `http://localhost:4000/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -210,7 +217,16 @@ const DashboardCategory = (props: {
       </div>
       <div className={style["subcategory-info"]}>
         {props.subcategories.length === 0 ? (
-          <p style={{padding: '2rem 0', fontSize: '1.75rem', color: '#666', fontStyle: 'italic'}}>No subcateogires. Add one now!</p>
+          <p
+            style={{
+              padding: "2rem 0",
+              fontSize: "1.75rem",
+              color: "#666",
+              fontStyle: "italic",
+            }}
+          >
+            No subcateogires. Add one now!
+          </p>
         ) : (
           <>
             {props.subcategories.map((subcategory, index) => {
@@ -225,6 +241,7 @@ const DashboardCategory = (props: {
                   category={props.category.title}
                   onDeleteSubcategory={deleteSubcategory}
                   onUpdateBudget={onUpdateBudget}
+                  onUpdateSubcategory={props.onUpdateSubcategory}
                 />
               );
             })}
@@ -243,8 +260,9 @@ const DashboardCategory = (props: {
             placeholder="New Subcategory"
             {...register("subcategory")}
             onChange={(event) => setNewSubcategoryInput(event.target.value)}
+            required
           />
-          <div className={style['form-buttons']}>
+          <div className={style["form-buttons"]}>
             <Button
               type="button"
               value="Cancel"
