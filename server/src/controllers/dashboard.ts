@@ -156,6 +156,46 @@ module.exports = {
       console.log(err);
     }
   },
+  updateSubcategoryTitle: async (req: any, res: any) => {
+    try {
+      let category = req.params.category;
+      let oldSubcategoryTitle = req.params.subcategory;
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
+      }
+
+      if (oldSubcategoryTitle.includes("&dash")) {
+        oldSubcategoryTitle = oldSubcategoryTitle.replaceAll("&dash", "/");
+      }
+
+      await Category.findOneAndUpdate(
+        {
+          user: req.user._id,
+          title: category,
+          dateMonth: req.params.month,
+          dateYear: req.params.year,
+        },
+        { $set: { "subcategories.$[el].title": req.body.newTitle } },
+        {
+          arrayFilters: [{ "el.title": oldSubcategoryTitle }],
+        }
+      );
+
+      await Transaction.updateMany(
+        {
+          user: req.user._id,
+          category: category,
+          subcategory: oldSubcategoryTitle,
+          dateMonth: req.params.month,
+          dateYear: req.params.year,
+        },
+        { $set: { subcategory: req.body.newTitle } }
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+    }
+  },
   addCategory: async (req: any, res: any) => {
     try {
       let newCategory = new Category({
@@ -174,8 +214,8 @@ module.exports = {
   addSubcategory: async (req: any, res: any) => {
     try {
       let category = req.params.category;
-      if(category.includes('&dash')) {
-        category = category.replace('&dash', '/');
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
       }
       await Category.findOneAndUpdate(
         {
@@ -203,8 +243,8 @@ module.exports = {
     try {
       let category = req.params.category;
 
-      if(category.includes('&dash')) {
-        category = category.replace('&dash', '/');
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
       }
       console.log(category);
       await Category.findOneAndDelete({
@@ -229,19 +269,19 @@ module.exports = {
     try {
       let category = req.params.category;
       let subcategory = req.params.subcategory;
-      if(category.includes('&dash')) {
-        category = category.replace('&dash', '/');
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
       }
 
-      if(subcategory.includes('&dash')) {
-        subcategory = subcategory.replace('/&dash', '/');
+      if (subcategory.includes("&dash")) {
+        subcategory = subcategory.replaceAll("/&dash", "/");
       }
       const updatedCategory = await Category.findOneAndUpdate(
         {
           user: req.user._id,
           title: category,
           dateMonth: Number(req.params.month),
-          dateYear: Number(req.params.year)
+          dateYear: Number(req.params.year),
         },
         {
           $pull: {
@@ -268,19 +308,19 @@ module.exports = {
     try {
       let category = req.params.category;
       let subcategory = req.params.subcategory;
-      if(category.includes('&dash')) {
-        category = category.replace('&dash', '/');
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
       }
 
-      if(subcategory.includes('&dash')) {
-        subcategory = subcategory.replace('&dash', '/');
+      if (subcategory.includes("&dash")) {
+        subcategory = subcategory.replaceAll("&dash", "/");
       }
       const updatedCategory = await Category.findOneAndUpdate(
         {
           user: req.user._id,
           title: category,
           dateMonth: req.params.month,
-          dateYear: req.params.year
+          dateYear: req.params.year,
         },
         { $set: { "subcategories.$[el].budget": req.body.budgetAmount } },
         {
@@ -294,11 +334,12 @@ module.exports = {
   },
   deleteTransaction: async (req: any, res: any) => {
     try {
-      await Transaction.findOneAndDelete({_id: new mongoose.Types.ObjectId(req.params.id)});
-      console.log('should be deleted');
+      await Transaction.findOneAndDelete({
+        _id: new mongoose.Types.ObjectId(req.params.id),
+      });
       res.sendStatus(200);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
-    } 
-  }
+    }
+  },
 };
