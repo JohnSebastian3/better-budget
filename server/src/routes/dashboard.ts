@@ -7,6 +7,7 @@ router.post('/addTransaction', dashboardController.addTransaction);
 router.post('/addCategory', dashboardController.addCategory);
 router.post('/addSubcategory/:category', dashboardController.addSubcategory);
 router.post('/createBudget', dashboardController.createBudget);
+router.put('/updateSubcategory/:category/:subcategory/:year/:month', dashboardController.updateSubcategoryTitle);
 router.put('/setSubcategoryBudget/:category/:subcategory/:year/:month', dashboardController.setSubcategoryBudget);
 router.delete('/deleteSubcategory/:category/:subcategory/:month/:year/:day', dashboardController.deleteSubcategory);
 router.delete('/deleteCategory/:category/:month/:year/:day', dashboardController.deleteCategory);
