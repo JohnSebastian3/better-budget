@@ -49,6 +49,13 @@ const DashboardCategories = (props: {
     category: string,
     budgetAmount: number
   ) => void;
+  onUpdateSubcategory: (
+    oldTitle: string,
+    newTitle: string,
+    category: string,
+    month: number,
+    year: number
+  ) => void;
   onCreateBudget: () => void;
   deleteTransactions: (transactionsToDelete: TransactionInterface[]) => void;
 }) => {
@@ -62,7 +69,7 @@ const DashboardCategories = (props: {
 
   const hideForm = () => {
     setisFormShown(false);
-    setNewCategoryInput('');
+    setNewCategoryInput("");
     reset();
   };
 
@@ -84,7 +91,7 @@ const DashboardCategories = (props: {
     if (valid) {
       axios
         .post(
-          "https://better-budget-production.up.railway.app/dashboard/addCategory",
+          "http://localhost:4000/dashboard/addCategory",
           {
             newCategory,
           },
@@ -109,17 +116,20 @@ const DashboardCategories = (props: {
 
   const deleteCategory = (category: string) => {
     let categoryTitle = category.includes("/")
-      ? category.replace("/", "&dash")
+      ? category.replaceAll("/", "&dash")
       : category;
     axios
       .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `http://localhost:4000/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
       )
       .then((res) => {
         props.onDeleteCategory(category, props.month, props.year);
+        
+        const filteredTransactions = props.transactions.filter((trx) => trx.category === category);
+        props.deleteTransactions(filteredTransactions);
       })
       .catch((err) => {
         console.log(err);
@@ -217,6 +227,7 @@ const DashboardCategories = (props: {
                   onDeleteSubcategory={props.onDeleteSubcategory}
                   onAddSubcategory={onAddSubcategory}
                   onUpdateBudget={onUpdateBudget}
+                  onUpdateSubcategory={props.onUpdateSubcategory}
                   deleteTransactions={deleteTransactions}
                 />
               </Card>
@@ -234,6 +245,7 @@ const DashboardCategories = (props: {
                 value={newCategoryInput}
                 {...register("category")}
                 onChange={(event) => setNewCategoryInput(event.target.value)}
+                required
               />
               <div className={style["form-buttons"]}>
                 <Button
