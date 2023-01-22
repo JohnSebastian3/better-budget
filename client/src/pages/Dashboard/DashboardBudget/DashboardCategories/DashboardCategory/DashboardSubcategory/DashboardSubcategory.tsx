@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { TransactionInterface } from "../../../../../../Interfaces/TransactionInterface";
 import { FaRegTrashAlt } from "react-icons/fa";
 import style from "./DashboardSubcategory.module.css";
@@ -28,6 +28,13 @@ const DashboardSubcategory = (props: {
     },
     budgetAmount: number
   ) => void;
+  onUpdateSubcategory: (
+    oldTitle: string,
+    newTitle: string,
+    category: string,
+    month: number,
+    year: number
+  ) => void;
 }) => {
   let transactions = props.transactions.filter((transaction) => {
     return transaction.subcategory === props.subcategory.title;
@@ -42,12 +49,19 @@ const DashboardSubcategory = (props: {
   }, [transactions]);
 
   const [budgetAmount, setBudgetAmount] = useState<number>(0);
+  const [subcategoryTile, setSubcategoryTitle] = useState<string>("");
   const [expenseAmount, setExpenseAmount] = useState<number>(0);
+
+  console.log(subcategoryTile);
+
+  // useEffect(() => {
+  //   setSubcategoryTitle(props.subcategory.title);
+  // }, [])
 
   useEffect(() => {
     setBudgetAmount(props.subcategory.budget);
-  }, [props.subcategory.budget]);
-
+    setSubcategoryTitle(props.subcategory.title);
+  }, [props.subcategory.budget, props.subcategory.title]);
 
   const onDeleteSubcategory = () => {
     props.onDeleteSubcategory(props.subcategory);
@@ -60,16 +74,16 @@ const DashboardSubcategory = (props: {
   const updateBudget = () => {
     let categoryTitle = props.category;
     if (categoryTitle.includes("/")) {
-      categoryTitle = categoryTitle.replace("/", "&dash");
+      categoryTitle = categoryTitle.replaceAll("/", "&dash");
     }
 
     let subcategoryTitle = props.subcategory.title;
     if (subcategoryTitle.includes("/")) {
-      subcategoryTitle = subcategoryTitle.replace("/", "&dash");
+      subcategoryTitle = subcategoryTitle.replaceAll("/", "&dash");
     }
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `http://localhost:4000/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
@@ -82,21 +96,58 @@ const DashboardSubcategory = (props: {
       });
   };
 
+  const updateSubcategoryTitle = (newTitle: string) => {
+    let categoryTitle = props.category;
+    if (categoryTitle.includes("/")) {
+      categoryTitle = categoryTitle.replaceAll("/", "&dash");
+    }
+
+    let oldSubcategoryTitle = props.subcategory.title;
+    if (oldSubcategoryTitle.includes("/")) {
+      oldSubcategoryTitle = oldSubcategoryTitle.replaceAll("/", "&dash");
+    }
+
+    axios
+      .put(
+        `http://localhost:4000/dashboard/updateSubcategory/${categoryTitle}/${oldSubcategoryTitle}/${props.year}/${props.month}`,
+        { newTitle },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setSubcategoryTitle(newTitle);
+        props.onUpdateSubcategory(
+          props.subcategory.title,
+          newTitle,
+          props.category,
+          props.month,
+          props.year
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return props.subcategory.title !== undefined ? (
     <div className={style["dashboard__subcategory"]}>
-      <div
-        className={style["subcategory__container"]}
-      >
+      <div className={style["subcategory__container"]}>
         <div className={style["subcategory-header"]}>
-          <h3>{props.subcategory.title}</h3>
+          {/* <h3>{props.subcategory.title}</h3> */}
+          <input
+            type="text"
+            value={subcategoryTile}
+            className={style["subcategory-title"]}
+            onChange={(event) => setSubcategoryTitle(event.target.value)}
+            onBlur={(event) => updateSubcategoryTitle(event.target.value)}
+          ></input>
           <div className={style["delete-icon"]}>
-              <div className={style['subcategory-delete']}>
-                <AiOutlineClose
-                  size={"15px"}
-                  onClick={onDeleteSubcategory}
-                  style={{ cursor: "pointer" }}
-                ></AiOutlineClose>
-              </div>
+            <div className={style["subcategory-delete"]}>
+              <AiOutlineClose
+                size={"15px"}
+                onClick={onDeleteSubcategory}
+                style={{ cursor: "pointer" }}
+              ></AiOutlineClose>
+            </div>
           </div>
         </div>
         <div className={style["subcategory__budget-amount"]}>
