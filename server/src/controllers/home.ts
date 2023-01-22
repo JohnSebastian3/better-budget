@@ -24,13 +24,13 @@ module.exports = {
 
     User.findOne({ email }, async (err: Error, doc: DatabaseUserInterface) => {
       if (err) throw err;
-      if (doc) res.send("Email already registered");
+      if (doc) res.sendStatus(402);
       if (!doc) {
         User.findOne(
           { username },
           async (err: Error, doc: DatabaseUserInterface) => {
             if (err) throw err;
-            if (doc) res.send("Username is in use");
+            if (doc) res.sendStatus(409);
             if (!doc) {
               const hashedPassword = await bcrypt.hash(req.body.password, 10);
               const newUser = new User({
