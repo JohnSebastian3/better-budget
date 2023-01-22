@@ -1,10 +1,10 @@
 h1 {
-  font-size: 3.8rem;
+  font-size: 4rem;
   font-weight: 500;
 }
 
 h2 {
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   font-weight: 600;
 }
 
@@ -17,9 +17,32 @@ p {
   font-size: 2rem;
 }
 
+
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+input {
+  font-family: 'Dosis';
+  padding: .5rem;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  outline: none;
+  border: 2px solid rgba(162, 173, 164, 0.6);
+}
+
+select {
+  font-family: 'Dosis';
+  padding: .2rem;
+  border-radius: 4px;
+  outline: none;
+  border: 2px solid rgba(162, 173, 164, 0.6);
+  background-color: rgba(162, 173, 164, 0.1)
+}
+
+input:focus-within {
+  border: 2px solid #3D9970;
 }
 
 a {
@@ -60,17 +83,25 @@ a:hover {
   }
 
   p {
-    font-size: 2.2rem;
+    font-size: 2.6rem;
     text-align: start;
   }
 
   a {
     /* color: #EFF2F1; */
-    font-size: 2rem;
+    font-size: 2.6rem;
   }
 
   a:hover {
     color: #51c591;
+  }
+
+  input {
+    font-size: 1.6rem;
+  }
+
+  select {
+    font-size: 1.6rem;
   }
 
   .container {
