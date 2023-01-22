@@ -8,8 +8,9 @@
   font-weight: 500;
 }
 
+
 .header__main-section {
-  padding: 50px 0;
+  padding: 90px 0;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -17,8 +18,9 @@
 
 @media screen and (min-width: 840px) {
   .header__main-section {
-    padding: 100px 0;
+    padding: 180px 0;
     gap: 5rem;
   }
+  
 
 }

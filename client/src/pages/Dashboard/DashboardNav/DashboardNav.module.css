@@ -38,6 +38,10 @@
   width: 35px;
 }
 
+.nav-span {
+  font-size: 1.8rem;
+}
+
 
 @media screen and (min-width: 840px) {
   .dashboard__nav {
@@ -80,4 +84,9 @@
     height: 45px;
     width: 45px;
   }
+
+  .nav-span {
+    font-size: 2rem;
+  }
+  
 }

@@ -6,6 +6,7 @@
   font-weight: bold;
   color: #777;
   font-size: 1.4rem;
+  font-family: 'Dosis';
 }
 
 .btn--primary--purple,
@@ -28,6 +29,7 @@
 .btn--small {
   padding: 8px 12px;
   font-size: 1.25rem;
+  min-width: 70px;
 }
 
 .btn--primary--purple:hover {
@@ -49,7 +51,7 @@
   background-color: transparent;
   border-radius: 0px;
   padding: 20px 15px;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 .btn--tab--green--selected{
@@ -91,9 +93,27 @@
   color: #3D9970;
 }
 
+@media screen and (min-width: 600px) {
+
+  .btn--small {
+    font-size: 1.4rem;
+    padding: 10px 15px;
+    min-width: 100px;
+  }
+
+ 
+}
+
 
 @media screen and (min-width: 840px) {
   .btn {
+    font-size: 1.75rem;
+  }
 
+  .btn--primary--green {
+    font-size: 1.75rem;
+  }
+  .btn--tab--green {
+    font-size: 1.75rem;
   }
 }

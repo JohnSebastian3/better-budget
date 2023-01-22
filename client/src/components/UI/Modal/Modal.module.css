@@ -1,6 +1,6 @@
 .modal {
   width: clamp(50%, 700px, 90%);
-  height: min(80%, 325px);
+  height: min(80%, 360px);
   background-color: #fafafa;
   padding: 1rem 2rem;
   border-radius: 10px;
@@ -9,4 +9,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (min-width: 840px) {
+ .modal {
+  height: min(80%, 425px);
+ }
+
 }

@@ -27,3 +27,9 @@ body {
   min-height: 100vh;
 }
 
+@media screen and (min-width: 840px) {
+  body {
+    letter-spacing: 2px;
+  }
+}
+
