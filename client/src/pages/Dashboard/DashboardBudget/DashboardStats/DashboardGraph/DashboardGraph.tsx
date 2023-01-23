@@ -45,7 +45,12 @@ const DashboardGraph = (props: {
             <div className={style["dashboard__info"]}>
               <span className={style["dashboard__total-value"]}>
                 <div className={style["dashboard__spent"]}>
-                  Spent: <br></br>${props.totalExpenses} of ${props.totalIncome}
+                  Spent: <br></br>$
+                  {props.totalExpenses.toLocaleString("en-US", {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2,
+                  })}{" "}
+                  of ${props.totalIncome}
                 </div>
                 <br></br>
                 <div className={style["dashboard__remaining"]}>
