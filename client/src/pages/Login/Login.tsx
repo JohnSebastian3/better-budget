@@ -33,7 +33,7 @@ const Login = () => {
     try {
       const res = await axios
       .post(
-        "http://localhost:4000/login",
+        "https://better-budget-production.up.railway.app/login",
         {
           email: email.toLowerCase(),
           password,
