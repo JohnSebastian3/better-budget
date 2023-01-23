@@ -51,12 +51,7 @@ const DashboardSubcategory = (props: {
   const [budgetAmount, setBudgetAmount] = useState<number>(0);
   const [subcategoryTile, setSubcategoryTitle] = useState<string>("");
   const [expenseAmount, setExpenseAmount] = useState<number>(0);
-
-  console.log(subcategoryTile);
-
-  // useEffect(() => {
-  //   setSubcategoryTitle(props.subcategory.title);
-  // }, [])
+  const [inputIsClicked, setInputIsClicked] = useState<boolean>(false);
 
   useEffect(() => {
     setBudgetAmount(props.subcategory.budget);
@@ -67,11 +62,11 @@ const DashboardSubcategory = (props: {
     props.onDeleteSubcategory(props.subcategory);
   };
 
-  const setBudget = (event: ChangeEvent<HTMLInputElement>) => {
-    setBudgetAmount(Number(event.target.value));
-  };
 
   const updateBudget = () => {
+
+    setInputIsClicked(false);
+
     let categoryTitle = props.category;
     if (categoryTitle.includes("/")) {
       categoryTitle = categoryTitle.replaceAll("/", "&dash");
@@ -83,7 +78,7 @@ const DashboardSubcategory = (props: {
     }
     axios
       .put(
-        `http://localhost:4000/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `https://better-budget-production.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
@@ -109,7 +104,7 @@ const DashboardSubcategory = (props: {
 
     axios
       .put(
-        `http://localhost:4000/dashboard/updateSubcategory/${categoryTitle}/${oldSubcategoryTitle}/${props.year}/${props.month}`,
+        `https://better-budget-production.up.railway.app/dashboard/updateSubcategory/${categoryTitle}/${oldSubcategoryTitle}/${props.year}/${props.month}`,
         { newTitle },
         { withCredentials: true }
       )
@@ -143,7 +138,7 @@ const DashboardSubcategory = (props: {
           <div className={style["delete-icon"]}>
             <div className={style["subcategory-delete"]}>
               <AiOutlineClose
-                size={"15px"}
+                size={"18px"}
                 onClick={onDeleteSubcategory}
                 style={{ cursor: "pointer" }}
               ></AiOutlineClose>
@@ -152,17 +147,30 @@ const DashboardSubcategory = (props: {
         </div>
         <div className={style["subcategory__budget-amount"]}>
           <label htmlFor="budgetAmount">Budget</label>
-          <input
-            className={style["budget-input"]}
-            type="number"
-            step=".01"
-            value={budgetAmount.toString()}
-            min="0"
-            id="budgetAmount"
-            onChange={(event) => setBudget(event)}
-            onBlur={updateBudget}
-            placeholder={`$${String(budgetAmount)}`}
-          />
+          {!inputIsClicked ? (
+            <input
+              className={style["budget-input"]}
+              type="text"
+              value={`$${budgetAmount.toLocaleString("en-US", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}`}
+              onClick={() => setInputIsClicked(true)}
+            ></input>
+          ) : (
+            <input
+              className={style["budget-input"]}
+              type="number"
+              step=".01"
+              value={budgetAmount}
+              min="0"
+              autoFocus
+              id="budgetAmount"
+              onChange={(event) => setBudgetAmount(Number(event.target.value))}
+              onBlur={updateBudget}
+              // placeholder={`$${String(budgetAmount)}`}
+            />
+          )}
         </div>
         {props.category === "Income" ? (
           <div className={style["received-spent"]}>
