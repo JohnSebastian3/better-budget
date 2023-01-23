@@ -8,6 +8,10 @@
   font-weight: 500;
 }
 
+.header__h2 {
+  font-weight: 600;
+}
+
 
 .header__main-section {
   padding: 90px 0;
