@@ -5,6 +5,8 @@ import DashboardTransactionItem from "./DashboardTransactionItem/DashboardTransa
 const DashboardTransactionList = (props: {
   transactions: TransactionInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
+  onUpdateTransactionTitle: (newTitle: string, transaction: TransactionInterface) => void;
+  onUpdateTransactionValue: (newValue: number, transaction: TransactionInterface) => void;
 }) => {
 
   const sortedTransactions = props.transactions.sort((a, b) => {
@@ -26,6 +28,8 @@ const DashboardTransactionList = (props: {
                   <DashboardTransactionItem
                     transaction={transaction}
                     onDeleteTransaction={onDeleteTransaction}
+                    onUpdateTransactionTitle={props.onUpdateTransactionTitle}
+                    onUpdateTransactionValue={props.onUpdateTransactionValue}
                   ></DashboardTransactionItem>
                 </li>
               );
