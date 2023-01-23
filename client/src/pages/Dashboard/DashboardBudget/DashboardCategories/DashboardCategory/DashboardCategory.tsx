@@ -35,6 +35,13 @@ const DashboardCategory = (props: {
     dateMonth: number,
     dateYear: number
   ) => void;
+  onUpdateCategory: (
+    oldTitle: string,
+    newTitle: string,
+    month: number,
+    year: number
+  ) => void;
+
   onUpdateSubcategory: (
     oldTitle: string,
     newTitle: string,
@@ -61,10 +68,12 @@ const DashboardCategory = (props: {
   const [subcategories, setSubcategories] = useState<
     { title: string; budget: number; dateMonth: number; dateYear: number }[]
   >([]);
+  const [categoryTitle, setCategoryTitle] = useState<string>("");
   const [newSubcategoryInput, setNewSubcategoryInput] = useState<string>("");
 
   useEffect(() => {
     setSubcategories(props.subcategories);
+    setCategoryTitle(props.category.title);
   }, []);
 
   const transactions = props.transactions.filter((transaction) => {
@@ -92,7 +101,7 @@ const DashboardCategory = (props: {
     if (valid) {
       axios
         .post(
-          `http://localhost:4000/dashboard/addSubcategory/${categoryTitle}`,
+          `https://better-budget-production.up.railway.app/dashboard/addSubcategory/${categoryTitle}`,
           {
             subcategory,
           },
@@ -155,7 +164,7 @@ const DashboardCategory = (props: {
     }
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://better-budget-production.up.railway.app/dashboard/deleteSubcategory/${categoryTitle}/${subcategoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
@@ -197,16 +206,48 @@ const DashboardCategory = (props: {
     props.onUpdateBudget(subcategory, props.category.title, budgetAmount);
   };
 
+  const updateCategoryTitle = (newTitle: string) => {
+    let categoryTitle = props.category.title;
+    if (categoryTitle.includes("/")) {
+      categoryTitle = categoryTitle.replaceAll("/", "&dash");
+    }
+
+    axios
+      .put(
+        `https://better-budget-production.up.railway.app/dashboard/updateCategory/${categoryTitle}/${props.year}/${props.month}`,
+        { newTitle },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setCategoryTitle(newTitle);
+        props.onUpdateCategory(
+          props.category.title,
+          newTitle,
+          props.month,
+          props.year
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className={style["categories"]}>
       <div className={style["category-header"]}>
         <div className={style["header-title"]}>
-          <h2>{props.category.title}</h2>
+          <input
+            type="text"
+            value={categoryTitle}
+            className={style["category-title"]}
+            onChange={(event) => setCategoryTitle(event.target.value)}
+            onBlur={(event) => updateCategoryTitle(event.target.value)}
+          />
           {props.category.title !== "Income" &&
           props.category.title !== "Spending" ? (
             <div className={style["category-delete"]}>
               <AiOutlineClose
-                size={"18px"}
+                size={"25px"}
                 onClick={deleteCategory}
               ></AiOutlineClose>
             </div>
