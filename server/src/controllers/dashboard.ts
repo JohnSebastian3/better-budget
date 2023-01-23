@@ -196,6 +196,65 @@ module.exports = {
       console.log(err);
     }
   },
+  updateCategoryTitle: async (req: any, res: any) => {
+    try {
+      let category = req.params.category;
+      if (category.includes("&dash")) {
+        category = category.replaceAll("&dash", "/");
+      }
+
+      await Category.findOneAndUpdate(
+        {
+          user: req.user._id,
+          title: category,
+          dateMonth: req.params.month,
+          dateYear: req.params.year,
+        },
+        { $set: { title: req.body.newTitle } }
+      );
+
+      await Transaction.updateMany(
+        {
+          user: req.user._id,
+          category: category,
+          dateMonth: req.params.month,
+          dateYear: req.params.year,
+        },
+        { $set: { category: req.body.newTitle } }
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  updateTransactionTitle: async (req: any, res: any) => {
+    try {
+      await Transaction.findOneAndUpdate(
+        {
+          user: req.user._id,
+          _id: new mongoose.Types.ObjectId(req.params.id),
+        },
+        { $set: { title: req.body.newTitle } }
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  updateTransactionValue: async (req: any, res: any) => {
+    try {
+      await Transaction.findOneAndUpdate(
+        {
+          user: req.user._id,
+          _id: new mongoose.Types.ObjectId(req.params.id),
+        },
+        { $set: { value: Number(req.body.newValue) } }
+      );
+      res.sendStatus(200);
+    } catch(err) {
+      console.log(err);
+    }
+  },
   addCategory: async (req: any, res: any) => {
     try {
       let newCategory = new Category({
