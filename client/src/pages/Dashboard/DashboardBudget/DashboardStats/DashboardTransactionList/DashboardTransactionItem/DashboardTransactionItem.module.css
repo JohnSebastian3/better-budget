@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  width: 40%;
 }
 
 .transaction-delete {
@@ -43,17 +44,27 @@
 }
 
 .title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 }
 
 .subcategory {
   font-size: 1.5rem;
   color: #3d9970;
   font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.value-wrapper {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1.5rem;
 }
 
 .transactions-value {
   font-weight: 600;
+  width: 50%;
 }
 
 .transactions-date {
@@ -68,4 +79,64 @@
   padding: 0.2rem 0;
   border: 1px solid rgba(162, 173, 164, 0.6);
   border-radius: 50%;
+}
+
+.title-input {
+  color: #02452d;
+  background-color: #fff;
+  border: 2px solid #fff;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.transactions-input {
+  width: 100%;
+  color: #02452d;
+  background-color: #fff;
+  border: 2px solid #fff;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.transactions-clickable {
+  display: inline-block;
+  text-align: right;
+  border-radius: 6px;
+  font-weight: 600;
+  width: 100%;
+  color: #02452d;
+  background-color: #fff;
+  padding: 0.5rem;
+  padding-left: calc(0.5rem + 2px);
+  border: 2px solid #fff;
+  cursor: text;
+  overflow-x: scroll;
+  font-size: 1.5rem;
+}
+
+.title-input,
+.transactions-input {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+@media screen and (min-width: 600px) {
+  .value-wrapper,
+  .transactions-input,
+  .title-input,
+  .transactions-clickable {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 840px) {
+  .title-input,
+  .transactions-input {
+    letter-spacing: 2px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
 }

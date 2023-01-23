@@ -20,7 +20,9 @@
 
 .dashboard__date__year {
   font-size: 2.4rem;
+  font-weight: 500;
 }
+
 
 .dashboard__date__container {
   display: flex;

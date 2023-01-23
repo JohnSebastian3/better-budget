@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 3rem 0;
+  padding: 2rem 0;
 }
 
 .dashboard__subcategory:not(:last-child) {
   border-bottom: 1px solid rgba(162, 173, 164, 0.6);
-
 }
 
 .subcategory__container {
@@ -24,9 +23,29 @@
   justify-content: space-between;
 }
 
-.subcategory__container h3 {
-  font-size: 2rem;
+.subcategory-title {
+  font-size: 2.2rem;
+  font-weight: 600;
   color: #69757a;
+  background-color: #fafafa;
+  border: 2px solid #fafafa;
+  padding: .5rem;
+  margin-left: -.5rem;
+  max-width: 75%;
+}
+
+.subcategory-title:hover {
+  background-color: #eff2f1;
+}
+
+.subcategory-title:focus {
+  border: 2px solid #3D9970;
+  background-color: #eff2f1;
+
+}
+
+.subcategory__container h3 {
+  
   flex-basis: 50%;
 }
 
@@ -34,10 +53,6 @@
   flex-basis: 25%;
 }
 
-
-.subcategory__container input::-webkit-inner-spin-button {
-  display: none;
-}
 
 .subcategory__budget-amount {
   display: flex;
@@ -61,7 +76,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 1rem;
+  padding-right: .5rem;
 }
 
 .budget-expense {
@@ -71,18 +86,16 @@
 .budget-input {
   text-align: right;
   width: 60%;
-  padding: .5rem 1rem;
-  border-radius: 6px;
-  border: none;
+  padding: .5rem;
   outline: none;
+  border: 2px solid #fafafa;
   /* background-color: #fafafa; */
-  background-color: #eff2f1;
-
-  color: #666;
+  background-color: #fafafa;
+  font-size: 1.75rem;
 }
 
 .budget-input:focus, .budget-input:hover {
-  background-color: #d8f5e8;
+  background-color: #eff2f1;
 }
 
 .subcategory-delete {
@@ -91,4 +104,10 @@
 
 .subcategory-delete:hover {
   color: #777;
+}
+
+@media screen and (min-width: 840px) {
+  .subcategory-title {
+    font-size: 2.8rem;
+  }
 }

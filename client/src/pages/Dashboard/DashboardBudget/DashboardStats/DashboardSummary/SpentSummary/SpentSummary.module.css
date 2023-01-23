@@ -11,7 +11,7 @@
 
 .spent-amount {
   display: flex;
-  /* gap: 1rem; */
+  gap: .5rem;
 }
 
 .spent-amount span {

@@ -14,6 +14,26 @@
   
 }
 
+.category-title {
+  font-size: 2.4rem;
+  max-width: 75%;
+  font-weight: 600;
+  color: #02452d;
+  background-color: #fafafa;
+  border: 2px solid #fafafa;
+  padding: .5rem;
+  margin-left: -.5rem;
+}
+
+.category-title:hover {
+  background-color: #eff2f1;
+}
+
+.category-title:focus {
+  border: 2px solid #3D9970;
+}
+
+
 .category-header h3 {
   flex-basis: 75%;
   font-size: 2.8rem;
@@ -67,4 +87,10 @@
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+}
+
+@media screen and (min-width: 840px) {
+  .category-title {
+    font-size: 3.6rem;
+  }
 }

@@ -11,7 +11,7 @@
 
 .budget-amount {
   display: flex;
-  /* gap: 1rem; */
+  gap: .5rem;
 }
 
 .budget-amount span {
