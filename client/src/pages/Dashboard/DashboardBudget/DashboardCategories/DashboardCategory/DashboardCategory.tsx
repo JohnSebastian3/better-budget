@@ -236,13 +236,17 @@ const DashboardCategory = (props: {
     <div className={style["categories"]}>
       <div className={style["category-header"]}>
         <div className={style["header-title"]}>
-          <input
-            type="text"
-            value={categoryTitle}
-            className={style["category-title"]}
-            onChange={(event) => setCategoryTitle(event.target.value)}
-            onBlur={(event) => updateCategoryTitle(event.target.value)}
-          />
+          {!(categoryTitle === "Income") && !(categoryTitle === "Spending") ? (
+            <input
+              type="text"
+              value={categoryTitle}
+              className={style["category-title"]}
+              onChange={(event) => setCategoryTitle(event.target.value)}
+              onBlur={(event) => updateCategoryTitle(event.target.value)}
+            />
+          ) : (
+            <h3 className={style["category-title"]}>{categoryTitle}</h3>
+          )}
           {props.category.title !== "Income" &&
           props.category.title !== "Spending" ? (
             <div className={style["category-delete"]}>
