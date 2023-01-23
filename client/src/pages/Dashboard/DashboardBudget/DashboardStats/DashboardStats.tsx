@@ -12,6 +12,8 @@ const DashboardStats = (props: {
   transactions: TransactionInterface[];
   categories: CategoryInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
+  onUpdateTransactionTitle: (newTitle: string, transaction: TransactionInterface) => void;
+  onUpdateTransactionValue: (newValue: number, transaction: TransactionInterface) => void;
 }) => {
   const [currentlySelected, setCurrentlySelected] = useState<string>("Graph");
 
@@ -66,6 +68,8 @@ const DashboardStats = (props: {
           <DashboardTransactionList
             transactions={props.transactions}
             onDeleteTransaction={onDeleteTransaction}
+            onUpdateTransactionTitle={props.onUpdateTransactionTitle}
+            onUpdateTransactionValue={props.onUpdateTransactionValue}
           ></DashboardTransactionList>
         )}
       </>
