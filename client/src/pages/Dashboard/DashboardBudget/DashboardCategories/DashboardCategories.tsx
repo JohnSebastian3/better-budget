@@ -49,6 +49,12 @@ const DashboardCategories = (props: {
     category: string,
     budgetAmount: number
   ) => void;
+  onUpdateCategory: (
+    oldTitle: string,
+    newTitle: string,
+    month: number,
+    year: number
+  ) => void;
   onUpdateSubcategory: (
     oldTitle: string,
     newTitle: string,
@@ -91,7 +97,7 @@ const DashboardCategories = (props: {
     if (valid) {
       axios
         .post(
-          "http://localhost:4000/dashboard/addCategory",
+          "https://better-budget-production.up.railway.app/dashboard/addCategory",
           {
             newCategory,
           },
@@ -120,15 +126,17 @@ const DashboardCategories = (props: {
       : category;
     axios
       .delete(
-        `http://localhost:4000/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
+        `https://better-budget-production.up.railway.app/dashboard/deleteCategory/${categoryTitle}/${props.month}/${props.year}/${props.day}`,
         {
           withCredentials: true,
         }
       )
       .then((res) => {
         props.onDeleteCategory(category, props.month, props.year);
-        
-        const filteredTransactions = props.transactions.filter((trx) => trx.category === category);
+
+        const filteredTransactions = props.transactions.filter(
+          (trx) => trx.category === category
+        );
         props.deleteTransactions(filteredTransactions);
       })
       .catch((err) => {
@@ -227,6 +235,7 @@ const DashboardCategories = (props: {
                   onDeleteSubcategory={props.onDeleteSubcategory}
                   onAddSubcategory={onAddSubcategory}
                   onUpdateBudget={onUpdateBudget}
+                  onUpdateCategory={props.onUpdateCategory}
                   onUpdateSubcategory={props.onUpdateSubcategory}
                   deleteTransactions={deleteTransactions}
                 />
