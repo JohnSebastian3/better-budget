@@ -141,7 +141,7 @@ const DashboardTransactionForm = (props: {
   const onSubmit = (data: any) => {
     axios
       .post(
-        "http://localhost:4000/dashboard/addTransaction",
+        "https://better-budget-production.up.railway.app/dashboard/addTransaction",
         {
           title: data.title || "No Description",
           category: isIncome ? "Income" : currentCategory,
