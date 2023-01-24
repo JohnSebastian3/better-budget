@@ -245,7 +245,9 @@ const DashboardCategory = (props: {
               onBlur={(event) => updateCategoryTitle(event.target.value)}
             />
           ) : (
-            <h3 className={style["category-title"]}>{categoryTitle}</h3>
+            <h3 className={style["category-title-alternate"]}>
+              {categoryTitle}
+            </h3>
           )}
           {props.category.title !== "Income" &&
           props.category.title !== "Spending" ? (
