@@ -2,6 +2,7 @@
   max-width: 300px;
   margin: 7rem auto;
   padding: 1rem;
+  min-height: 65vh;
 }
 
 .login-container {
