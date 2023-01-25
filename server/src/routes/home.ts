@@ -9,6 +9,5 @@ router.post("/login", passport.authenticate("local", {session: true}), (req, res
 });
 router.get('/user', homeController.getUser);
 router.get('/logout', homeController.logoutUser);
-router.get('/', homeController.testDeployment);
 
 module.exports = router;

@@ -5,10 +5,6 @@ import { DatabaseUserInterface } from "../interfaces/UserInterface";
 import mongoose from "mongoose";
 import Category from "../models/Category";
 module.exports = {
-  testDeployment: async (req: any, res: any) => {
-    res.send('this works!');
-  }
-  ,
   registerUser: async (req: any, res: any) => {
     const { email, username, password } = req?.body;
     if (
