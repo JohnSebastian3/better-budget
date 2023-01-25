@@ -48,15 +48,11 @@ const Register = () => {
 
   useEffect(() => {
     const result = usernameRegex.test(username);
-    console.log(result);
-    console.log(username);
     setValidName(result);
   }, [username]);
 
   useEffect(() => {
     const result = passwordRegex.test(password);
-    console.log(result);
-    console.log(password);
     setValidPwd(result);
     const match = password === matchPwd;
     setValidMatch(match);
