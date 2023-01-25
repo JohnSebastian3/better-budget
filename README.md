@@ -2,8 +2,9 @@
 A lightweight budgeting web app built with MERN + Typescript.
 Link to live project: https://betterbudget.up.railway.app/
 
-## How It's Made:
+![alt-tag](client/public/budget.gif)
 
+## How It's Made:
 **Tech used:** TypeScript, CSS, React, NodeJS, Express, MongoDB
 
 Made with the MERN stack with TypeScript, this full-stack application allows the user to track their expenses and create a personalized monthly budget. Animations are done with the react library [Framer Motion](https://www.framer.com/motion/), and the charts on the dashboard are created using another library called [ChartJS](https://www.chartjs.org/) along with [react-chartjs-2](https://react-chartjs-2.js.org/) to allow react components for ChartJS. To style the app, a Mobile-first approach was used to ensure accessability across multiple devices.
