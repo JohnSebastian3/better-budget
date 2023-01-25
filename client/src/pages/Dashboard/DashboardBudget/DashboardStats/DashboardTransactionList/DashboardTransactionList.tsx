@@ -11,7 +11,7 @@ const DashboardTransactionList = (props: {
 
   const sortedTransactions = props.transactions.sort((a, b) => {
     return Number(b.dateDay) - Number(a.dateDay);
-  })
+  });
 
   const onDeleteTransaction = (transaction: TransactionInterface) => {
     props.onDeleteTransaction(transaction);
