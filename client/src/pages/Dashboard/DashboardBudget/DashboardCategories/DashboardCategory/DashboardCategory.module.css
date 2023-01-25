@@ -45,11 +45,6 @@
 }
 
 
-.category-header h3 {
-  flex-basis: 75%;
-  font-size: 2.8rem;
-}
-
 .category-header span {
   flex-basis: 25%;
 }
@@ -101,7 +96,8 @@
 }
 
 @media screen and (min-width: 840px) {
-  .category-title {
+  .category-title,
+  .category-title-alternate {
     font-size: 3.6rem;
   }
 }
