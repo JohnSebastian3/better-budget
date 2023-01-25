@@ -16,4 +16,6 @@ Optimizations include reducing time complexity of certain setter functions, espe
 
 During this project I learned about multiple react libraries including Framer Motion, ChartJS, and React-Icons. I improved my React skills by being able to learn how to more efficiently render components and pass props. I also learned how to connect a React frontend to a MongoDB, Express backend using Axios. Most importantly, I learned how to use TypeScript in a Full-stack MERN application, and I am confident that my projects going forward will be developed in TS instead of JS, since TS made my life much easier during the development of this project.
 
+## Credits:
+Favicon: [freepik](https://www.freepik.com/)
 
