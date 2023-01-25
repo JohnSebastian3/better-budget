@@ -28,7 +28,7 @@ const DashboardTransactionItem = (props: {
         minimumFractionDigits: 2,
       })
     );
-  }, []);
+  }, [props.transaction]);
 
   const months = [
     "Jan",
