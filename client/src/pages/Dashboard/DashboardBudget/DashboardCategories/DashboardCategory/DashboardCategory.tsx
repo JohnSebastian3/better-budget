@@ -152,7 +152,7 @@ const DashboardCategory = (props: {
   const deleteSubcategory = (subcategory: {
     title: string;
     budget: number;
-  }) => {
+  }, transactionsToDelete: TransactionInterface[]) => {
     let categoryTitle = props.category.title;
     if (categoryTitle.includes("/")) {
       categoryTitle = categoryTitle.replaceAll("/", "&dash");
@@ -183,7 +183,7 @@ const DashboardCategory = (props: {
           props.year
         );
 
-        props.deleteTransactions(transactions);
+        props.deleteTransactions(transactionsToDelete);
       })
       .catch((err) => {
         console.log(err);
@@ -214,7 +214,7 @@ const DashboardCategory = (props: {
 
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/updateCategory/${categoryTitle}/${props.year}/${props.month}`,
+        `http://localhost:4000/dashboard/updateCategory/${categoryTitle}/${props.year}/${props.month}`,
         { newTitle },
         { withCredentials: true }
       )

@@ -18,7 +18,7 @@ const DashboardSubcategory = (props: {
   year: number;
   month: number;
   day: number;
-  onDeleteSubcategory: (subcategory: { title: string; budget: number }) => void;
+  onDeleteSubcategory: (subcategory: { title: string; budget: number }, transactionsToDelete: TransactionInterface[]) => void;
   onUpdateBudget: (
     subcategory: {
       title: string;
@@ -59,7 +59,7 @@ const DashboardSubcategory = (props: {
   }, [props.subcategory.budget, props.subcategory.title]);
 
   const onDeleteSubcategory = () => {
-    props.onDeleteSubcategory(props.subcategory);
+    props.onDeleteSubcategory(props.subcategory, transactions);
   };
 
 

@@ -366,6 +366,7 @@ const DashboardBudget = () => {
       )
       .then((res) => {
         const filteredTransactions = transactions.filter((trx) => {
+          console.log(trx._id, transaction._id);
           return trx._id !== transaction._id;
         });
         setTransactions(filteredTransactions);
