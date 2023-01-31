@@ -85,7 +85,7 @@ const DashboardCategory = (props: {
       ? props.category.title.replaceAll("/", "&dash")
       : props.category.title;
 
-    let newSubcategory = data.subcategory;
+    let newSubcategory = data.subcategory || newSubcategoryInput;
     const subcategory = {
       title: newSubcategory,
       budget: 0,
@@ -137,6 +137,7 @@ const DashboardCategory = (props: {
     }
 
     reset();
+    setNewSubcategoryInput("");
     setIsFormShown(false);
   };
 
