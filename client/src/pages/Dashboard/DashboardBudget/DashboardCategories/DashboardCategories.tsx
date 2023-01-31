@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { TransactionInterface } from "../../../../Interfaces/TransactionInterface";
 import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 import style from "./DashboardCategories.module.css";
@@ -7,6 +7,7 @@ import Button from "../../../../components/UI/Button/Button";
 import DashboardCategory from "./DashboardCategory/DashboardCategory";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+
 const DashboardCategories = (props: {
   transactions: TransactionInterface[];
   categories: CategoryInterface[];
@@ -80,7 +81,7 @@ const DashboardCategories = (props: {
   };
 
   const onSubmit = (data: any) => {
-    let categoryTitle = data.category;
+    let categoryTitle = data.category || newCategoryInput;
     let newCategory = {
       title: String(categoryTitle),
       subcategories: [],
@@ -112,11 +113,11 @@ const DashboardCategories = (props: {
           console.log(err);
         });
     } else {
-      //PLaceholder for now
       alert("Category already exists");
     }
 
     setisFormShown(false);
+    setNewCategoryInput("");
     reset();
   };
 
