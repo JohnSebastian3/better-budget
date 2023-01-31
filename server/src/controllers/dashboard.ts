@@ -251,7 +251,7 @@ module.exports = {
         { $set: { value: Number(req.body.newValue) } }
       );
       res.sendStatus(200);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   },
@@ -305,8 +305,8 @@ module.exports = {
       if (category.includes("&dash")) {
         category = category.replaceAll("&dash", "/");
       }
-      console.log(category);
       await Category.findOneAndDelete({
+        user: req.user.id,
         title: category,
         dateMonth: Number(req.params.month),
         dateYear: Number(req.params.year),
