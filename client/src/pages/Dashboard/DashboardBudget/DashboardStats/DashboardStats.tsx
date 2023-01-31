@@ -12,8 +12,14 @@ const DashboardStats = (props: {
   transactions: TransactionInterface[];
   categories: CategoryInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
-  onUpdateTransactionTitle: (newTitle: string, transaction: TransactionInterface) => void;
-  onUpdateTransactionValue: (newValue: number, transaction: TransactionInterface) => void;
+  onUpdateTransactionTitle: (
+    newTitle: string,
+    transaction: TransactionInterface
+  ) => void;
+  onUpdateTransactionValue: (
+    newValue: number,
+    transaction: TransactionInterface
+  ) => void;
 }) => {
   const [currentlySelected, setCurrentlySelected] = useState<string>("Graph");
 
@@ -31,30 +37,33 @@ const DashboardStats = (props: {
 
   return (
     <div className={style["dashboard-stats"]}>
-      <div className={style["dashboard-stats__controls"]}>
-        <Button
-          type="button"
-          onClick={setSelectedGraph}
-          value="Breakdown"
-          kind={`btn--tab--green`}
-          modifier={`${
-            currentlySelected === "Graph" ? "btn--tab--green--selected" : ""
-          }`}
-          disabled={false}
-        />
-        <Button
-          type="button"
-          onClick={setSelectedTransactions}
-          value="Transactions"
-          kind={`btn--tab--green`}
-          modifier={`${
-            currentlySelected === "Transactions"
-              ? "btn--tab--green--selected"
-              : ""
-          }`}
-          disabled={false}
-        />
-      </div>
+      <div className={style['dashboard-stats__controls__wrapper']}>
+        <div className={style["dashboard-stats__controls"]}>
+          <Button
+            type="button"
+            onClick={setSelectedGraph}
+            value="Breakdown"
+            kind={`btn--tab--green`}
+            modifier={`${
+              currentlySelected === "Graph" ? "btn--tab--green--selected" : ""
+            }`}
+            disabled={false}
+          />
+          <Button
+            type="button"
+            onClick={setSelectedTransactions}
+            value="Transactions"
+            kind={`btn--tab--green`}
+            modifier={`${
+              currentlySelected === "Transactions"
+                ? "btn--tab--green--selected"
+                : ""
+            }`}
+            disabled={false}
+          />
+        </div>
+      
+
       <>
         {currentlySelected === "Graph" ? (
           <>
@@ -62,7 +71,10 @@ const DashboardStats = (props: {
               totalExpenses={props.totalExpenses}
               totalIncome={props.totalIncome}
             />
-            <DashboardSummary categories={props.categories} transactions={props.transactions}></DashboardSummary>
+            <DashboardSummary
+              categories={props.categories}
+              transactions={props.transactions}
+            ></DashboardSummary>
           </>
         ) : (
           <DashboardTransactionList
@@ -73,6 +85,7 @@ const DashboardStats = (props: {
           ></DashboardTransactionList>
         )}
       </>
+      </div>
     </div>
   );
 };
