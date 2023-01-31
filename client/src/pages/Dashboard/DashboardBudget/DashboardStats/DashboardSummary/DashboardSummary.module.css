@@ -9,9 +9,9 @@
 }
 
 .summary-info {
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   font-size: 1.6rem;
-  height: 320px;
+  height: 29vh;
   overflow-y: auto;
 }
 
@@ -19,6 +19,7 @@
   .dashboard-stats__summary {
     display: block;
     padding: 1rem 2rem;
+    overflow: auto;
   }
 
 }
