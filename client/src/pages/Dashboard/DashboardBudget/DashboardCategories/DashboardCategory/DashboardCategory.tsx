@@ -84,6 +84,7 @@ const DashboardCategory = (props: {
     let categoryTitle = props.category.title.includes("/")
       ? props.category.title.replaceAll("/", "&dash")
       : props.category.title;
+
     let newSubcategory = data.subcategory;
     const subcategory = {
       title: newSubcategory,
@@ -214,7 +215,7 @@ const DashboardCategory = (props: {
 
     axios
       .put(
-        `http://localhost:4000/dashboard/updateCategory/${categoryTitle}/${props.year}/${props.month}`,
+        `https://better-budget-production.up.railway.app/dashboard/updateCategory/${categoryTitle}/${props.year}/${props.month}`,
         { newTitle },
         { withCredentials: true }
       )
