@@ -8,7 +8,6 @@ import Footer from "../../components/Footer/Footer";
 import { AiOutlineCheck } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import { AiFillInfoCircle } from "react-icons/ai";
-import { E } from "chart.js/dist/chunks/helpers.core";
 
 const Register = () => {
   // Username must start with letter be followed by 3-23 characters that can be letters, digits, hyphens, or underscores
@@ -106,10 +105,14 @@ const Register = () => {
         <div className={style["register"]}>
           <Card>
             <div className={style["register-container"]}>
-              <h1>Success!</h1>
-              <p>
-                <Link to={"/login"}>Log In</Link>
-              </p>
+              <div className={style['redirect-container']}>
+                <h1>Success!</h1>
+                <p >
+                  <Link to={"/login"} className={style["redirect-link"]}>
+                    Log In
+                  </Link>
+                </p>
+              </div>
             </div>
           </Card>
         </div>
@@ -124,7 +127,7 @@ const Register = () => {
                   </div>
                   <p
                     ref={errRef}
-                    className={errMsg ? style['errmsg'] : style['offscreen']}
+                    className={errMsg ? style["errmsg"] : style["offscreen"]}
                     aria-live="assertive"
                   >
                     {errMsg}
