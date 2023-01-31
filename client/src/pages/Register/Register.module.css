@@ -45,6 +45,16 @@
   flex-direction: column;
 }
 
+.redirect-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.redirect-link {
+  color:#3D9970;
+}
 
 .register-link {
   font-size: 1.5rem;
