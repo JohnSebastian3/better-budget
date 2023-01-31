@@ -6,7 +6,7 @@ export const userContext = createContext<Partial<UserInterface>>({})
 export default function UserContext(props: PropsWithChildren) {
   const [user, setUser] = useState<UserInterface>()
   useEffect(() => {
-    axios.get('http://localhost:4000/user', {withCredentials: true}).then(res => {
+    axios.get('https://better-budget-production.up.railway.app/user', {withCredentials: true}).then(res => {
       setUser(res.data);
     })
 }, [])
