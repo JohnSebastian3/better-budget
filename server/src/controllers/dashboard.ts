@@ -1,8 +1,6 @@
 import Category from "../models/Category";
 import Transaction from "../models/Transaction";
-import Subcategory from "../models/Category";
-import mongoose, { Mongoose, Schema } from "mongoose";
-import CategoryModel from "../models/Category";
+import mongoose from "mongoose";
 module.exports = {
   getDashboard: async (req: any, res: any) => {
     try {
