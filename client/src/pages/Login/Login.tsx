@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, FormEvent } from "react";
+import { useState, useRef, useEffect, FormEvent } from "react";
 import axios from "axios";
 import Footer from "../../components/Footer/Footer";
 import Card from "../../components/UI/Card/Card";
@@ -7,7 +7,6 @@ import Button from "../../components/UI/Button/Button";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
 
@@ -17,23 +16,21 @@ const Login = () => {
   const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
-    if(emailRef.current) {
+    if (emailRef.current) {
       emailRef.current.focus();
     }
   }, []);
 
   useEffect(() => {
-    setErrMsg('');
-  }, [email, password])
+    setErrMsg("");
+  }, [email, password]);
 
   const login = async (e: FormEvent) => {
     e.preventDefault();
 
-
     try {
-      const res = await axios
-      .post(
-        "https://better-budget-production.up.railway.app/login",
+      const res = await axios.post(
+        "/login",
         {
           email: email.toLowerCase(),
           password,
@@ -41,42 +38,41 @@ const Login = () => {
         {
           withCredentials: true,
         }
-      )
+      );
 
       setSuccess(true);
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
 
       window.location.href = "/dashboard";
-    } catch(err: any) {
+    } catch (err: any) {
       if (!err?.response) {
-        setErrMsg('No Server Response');
+        setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrMsg('Missing Email or Password');
+        setErrMsg("Missing Email or Password");
       } else if (err.response?.status === 401) {
-        setErrMsg('Incorrect Email or Password');
+        setErrMsg("Incorrect Email or Password");
       } else {
-        setErrMsg('Log In Failed');
+        setErrMsg("Log In Failed");
       }
-     }
-    
+    }
   };
 
   return (
     <>
-      <div className={style["login"]}>
+      <section className={style["login"]}>
         <Card>
           <div className={style["login-container"]}>
             <form onSubmit={(e) => login(e)}>
               <div className={style["login-header"]}>
                 <h1>Log In</h1>
                 <p
-                    ref={errRef}
-                    className={errMsg ? style['errmsg'] : style['offscreen']}
-                    aria-live="assertive"
-                  >
-                    {errMsg}
-                  </p>
+                  ref={errRef}
+                  className={errMsg ? style["errmsg"] : style["offscreen"]}
+                  aria-live="assertive"
+                >
+                  {errMsg}
+                </p>
               </div>
               <div className={style["login-inputs"]}>
                 <div className={style["email-wrapper"]}>
@@ -103,16 +99,14 @@ const Login = () => {
                 </div>
               </div>
               <div className={style["form-button"]}>
-                    <Button
-                      type="submit"
-                      kind="btn--primary--green"
-                      modifier="btn--small"
-                      value="Log In"
-                      disabled={
-                        false
-                      }
-                    />
-                  </div>
+                <Button
+                  type="submit"
+                  kind="btn--primary--green"
+                  modifier="btn--small"
+                  value="Log In"
+                  disabled={false}
+                />
+              </div>
             </form>
           </div>
         </Card>
@@ -122,7 +116,7 @@ const Login = () => {
             Create an account!
           </Link>
         </span>
-      </div>
+      </section>
       <Footer></Footer>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FormEvent } from "react";
+import { useState, useEffect, useRef, FormEvent } from "react";
 import axios from "axios";
 import style from "./Register.module.css";
 import Card from "../../components/UI/Card/Card";
@@ -39,17 +39,20 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
 
+  // Set focus on mount
   useEffect(() => {
     if (emailRef.current) {
       emailRef.current.focus();
     }
   }, []);
 
+  // Determine whether entered username is valid
   useEffect(() => {
     const result = usernameRegex.test(username);
     setValidName(result);
   }, [username]);
 
+  // Determine whether entered password is valid
   useEffect(() => {
     const result = passwordRegex.test(password);
     setValidPwd(result);
@@ -57,10 +60,12 @@ const Register = () => {
     setValidMatch(match);
   }, [password, matchPwd]);
 
+  // If any input changes, remove error message
   useEffect(() => {
     setErrMsg("");
   }, [email, username, password, matchPwd]);
 
+  // register user
   const register = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -73,8 +78,8 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post(
-        "https://better-budget-production.up.railway.app/register",
+      await axios.post(
+        "/register",
         {
           email: email.toLowerCase(),
           username,
@@ -87,6 +92,7 @@ const Register = () => {
 
       setSuccess(true);
     } catch (err: any) {
+      // Determine proper error message to display based on error code received from server
       if (!err?.response) {
         setErrMsg("No Server Repsonse");
       } else if (err.response?.status === 409) {
@@ -101,13 +107,14 @@ const Register = () => {
 
   return (
     <>
+      {/* If register was a success, display special card to direct user to login */}
       {success ? (
-        <div className={style["register"]}>
+        <section className={style["register"]}>
           <Card>
             <div className={style["register-container"]}>
-              <div className={style['redirect-container']}>
+              <div className={style["redirect-container"]}>
                 <h1>Success!</h1>
-                <p >
+                <p>
                   <Link to={"/login"} className={style["redirect-link"]}>
                     Log In
                   </Link>
@@ -115,10 +122,11 @@ const Register = () => {
               </div>
             </div>
           </Card>
-        </div>
+        </section>
       ) : (
         <>
-          <div className={style["register"]}>
+          {/* Default register section */}
+          <section className={style["register"]}>
             <Card>
               <div className={style["register-container"]}>
                 <form onSubmit={(e) => register(e)}>
@@ -312,7 +320,7 @@ const Register = () => {
                 Log in!
               </Link>
             </span>
-          </div>
+          </section>
         </>
       )}
       <Footer></Footer>
