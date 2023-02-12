@@ -5,9 +5,9 @@ import MainFooter from "./MainFooter/MainFooter";
 const Main = () => {
   return (
     <main id="main" className={style.main}>
-        <MainIntro />
-        <MainDescription />
-        <MainFooter />
+      <MainIntro />
+      <MainDescription />
+      <MainFooter />
     </main>
   );
 };

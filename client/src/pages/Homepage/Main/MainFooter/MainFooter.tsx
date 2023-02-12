@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./MainFooter.module.css";
 import { AiOutlineDashboard } from "react-icons/ai";
 import Button from "../../../../components/UI/Button/Button";

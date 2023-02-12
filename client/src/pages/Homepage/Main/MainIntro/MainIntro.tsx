@@ -1,11 +1,10 @@
-import React from "react";
 import { GiReceiveMoney } from "react-icons/gi";
 import style from "./MainIntro.module.css";
 const MainIntro = () => {
   return (
     <section className={style["main__intro"]}>
       <div className="container">
-        <div className={style['main__intro-content']}>
+        <div className={style["main__intro-content"]}>
           <GiReceiveMoney
             size="80px"
             style={{ marginBottom: "20px" }}
