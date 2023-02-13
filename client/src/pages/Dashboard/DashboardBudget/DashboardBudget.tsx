@@ -1,7 +1,6 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import style from "./DashboardBudget.module.css";
-import { userContext } from "../../../context/UserContext";
 import { TransactionInterface } from "../../../Interfaces/TransactionInterface";
 import DashboardDate from "./DashboardDate/DashboardDate";
 import DashboardStats from "./DashboardStats/DashboardStats";
@@ -10,8 +9,6 @@ import DashboardCategories from "./DashboardCategories/DashboardCategories";
 import { CategoryInterface } from "../../../Interfaces/CategoryInterface";
 
 const DashboardBudget = () => {
-  const ctx = useContext(userContext);
-
   const [transactions, setTransactions] = useState<TransactionInterface[]>([]);
   const [day, setDay] = useState<number>(new Date().getDate());
   const [month, setMonth] = useState<number>(new Date().getMonth());
@@ -37,7 +34,7 @@ const DashboardBudget = () => {
 
   useEffect(() => {
     axios
-      .get("https://better-budget-production.up.railway.app/dashboard", { withCredentials: true })
+      .get("/dashboard", { withCredentials: true })
       .then((data) => {
         const categories = data.data.categories.map(
           (category: CategoryInterface) => {
@@ -330,7 +327,7 @@ const DashboardBudget = () => {
   const createBudget = () => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/createBudget",
+        "/dashboard/createBudget",
         { month, year },
         { withCredentials: true }
       )
@@ -361,9 +358,7 @@ const DashboardBudget = () => {
 
   const deleteTransaction = (transaction: TransactionInterface) => {
     axios
-      .delete(
-        `https://better-budget-production.up.railway.app/dashboard/deleteTransaction/${transaction._id}`
-      )
+      .delete(`/dashboard/deleteTransaction/${transaction._id}`)
       .then((res) => {
         const filteredTransactions = transactions.filter((trx) => {
           console.log(trx._id, transaction._id);
@@ -380,7 +375,7 @@ const DashboardBudget = () => {
   ) => {
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/updateTransactionTitle/${transaction._id}`,
+        `/dashboard/updateTransactionTitle/${transaction._id}`,
         { newTitle },
         { withCredentials: true }
       )
@@ -407,7 +402,7 @@ const DashboardBudget = () => {
   ) => {
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/updateTransactionValue/${transaction._id}`,
+        `/dashboard/updateTransactionValue/${transaction._id}`,
         { newValue },
         { withCredentials: true }
       )

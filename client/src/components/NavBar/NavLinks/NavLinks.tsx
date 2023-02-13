@@ -14,7 +14,9 @@ const NavLinks: React.FC<{
 
   const logout = () => {
     axios
-      .get("https://better-budget-production.up.railway.app/logout", { withCredentials: true })
+      .get("/logout", {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data === "OK") {
           document.body.style.overflow = "visible";
@@ -33,7 +35,7 @@ const NavLinks: React.FC<{
           <motion.ul
             initial={animateFrom}
             animate={animateTo}
-            exit={{opacity: 0}}
+            exit={{ opacity: 0 }}
             transition={{ delay: 0.1 }}
             className={style["nav-links"]}
           >

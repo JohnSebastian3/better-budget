@@ -1,11 +1,11 @@
 import express from "express";
-import mongoose from "mongoose"; 
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import cookieParser from 'cookie-parser'
+import cookieParser from "cookie-parser";
 const dashboardRoutes = require("./routes/dashboard");
 const homeRoutes = require("./routes/home");
 
@@ -15,9 +15,10 @@ const app = express();
 // Passport config
 require("./config/passport")(passport);
 
-app.use(cors({ origin: "https://betterbudget.up.railway.app", credentials: true}))
-// app.use(cors({ origin: "http://localhost:3000", credentials: true}))
-
+app.use(
+  cors({ origin: "https://betterbudget.up.railway.app", credentials: true })
+);
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // Body parser middleware
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +30,7 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 6},
+    cookie: { maxAge: 1000 * 60 * 60 * 6 },
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );

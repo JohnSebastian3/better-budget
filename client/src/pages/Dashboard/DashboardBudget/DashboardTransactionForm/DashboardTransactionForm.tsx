@@ -31,7 +31,7 @@ const DashboardTransactionForm = (props: {
 
   const closeModal = () => {
     setModalOpen(false);
-    setIsIncome(false); 
+    setIsIncome(false);
   };
 
   const openModal = () => {
@@ -141,7 +141,7 @@ const DashboardTransactionForm = (props: {
   const onSubmit = (data: any) => {
     axios
       .post(
-        "https://better-budget-production.up.railway.app/dashboard/addTransaction",
+        "/dashboard/addTransaction",
         {
           title: data.title || "No Description",
           category: isIncome ? "Income" : currentCategory,
@@ -194,7 +194,6 @@ const DashboardTransactionForm = (props: {
   return (
     <>
       <BsFillPlusCircleFill
-        
         className={style["add-transaction-btn"]}
         onClick={openModal}
       ></BsFillPlusCircleFill>
@@ -275,28 +274,28 @@ const DashboardTransactionForm = (props: {
                       }}
                     />
                   </div>
-                    <select
-                      defaultValue={currentSubcategory}
-                      onChange={(event) => onChangeSubcategory(event)}
-                      className={style['income-select']}
-                    >
-                      <option value="default" disabled>
-                        Subcategory
-                      </option>
-                      {filteredCategory.length > 0 ? (
-                        filteredCategory[0].subcategories.map(
-                          (subcategory, index) => {
-                            return (
-                              <option key={index} value={subcategory.title}>
-                                {subcategory.title}
-                              </option>
-                            );
-                          }
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </select>
+                  <select
+                    defaultValue={currentSubcategory}
+                    onChange={(event) => onChangeSubcategory(event)}
+                    className={style["income-select"]}
+                  >
+                    <option value="default" disabled>
+                      Subcategory
+                    </option>
+                    {filteredCategory.length > 0 ? (
+                      filteredCategory[0].subcategories.map(
+                        (subcategory, index) => {
+                          return (
+                            <option key={index} value={subcategory.title}>
+                              {subcategory.title}
+                            </option>
+                          );
+                        }
+                      )
+                    ) : (
+                      <></>
+                    )}
+                  </select>
                   <div className={style["form-buttons"]}>
                     <Button
                       type="button"

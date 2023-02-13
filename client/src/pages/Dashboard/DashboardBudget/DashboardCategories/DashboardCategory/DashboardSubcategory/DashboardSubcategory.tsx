@@ -18,7 +18,10 @@ const DashboardSubcategory = (props: {
   year: number;
   month: number;
   day: number;
-  onDeleteSubcategory: (subcategory: { title: string; budget: number }, transactionsToDelete: TransactionInterface[]) => void;
+  onDeleteSubcategory: (
+    subcategory: { title: string; budget: number },
+    transactionsToDelete: TransactionInterface[]
+  ) => void;
   onUpdateBudget: (
     subcategory: {
       title: string;
@@ -62,9 +65,7 @@ const DashboardSubcategory = (props: {
     props.onDeleteSubcategory(props.subcategory, transactions);
   };
 
-
   const updateBudget = () => {
-
     setInputIsClicked(false);
 
     let categoryTitle = props.category;
@@ -78,7 +79,7 @@ const DashboardSubcategory = (props: {
     }
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
+        `/dashboard/setSubcategoryBudget/${categoryTitle}/${subcategoryTitle}/${props.year}/${props.month}`,
         { budgetAmount },
         { withCredentials: true }
       )
@@ -104,7 +105,7 @@ const DashboardSubcategory = (props: {
 
     axios
       .put(
-        `https://better-budget-production.up.railway.app/dashboard/updateSubcategory/${categoryTitle}/${oldSubcategoryTitle}/${props.year}/${props.month}`,
+        `/dashboard/updateSubcategory/${categoryTitle}/${oldSubcategoryTitle}/${props.year}/${props.month}`,
         { newTitle },
         { withCredentials: true }
       )
