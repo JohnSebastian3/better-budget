@@ -13,8 +13,8 @@ const App = () => {
   const ctx = useContext(userContext);
 
   // Set base axios url
-  axios.defaults.baseURL = "https://better-budget-production.up.railway.app";
-  // axios.defaults.baseURL = "http://localhost:4000";
+  // axios.defaults.baseURL = "https://better-budget-production.up.railway.app";
+  axios.defaults.baseURL = "http://localhost:4000";
 
   return (
     <BrowserRouter>
