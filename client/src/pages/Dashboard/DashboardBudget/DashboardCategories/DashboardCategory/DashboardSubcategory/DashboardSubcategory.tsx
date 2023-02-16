@@ -125,9 +125,9 @@ const DashboardSubcategory = (props: {
   };
 
   return props.subcategory.title !== undefined ? (
-    <div className={style["dashboard__subcategory"]}>
+    <section className={style["dashboard__subcategory"]}>
       <div className={style["subcategory__container"]}>
-        <div className={style["subcategory-header"]}>
+        <section className={style["subcategory-header"]}>
           {/* <h3>{props.subcategory.title}</h3> */}
           <input
             type="text"
@@ -145,8 +145,8 @@ const DashboardSubcategory = (props: {
               ></AiOutlineClose>
             </div>
           </div>
-        </div>
-        <div className={style["subcategory__budget-amount"]}>
+        </section>
+        <section className={style["subcategory__budget-amount"]}>
           <label htmlFor="budgetAmount">Budget</label>
           {!inputIsClicked ? (
             <input
@@ -172,7 +172,7 @@ const DashboardSubcategory = (props: {
               // placeholder={`$${String(budgetAmount)}`}
             />
           )}
-        </div>
+        </section>
         {props.category === "Income" ? (
           <div className={style["received-spent"]}>
             <span>Received</span>
@@ -206,7 +206,7 @@ const DashboardSubcategory = (props: {
           />
         )}
       </div>
-    </div>
+    </section>
   ) : (
     <div></div>
   );

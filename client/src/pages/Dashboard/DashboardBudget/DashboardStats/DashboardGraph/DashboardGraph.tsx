@@ -37,7 +37,7 @@ const DashboardGraph = (props: {
   };
 
   return (
-    <div className={style["dashboard-stats__graph"]}>
+    <section className={style["dashboard-stats__graph"]}>
       <div className={style["dashboard__graph"]}>
         <div className={style["dashboard__item"]}>
           <div className={style["dashboard__chart"]}>
@@ -78,7 +78,7 @@ const DashboardGraph = (props: {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

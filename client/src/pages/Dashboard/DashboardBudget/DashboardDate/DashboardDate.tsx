@@ -56,7 +56,7 @@ const DashboardDate = (props: {
   };
 
   return (
-    <div className={style["dashboard__date"]}>
+    <section className={style["dashboard__date"]}>
       <div className={style["dashboard__date__container"]}>
         <button
           type="button"
@@ -79,7 +79,7 @@ const DashboardDate = (props: {
           <IoIosArrowForward size={"30px"} />
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

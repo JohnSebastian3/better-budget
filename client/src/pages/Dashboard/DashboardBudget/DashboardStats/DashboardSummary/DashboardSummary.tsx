@@ -14,8 +14,8 @@ const DashboardSummary = (props: {
   const [currentTab, setCurrentTab] = useState<string>("Budget");
 
   return (
-    <div className={style["dashboard-stats__summary"]}>
-      <div className={style["summary-tabs"]}>
+    <section className={style["dashboard-stats__summary"]}>
+      <section className={style["summary-tabs"]}>
         <Button
           type="button"
           kind={`btn--tab--green`}
@@ -42,8 +42,8 @@ const DashboardSummary = (props: {
           disabled={false}
           onClick={() => setCurrentTab("Remaining")}
         />
-      </div>
-      <div className={style["summary-info"]}>
+      </section>
+      <section className={style["summary-info"]}>
         {currentTab === "Budget" ? (
           <BudgetSummary
             categories={props.categories}
@@ -60,8 +60,8 @@ const DashboardSummary = (props: {
             transactions={props.transactions}
           />
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 

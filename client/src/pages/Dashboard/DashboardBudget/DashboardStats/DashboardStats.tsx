@@ -36,8 +36,8 @@ const DashboardStats = (props: {
   };
 
   return (
-    <div className={style["dashboard-stats"]}>
-      <div className={style['dashboard-stats__controls__wrapper']}>
+    <section className={style["dashboard-stats"]}>
+      <div className={style["dashboard-stats__controls__wrapper"]}>
         <div className={style["dashboard-stats__controls"]}>
           <Button
             type="button"
@@ -62,31 +62,30 @@ const DashboardStats = (props: {
             disabled={false}
           />
         </div>
-      
 
-      <>
-        {currentlySelected === "Graph" ? (
-          <>
-            <DashboardGraph
-              totalExpenses={props.totalExpenses}
-              totalIncome={props.totalIncome}
-            />
-            <DashboardSummary
-              categories={props.categories}
+        <>
+          {currentlySelected === "Graph" ? (
+            <>
+              <DashboardGraph
+                totalExpenses={props.totalExpenses}
+                totalIncome={props.totalIncome}
+              />
+              <DashboardSummary
+                categories={props.categories}
+                transactions={props.transactions}
+              ></DashboardSummary>
+            </>
+          ) : (
+            <DashboardTransactionList
               transactions={props.transactions}
-            ></DashboardSummary>
-          </>
-        ) : (
-          <DashboardTransactionList
-            transactions={props.transactions}
-            onDeleteTransaction={onDeleteTransaction}
-            onUpdateTransactionTitle={props.onUpdateTransactionTitle}
-            onUpdateTransactionValue={props.onUpdateTransactionValue}
-          ></DashboardTransactionList>
-        )}
-      </>
+              onDeleteTransaction={onDeleteTransaction}
+              onUpdateTransactionTitle={props.onUpdateTransactionTitle}
+              onUpdateTransactionValue={props.onUpdateTransactionValue}
+            ></DashboardTransactionList>
+          )}
+        </>
       </div>
-    </div>
+    </section>
   );
 };
 

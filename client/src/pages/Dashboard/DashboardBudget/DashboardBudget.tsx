@@ -424,8 +424,8 @@ const DashboardBudget = () => {
   };
 
   return (
-    <div className={style["dashboard__budget"]}>
-      <div className={style["dashboard__content"]}>
+    <section className={style["dashboard__budget"]}>
+      <section className={style["dashboard__content"]}>
         <DashboardDate
           setNewMonth={setNewMonth}
           setNewYear={setNewYear}
@@ -451,8 +451,8 @@ const DashboardBudget = () => {
           onCreateBudget={createBudget}
           deleteTransactions={deleteTransactions}
         />
-      </div>
-      <div className={style["dashboard-info"]}>
+      </section>
+      <section className={style["dashboard-info"]}>
         <DashboardStats
           totalExpenses={totalExpenses}
           totalIncome={totalIncome}
@@ -470,8 +470,8 @@ const DashboardBudget = () => {
           selectedYear={year}
           selectedDay={day}
         />
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 
