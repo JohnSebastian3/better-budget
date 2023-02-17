@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import { useState } from "react";
 import { TransactionInterface } from "../../../../Interfaces/TransactionInterface";
 import { CategoryInterface } from "../../../../Interfaces/CategoryInterface";
 import style from "./DashboardCategories.module.css";
