@@ -238,8 +238,8 @@ const DashboardCategory = (props: {
   };
 
   return (
-    <section className={style["categories"]}>
-      <section className={style["category-header"]}>
+    <div className={style["categories"]}>
+      <div className={style["category-header"]}>
         <div className={style["header-title"]}>
           {!(categoryTitle === "Income") && !(categoryTitle === "Spending") ? (
             <input
@@ -266,8 +266,8 @@ const DashboardCategory = (props: {
             ""
           )}
         </div>
-      </section>
-      <section className={style["subcategory-info"]}>
+      </div>
+      <div className={style["subcategory-info"]}>
         {props.subcategories.length === 0 ? (
           <p
             style={{
@@ -299,7 +299,7 @@ const DashboardCategory = (props: {
             })}
           </>
         )}
-      </section>
+      </div>
 
       {isFormShown ? (
         <form
@@ -342,7 +342,7 @@ const DashboardCategory = (props: {
           onClick={showForm}
         ></Button>
       )}
-    </section>
+    </div>
   );
 };
 

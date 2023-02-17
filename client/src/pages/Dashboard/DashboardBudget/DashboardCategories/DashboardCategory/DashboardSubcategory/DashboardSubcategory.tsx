@@ -125,7 +125,7 @@ const DashboardSubcategory = (props: {
   };
 
   return props.subcategory.title !== undefined ? (
-    <section className={style["dashboard__subcategory"]}>
+    <div className={style["dashboard__subcategory"]}>
       <div className={style["subcategory__container"]}>
         <section className={style["subcategory-header"]}>
           {/* <h3>{props.subcategory.title}</h3> */}
@@ -206,7 +206,7 @@ const DashboardSubcategory = (props: {
           />
         )}
       </div>
-    </section>
+    </div>
   ) : (
     <div></div>
   );
