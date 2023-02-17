@@ -4,6 +4,7 @@ import style from "./NavLinks.module.css";
 import { motion } from "framer-motion";
 import { userContext } from "../../../context/UserContext";
 import axios from "axios";
+
 const NavLinks: React.FC<{
   isMobile: boolean;
   closeMobileMenu: () => void;
@@ -37,18 +38,19 @@ const NavLinks: React.FC<{
             animate={animateTo}
             exit={{ opacity: 0 }}
             transition={{ delay: 0.1 }}
-            className={style["nav-links"]}
+            className={style["nav__links"]}
           >
             <motion.li
               initial={animateFrom}
               animate={animateTo}
               transition={{ delay: 0.2 }}
               onClick={() => props.isMobile && props.closeMobileMenu()}
+              className={style["nav__item"]}
             >
               <Link
                 to={"/"}
                 onClick={resetHomeOverflow}
-                className={style["nav-links__item"]}
+                className={style["nav__link"]}
               >
                 Home
               </Link>
@@ -60,11 +62,12 @@ const NavLinks: React.FC<{
                   animate={animateTo}
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
+                  className={style["nav__item"]}
                 >
                   <Link
                     to={"/dashboard"}
                     onClick={resetHomeOverflow}
-                    className={style["nav-links__item"]}
+                    className={style["nav__link"]}
                   >
                     Dashboard
                   </Link>
@@ -74,11 +77,12 @@ const NavLinks: React.FC<{
                   animate={animateTo}
                   transition={{ delay: 0.4 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
+                  className={style["nav__item"]}
                 >
                   <Link
                     onClick={logout}
                     to={"/login"}
-                    className={style["nav-links__item"]}
+                    className={style["nav__link"]}
                   >
                     Logout
                   </Link>
@@ -91,11 +95,12 @@ const NavLinks: React.FC<{
                   animate={animateTo}
                   transition={{ delay: 0.3 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
+                  className={style["nav__item"]}
                 >
                   <Link
                     to={"/login"}
                     onClick={resetHomeOverflow}
-                    className={style["nav-links__item"]}
+                    className={style["nav__link"]}
                   >
                     Login
                   </Link>
@@ -105,11 +110,12 @@ const NavLinks: React.FC<{
                   animate={animateTo}
                   transition={{ delay: 0.4 }}
                   onClick={() => props.isMobile && props.closeMobileMenu()}
+                  className={style["nav__item"]}
                 >
                   <Link
                     to={"/register"}
                     onClick={resetHomeOverflow}
-                    className={style["nav-links__item"]}
+                    className={style["nav__link"]}
                   >
                     Sign Up
                   </Link>
@@ -119,11 +125,11 @@ const NavLinks: React.FC<{
           </motion.ul>
         </>
       ) : (
-        <ul className={style["nav-links"]}>
+        <ul className={style["nav__links"]}>
           <Link
             to={"/"}
             onClick={resetHomeOverflow}
-            className={style["nav-links__item"]}
+            className={style["nav__link"]}
           >
             Home
           </Link>
@@ -132,14 +138,14 @@ const NavLinks: React.FC<{
               <Link
                 to={"/dashboard"}
                 onClick={resetHomeOverflow}
-                className={style["nav-links__item"]}
+                className={style["nav__link"]}
               >
                 Dashboard
               </Link>
               <Link
                 onClick={logout}
                 to={"/login"}
-                className={style["nav-links__item"]}
+                className={style["nav__link"]}
               >
                 Logout
               </Link>
@@ -149,14 +155,14 @@ const NavLinks: React.FC<{
               <Link
                 to={"/login"}
                 onClick={resetHomeOverflow}
-                className={style["nav-links__item"]}
+                className={style["nav__link"]}
               >
                 Login
               </Link>
               <Link
                 to={"/register"}
                 onClick={resetHomeOverflow}
-                className={style["nav-links__item"]}
+                className={style["nav__link"]}
               >
                 Sign Up
               </Link>

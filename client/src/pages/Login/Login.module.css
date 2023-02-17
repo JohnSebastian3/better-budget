@@ -5,7 +5,7 @@
   min-height: 65vh;
 }
 
-.login-container {
+.login__container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

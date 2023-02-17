@@ -5,11 +5,15 @@ import style from "./NavBar.module.css";
 import { FaMoneyBillWave } from "react-icons/fa";
 const NavBar = () => {
   return (
-    <nav className={style["nav-container"]}>
-      <div className={style["nav-content"]}>
-        <div className={style["nav-container__logo-container"]}>
-          <Link to={"/"} className={style["logo"]}>
-            <FaMoneyBillWave color="#3D9970" size="40px" />
+    <nav className={style["nav"]}>
+      <div className={style["nav__content"]}>
+        <div className={style["nav__logo-container"]}>
+          <Link to={"/"} className={style["logo-link"]}>
+            <FaMoneyBillWave
+              color="#3D9970"
+              size="40px"
+              className={style["logo"]}
+            />
             <span>Better Budget</span>
           </Link>
         </div>

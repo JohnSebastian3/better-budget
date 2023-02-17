@@ -5,7 +5,7 @@
   min-height: 65vh;
 }
 
-.register-container {
+.register__container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,32 +13,28 @@
   height: auto;
 }
 
-.redirect-container {
+.register__redirect {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.redirect-link {
+.register__redirect-link {
   color: #3d9970;
 }
 
-.register-link {
+.register__link-wrapper {
   font-size: 1.5rem;
   display: block;
   text-align: center;
   padding: 1rem;
 }
 
-.link {
+.register__link {
   font-size: 1.5rem;
   color: #3d9970;
   padding-left: 0.5rem;
-}
-
-.line {
-  display: inline-block;
 }
 
 @media screen and (min-width: 600px) {
@@ -49,8 +45,8 @@
 }
 
 @media screen and (min-width: 840px) {
-  .link,
-  .register-link {
+  .register__link,
+  .register__link-wrapper {
     font-size: 1.75rem;
   }
 }

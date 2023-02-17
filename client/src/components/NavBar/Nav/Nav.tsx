@@ -1,15 +1,15 @@
 import NavLinks from "../NavLinks/NavLinks";
-import classes from "./Nav.module.css";
+import style from "./Nav.module.css";
 const Nav = () => {
   return (
-    <nav className={classes.navigation}>
+    <div className={style["nav__links-container"]}>
       <NavLinks
         isMobile={false}
         closeMobileMenu={function (): void {
           throw new Error("Function not implemented.");
         }}
       />
-    </nav>
+    </div>
   );
 };
 

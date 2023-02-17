@@ -9,7 +9,7 @@ const Login = () => {
     <>
       <section className={style["login"]}>
         <Card>
-          <div className={style["login-container"]}>
+          <div className={style["login__container"]}>
             <LoginForm />
           </div>
         </Card>

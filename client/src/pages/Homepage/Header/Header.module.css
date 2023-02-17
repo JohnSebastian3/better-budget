@@ -1,10 +1,12 @@
 .header {
   color: #32493e;
   text-align: center;
+  height: calc(100vh - 65px);
+  padding-top: 5vh;
 }
 
 .header__h1 {
-  color: #3D9970;
+  color: #3d9970;
   font-weight: 500;
 }
 
@@ -12,8 +14,7 @@
   font-weight: 600;
 }
 
-
-.header__main-section {
+.header__content {
   padding: 90px 0;
   display: flex;
   flex-direction: column;
@@ -21,10 +22,8 @@
 }
 
 @media screen and (min-width: 840px) {
-  .header__main-section {
-    padding: 180px 0;
+  .header__content {
+    padding: 15vh 0;
     gap: 5rem;
   }
-  
-
 }

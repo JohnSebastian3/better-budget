@@ -1,13 +1,13 @@
-.nav-container {
+.nav {
   background-color: #fafafa;
   height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 1px 3px 2px rgba(0,0,0, 0.2);
+  box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.2);
 }
 
-.nav-content {
+.nav__content {
   display: flex;
   align-content: center;
   justify-content: space-between;
@@ -16,50 +16,42 @@
   width: 1200px;
 }
 
-.nav-container__logo-container {
+.nav__logo-container {
   flex-grow: 1;
   text-align: center;
 }
 
-.logo {
-  font-family: 'Righteous', sans-serif;
+.logo-link {
+  font-family: "Righteous", sans-serif;
   font-size: 2rem;
   text-align: center;
-  color: #3D9970;
+  color: #3d9970;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
 }
 
-.logo svg {
+.logo {
   width: 30px;
   height: 30px;
 }
 
-
-
 @media screen and (min-width: 580px) {
-  .logo {
+  .logo-link {
     flex-grow: 0;
     font-size: 3rem;
     justify-content: flex-start;
   }
 
-  .logo svg {
+  .logo {
     width: 40px;
     height: 40px;
   }
 }
 
 @media screen and (min-width: 840px) {
-  .nav-container__logo-container {
+  .nav__logo-container {
     text-align: start;
   }
-
-  /* .nav-container {
-    height: 70px;
-  } */
-
 }
-

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NavLinks from "../NavLinks/NavLinks";
-import classes from "./MobileNav.module.css";
+import style from "./MobileNav.module.css";
 import { AiOutlineMenu } from "react-icons/ai";
 import { SlClose } from "react-icons/sl";
 import { AnimatePresence } from "framer-motion";
@@ -20,7 +20,7 @@ const MobileNav: React.FC = (props) => {
 
   const hamburgerIcon = (
     <AiOutlineMenu
-      className={classes.hamburger}
+      className={style.hamburger}
       size="25px"
       color="#3D9970"
       style={{ cursor: "pointer" }}
@@ -29,7 +29,7 @@ const MobileNav: React.FC = (props) => {
   );
   const closeHamburgerIcon = (
     <SlClose
-      className={classes.hamburger}
+      className={style.hamburger}
       size="25px"
       color="#3D9970"
       style={{ cursor: "pointer" }}
@@ -40,12 +40,12 @@ const MobileNav: React.FC = (props) => {
     setOpen(false);
   };
   return (
-    <nav className={classes["mobile-navigation"]}>
+    <div className={style["nav__mobile-nav"]}>
       {open ? closeHamburgerIcon : hamburgerIcon}
       <AnimatePresence>
         {open && <NavLinks isMobile={true} closeMobileMenu={closeMobileMenu} />}
       </AnimatePresence>
-    </nav>
+    </div>
   );
 };
 

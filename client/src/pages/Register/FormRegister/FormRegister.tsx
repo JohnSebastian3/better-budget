@@ -110,20 +110,24 @@ const FormRegister = (props: {
   };
 
   return (
-    <form onSubmit={(e) => register(e)}>
-      <div className={style["register-header"]}>
-        <h1>Sign Up</h1>
+    <form onSubmit={(e) => register(e)} className={style["register__form"]}>
+      <div className={style["register__header"]}>
+        <h1 className={style["register__h1"]}>Sign Up</h1>
       </div>
       <p
         ref={errRef}
-        className={errMsg ? style["errmsg"] : style["offscreen"]}
+        className={
+          errMsg ? style["register__errmsg"] : style["regsiter__offscreen"]
+        }
         aria-live="assertive"
       >
         {errMsg}
       </p>
-      <div className={style["register-inputs"]}>
-        <div className={style["email-wrapper"]}>
-          <label htmlFor="email">Email</label>
+      <div className={style["register__inputs"]}>
+        <div className={style["register__email"]}>
+          <label htmlFor="email" className={style["register__label"]}>
+            Email
+          </label>
           <input
             type="text"
             id="email"
@@ -135,17 +139,24 @@ const FormRegister = (props: {
             aria-invalid={validName ? "false" : "true"}
             onFocus={() => setEmailFocus(true)}
             onBlur={() => setEmailFocus(false)}
+            className={style["register__input"]}
           />
         </div>
-        <div className={style["username-wrapper"]}>
-          <label htmlFor="username">
+        <div className={style["register__username"]}>
+          <label htmlFor="username" className={style["register__label"]}>
             Username{" "}
-            <span className={validName ? style["valid"] : style["hide"]}>
+            <span
+              className={
+                validName ? style["register__valid"] : style["register__hide"]
+              }
+            >
               <AiOutlineCheck />
             </span>
             <span
               className={
-                validName || !username ? style["hide"] : style["invalid"]
+                validName || !username
+                  ? style["register__hide"]
+                  : style["register__invalid"]
               }
             >
               {" "}
@@ -164,16 +175,20 @@ const FormRegister = (props: {
             aria-describedby="uidnote"
             onFocus={() => setUserFocus(true)}
             onBlur={() => setUserFocus(false)}
+            className={style["register__input"]}
           ></input>
           <p
             id="uidnote"
             className={
               userFocus && username && !validName
-                ? style["instructions"]
-                : style["offscreen"]
+                ? style["register__instructions"]
+                : style["register__offscreen"]
             }
           >
-            <AiFillInfoCircle size={"15px"} />
+            <AiFillInfoCircle
+              size={"15px"}
+              className={style["register__info-icon"]}
+            />
             4 to 24 characters.
             <br />
             Must begin with a letter.
@@ -181,15 +196,21 @@ const FormRegister = (props: {
             Letters, numbers, underscores, hyphens allowed.
           </p>
         </div>
-        <div className={style["password-wrapper"]}>
-          <label htmlFor="password">
+        <div className={style["register__password"]}>
+          <label htmlFor="password" className={style["register__label"]}>
             Password
-            <span className={validPwd ? style["valid"] : style["hide"]}>
+            <span
+              className={
+                validPwd ? style["register__valid"] : style["register__hide"]
+              }
+            >
               <AiOutlineCheck />
             </span>
             <span
               className={
-                validPwd || !password ? style["hide"] : style["invalid"]
+                validPwd || !password
+                  ? style["register__hide"]
+                  : style["register__invalid"]
               }
             >
               <RxCross2 />
@@ -205,14 +226,20 @@ const FormRegister = (props: {
             aria-describedby="pwdnote"
             onFocus={() => setPwdFocus(true)}
             onBlur={() => setPwdFocus(false)}
+            className={style["register__input"]}
           />
           <p
             id="pwdnote"
             className={
-              pwdFocus && !validPwd ? style["instructions"] : style["offscreen"]
+              pwdFocus && !validPwd
+                ? style["register__instructions"]
+                : style["register__offscreen"]
             }
           >
-            <AiFillInfoCircle size={"15px"} />
+            <AiFillInfoCircle
+              size={"15px"}
+              className={style["register__info-icon"]}
+            />
             8 to 24 characters.
             <br />
             Must include uppercase and lowercase letters, a number, and a
@@ -226,19 +253,23 @@ const FormRegister = (props: {
             <span aria-label="percent">%</span>
           </p>
         </div>
-        <div className={style["pwd-match-wrapper"]}>
-          <label htmlFor="confirm-pwd">
+        <div className={style["register__pwd-match"]}>
+          <label htmlFor="confirm-pwd" className={style["register__label"]}>
             Confirm Password
             <span
               className={
-                validMatch && matchPwd ? style["valid"] : style["hide"]
+                validMatch && matchPwd
+                  ? style["register__valid"]
+                  : style["register__hide"]
               }
             >
               <AiOutlineCheck />
             </span>
             <span
               className={
-                validMatch || !matchPwd ? style["hide"] : style["invalid"]
+                validMatch || !matchPwd
+                  ? style["register__hide"]
+                  : style["register__invalid"]
               }
             >
               <RxCross2 />
@@ -253,21 +284,25 @@ const FormRegister = (props: {
             aria-describedby="confirmnote"
             onFocus={() => setMatchFocus(true)}
             onBlur={() => setMatchFocus(false)}
+            className={style["register__input"]}
           />
           <p
             id="confirmnote"
             className={
               matchFocus && !validMatch
-                ? style["instructions"]
-                : style["offscreen"]
+                ? style["register__instructions"]
+                : style["register__offscreen"]
             }
           >
-            <AiFillInfoCircle size={"15px"} />
+            <AiFillInfoCircle
+              size={"15px"}
+              className={style["register__info-icon"]}
+            />
             Passwords must match.
           </p>
         </div>
       </div>
-      <div className={style["form-button"]}>
+      <div className={style["register__submit"]}>
         <Button
           type="submit"
           kind="btn--primary--green"

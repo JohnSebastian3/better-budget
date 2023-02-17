@@ -1,6 +1,6 @@
-.main__intro{
-  background-color: #3D9970;
-  color: #EFF2F1;
+.main__intro {
+  background-color: #3d9970;
+  color: #eff2f1;
   padding: 50px 0;
 }
 
@@ -12,12 +12,11 @@
 }
 
 @media screen and (min-width: 840px) {
-
   .main__intro {
     padding: 100px 0;
   }
 
-  .main__intro-content p{
+  .main__intro-p {
     width: 100%;
     text-align: left;
   }

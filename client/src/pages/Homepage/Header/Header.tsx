@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className={style.header}>
       <div className="container">
-        <section className={style["header__main-section"]}>
+        <section className={style["header__content"]}>
           <h1 className={style["header__h1"]}>
             It's time to make money work in your favor.
           </h1>

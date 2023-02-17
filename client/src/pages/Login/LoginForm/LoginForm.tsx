@@ -56,19 +56,21 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={(e) => login(e)}>
-      <div className={style["login-header"]}>
-        <h1>Log In</h1>
+    <form onSubmit={(e) => login(e)} className={style["login__form"]}>
+      <div className={style["login__header"]}>
+        <h1 className={style["login__h1"]}>Log In</h1>
         <p
           ref={errRef}
-          className={errMsg ? style["errmsg"] : style["offscreen"]}
+          className={
+            errMsg ? style["login__errmsg"] : style["login__offscreen"]
+          }
           aria-live="assertive"
         >
           {errMsg}
         </p>
       </div>
-      <div className={style["login-inputs"]}>
-        <div className={style["email-wrapper"]}>
+      <div className={style["login__inputs"]}>
+        <div className={style["login__email"]}>
           <label htmlFor="email">Email</label>
           <input
             type="text"
@@ -78,9 +80,10 @@ const LoginForm = () => {
             required
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            className={style["login__input"]}
           />
         </div>
-        <div className={style["password-wrapper"]}>
+        <div className={style["login__password"]}>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -88,10 +91,11 @@ const LoginForm = () => {
             required
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            className={style["login__input"]}
           />
         </div>
       </div>
-      <div className={style["form-button"]}>
+      <div className={style["login__submit"]}>
         <Button
           type="submit"
           kind="btn--primary--green"

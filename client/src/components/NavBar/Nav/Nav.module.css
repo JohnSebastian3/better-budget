@@ -1,10 +1,10 @@
-.navigation {
+.nav__links-container {
   display: none;
 }
 
 @media screen and (min-width: 840px) {
-  .navigation {
-     display: block;
-     width: 50%;
+  .nav__links-container {
+    display: block;
+    width: 50%;
   }
 }
