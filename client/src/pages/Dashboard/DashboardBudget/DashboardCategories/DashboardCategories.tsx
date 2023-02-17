@@ -172,7 +172,7 @@ const DashboardCategories = (props: {
   };
 
   return (
-    <div className={style["dashboard__categories"]}>
+    <section className={style["dashboard__categories"]}>
       {props.categories.length === 0 ? (
         <div className={style["start-budget-btn"]}>
           <Button
@@ -287,7 +287,7 @@ const DashboardCategories = (props: {
           )}
         </>
       )}
-    </div>
+    </section>
   );
 };
 
