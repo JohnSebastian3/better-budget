@@ -1,14 +1,18 @@
-import React, { useState } from "react";
 import style from "./DashboardTransactionList.module.css";
 import { TransactionInterface } from "../../../../../Interfaces/TransactionInterface";
 import DashboardTransactionItem from "./DashboardTransactionItem/DashboardTransactionItem";
 const DashboardTransactionList = (props: {
   transactions: TransactionInterface[];
   onDeleteTransaction: (transaction: TransactionInterface) => void;
-  onUpdateTransactionTitle: (newTitle: string, transaction: TransactionInterface) => void;
-  onUpdateTransactionValue: (newValue: number, transaction: TransactionInterface) => void;
+  onUpdateTransactionTitle: (
+    newTitle: string,
+    transaction: TransactionInterface
+  ) => void;
+  onUpdateTransactionValue: (
+    newValue: number,
+    transaction: TransactionInterface
+  ) => void;
 }) => {
-
   const sortedTransactions = props.transactions.sort((a, b) => {
     return Number(b.dateDay) - Number(a.dateDay);
   });
